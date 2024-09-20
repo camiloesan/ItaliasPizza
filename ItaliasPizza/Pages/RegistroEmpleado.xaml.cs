@@ -1,5 +1,4 @@
-﻿using ItaliasPizza.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,20 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ItaliasPizza
+namespace ItaliasPizza.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RegistroEmpleado.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RegistroEmpleado : Page
     {
-        public MainWindow()
+        public RegistroEmpleado()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //Closing += OnWindowClosing;
-            Login login = new Login();
-            Content = login;
+        }
+
+        private void Btn_Save(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Cancel(object sender, RoutedEventArgs e)
+        {
+            // todo return to previous page or main menu
         }
     }
 }
