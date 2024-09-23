@@ -36,7 +36,7 @@ namespace ItaliasPizza.Pages
 
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new RegistroEmpleado();
         }
 
         private void BtnCancelEvent(object sender, RoutedEventArgs e)

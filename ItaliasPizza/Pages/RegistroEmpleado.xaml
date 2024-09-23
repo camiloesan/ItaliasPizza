@@ -1,0 +1,49 @@
+﻿<Page x:Class="ItaliasPizza.Pages.RegistroEmpleado"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ItaliasPizza.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="RegistroEmpleado">
+
+    <Grid Margin="10" VerticalAlignment="Center" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="500">
+            <Label Content="Registrar nuevo empleado" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Margin="0,5,0,20"/>
+
+            <Label Content="Campo obligatorio (*)" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+            <Label Content="Nombre (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <Label Content="Apellidos (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtLastName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <Label Content="Teléfono (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtPhone" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <Label Content="Cargo (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <ComboBox x:Name="CbCharge" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
+                <ComboBoxItem IsEnabled="False" Content="Selecciona un cargo" />
+                <ComboBoxItem>Cajero</ComboBoxItem>
+                <ComboBoxItem>Mesero</ComboBoxItem>
+                <ComboBoxItem>Personal de cocina</ComboBoxItem>
+            </ComboBox>
+
+            <Label Content="Correo electrónico (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtEmail" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <Label Content="Contraseña (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <PasswordBox x:Name="TxtPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <Label Content="Confirmar contraseña (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <PasswordBox x:Name="TxtConfirmPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
+                <Button Margin="5" Content="Guardar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
+                <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

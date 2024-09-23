@@ -24,7 +24,6 @@ namespace ItaliasPizza
         public MainWindow()
         {
             InitializeComponent();
-            ResizeMode = ResizeMode.NoResize;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //Closing += OnWindowClosing;
             Login login = new Login();
