@@ -25,7 +25,7 @@ namespace Database
         public System.DateTime OrderDate { get; set; }
         public System.DateTime ExpectedDate { get; set; }
         public System.DateTime ArrivalDate { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderedSupply> OrderedSupply { get; set; }

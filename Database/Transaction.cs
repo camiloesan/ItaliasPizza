@@ -20,5 +20,7 @@ namespace Database
         public decimal Amount { get; set; }
         public int Description { get; set; }
         public System.Guid RegisteredBy { get; set; }
+    
+        public virtual Employee Employee { get; set; }
     }
 }

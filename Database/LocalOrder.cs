@@ -22,7 +22,7 @@ namespace Database
     
         public System.Guid IdLocalOrder { get; set; }
         public System.Guid Waiter { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         public int Table { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Total { get; set; }
