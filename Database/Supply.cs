@@ -19,18 +19,22 @@ namespace Database
         {
             this.OrderedSupply = new HashSet<OrderedSupply>();
             this.RecipeSupply = new HashSet<RecipeSupply>();
+            this.SupplyInventoryReport = new HashSet<SupplyInventoryReport>();
         }
     
         public System.Guid IdSupply { get; set; }
         public string Name { get; set; }
         public decimal Quantity { get; set; }
-        public string Category { get; set; }
+        public int IdSupplyCategory { get; set; }
         public string MeasurementUnit { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderedSupply> OrderedSupply { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeSupply> RecipeSupply { get; set; }
+        public virtual SupplyCategory SupplyCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplyInventoryReport> SupplyInventoryReport { get; set; }
     }
 }

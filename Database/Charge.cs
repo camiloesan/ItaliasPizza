@@ -12,20 +12,18 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class InventoryReport
+    public partial class Charge
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public InventoryReport()
+        public Charge()
         {
-            this.SupplyInventoryReport = new HashSet<SupplyInventoryReport>();
+            this.Employee = new HashSet<Employee>();
         }
     
-        public System.Guid IdInventoryReport { get; set; }
-        public System.Guid Reporter { get; set; }
-        public string Observations { get; set; }
+        public int IdCharge { get; set; }
+        public string Name { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SupplyInventoryReport> SupplyInventoryReport { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

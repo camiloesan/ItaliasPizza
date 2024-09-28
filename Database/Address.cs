@@ -17,10 +17,10 @@ namespace Database
         public System.Guid IdAddress { get; set; }
         public System.Guid IdClient { get; set; }
         public string Street { get; set; }
-        public byte Number { get; set; }
+        public int Number { get; set; }
         public short PostalCode { get; set; }
         public string Colony { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         public string Reference { get; set; }
     
         public virtual Client Client { get; set; }

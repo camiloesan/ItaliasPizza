@@ -21,5 +21,8 @@ namespace Database
         public decimal ExpectedAmount { get; set; }
         public decimal ReportedAmount { get; set; }
         public string DifferingAmountReason { get; set; }
+    
+        public virtual InventoryReport InventoryReport { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

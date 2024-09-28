@@ -22,7 +22,7 @@ namespace Database
     
         public System.Guid IdDeliveryOrder { get; set; }
         public System.Guid IdClient { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Total { get; set; }
         public System.Guid DeliveryDriver { get; set; }

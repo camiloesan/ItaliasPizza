@@ -24,14 +24,15 @@ namespace Database
     
         public System.Guid IdProduct { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public int IdType { get; set; }
         public decimal Price { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderProduct> DeliveryOrderProduct { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LocalOrderProduct> LocalOrderProduct { get; set; }
+        public virtual ProducType ProducType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe> Recipe { get; set; }
     }

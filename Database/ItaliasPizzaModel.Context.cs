@@ -28,6 +28,7 @@ namespace Database
         public virtual DbSet<AccessAccount> AccessAccount { get; set; }
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<CashReconciliation> CashReconciliation { get; set; }
+        public virtual DbSet<Charge> Charge { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrder { get; set; }
         public virtual DbSet<DeliveryOrderProduct> DeliveryOrderProduct { get; set; }
@@ -37,11 +38,13 @@ namespace Database
         public virtual DbSet<LocalOrderProduct> LocalOrderProduct { get; set; }
         public virtual DbSet<OrderedSupply> OrderedSupply { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProducType> ProducType { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<RecipeSupply> RecipeSupply { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<SupplierOrder> SupplierOrder { get; set; }
         public virtual DbSet<Supply> Supply { get; set; }
+        public virtual DbSet<SupplyCategory> SupplyCategory { get; set; }
         public virtual DbSet<SupplyInventoryReport> SupplyInventoryReport { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
     }

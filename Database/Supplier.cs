@@ -22,9 +22,10 @@ namespace Database
     
         public System.Guid IdSupplier { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
+        public int IdSupplyCategory { get; set; }
         public string Phone { get; set; }
     
+        public virtual SupplyCategory SupplyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
     }

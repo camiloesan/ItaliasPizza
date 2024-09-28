@@ -14,7 +14,7 @@ namespace Database
     
     public partial class RecipeSupply
     {
-        public System.Guid IdProductSupply { get; set; }
+        public System.Guid IdRecipeSupply { get; set; }
         public System.Guid IdRecipe { get; set; }
         public System.Guid IdSupply { get; set; }
         public decimal SupplyAmount { get; set; }
