@@ -24,7 +24,10 @@ namespace ItaliasPizza.Pages
         public RegistroEmpleado()
         {
             InitializeComponent();
+            CbCharge.ItemsSource = GetCharges();
         }
+
+        public RegistroEmpleado(bool test) {}
 
         private bool IsPasswordMatch()
         {
@@ -37,7 +40,8 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(TxtLastName.Text) 
                 && !string.IsNullOrEmpty(TxtPhone.Text) 
                 && !string.IsNullOrEmpty(TxtEmail.Text) 
-                && !string.IsNullOrEmpty(TxtPassword.Password) 
+                && !string.IsNullOrEmpty(TxtPassword.Password)
+                && !string.IsNullOrEmpty(CbCharge.Text)
                 && !string.IsNullOrEmpty(TxtConfirmPassword.Password);
         }
 
@@ -51,7 +55,15 @@ namespace ItaliasPizza.Pages
             }
         }
 
-        private void Btn_Save(object sender, RoutedEventArgs e)
+        public List<Charge> GetCharges()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Charge.ToList();
+            }
+        }
+
+            private void Btn_Save(object sender, RoutedEventArgs e)
         {
             if (!IsPasswordMatch())
             {
@@ -69,11 +81,17 @@ namespace ItaliasPizza.Pages
                 string name = TxtName.Text;
                 string lastName = TxtLastName.Text;
                 string phone = TxtPhone.Text;
-                string charge = CbCharge.Text;
+                Charge charge = (Charge)CbCharge.SelectedItem;
                 string email = TxtEmail.Text;
                 string password = TxtPassword.Password;
-                string confirmPassword = TxtConfirmPassword.Password;
-                string status = "Active";
+                bool status = false;
+                if (CbStatus.Text.Equals("Activo"))
+                {
+                    status = true;
+                } else if (CbStatus.Text.Equals("Inactivo"))
+                {
+                    status = false;
+                }
 
                 Employee employee = new Employee { 
                     IdEmployee = employeeId, 
@@ -97,7 +115,6 @@ namespace ItaliasPizza.Pages
 
                 MessageBox.Show("Empleado registrado exitosamente");
             }
-            
         }
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)

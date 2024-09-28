@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItaliasPizza", "ItaliasPizz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{99F778D9-402B-4DA6-8BB1-45A6C3580999}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItaliasPizzaTests", "ItaliasPizzaTests\ItaliasPizzaTests.csproj", "{6E018841-F1A6-4825-907E-26B05329C9E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{99F778D9-402B-4DA6-8BB1-45A6C3580999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F778D9-402B-4DA6-8BB1-45A6C3580999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F778D9-402B-4DA6-8BB1-45A6C3580999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E018841-F1A6-4825-907E-26B05329C9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E018841-F1A6-4825-907E-26B05329C9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E018841-F1A6-4825-907E-26B05329C9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E018841-F1A6-4825-907E-26B05329C9E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
