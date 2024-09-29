@@ -26,8 +26,8 @@ namespace ItaliasPizza
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //Closing += OnWindowClosing;
-            //Login login = new Login();
-            Content = new SuppliersList();
+            Login login = new Login();
+            Content = login;
         }
     }
 }
