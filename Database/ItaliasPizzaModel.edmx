@@ -157,9 +157,9 @@
         </EntityType>
         <EntityType Name="RecipeSupply">
           <Key>
-            <PropertyRef Name="IdProductSupply" />
+            <PropertyRef Name="IdRecipeSupply" />
           </Key>
-          <Property Name="IdProductSupply" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdRecipeSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdRecipe" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="SupplyAmount" Type="decimal" Precision="12" Scale="3" Nullable="false" />
@@ -741,7 +741,7 @@
           <NavigationProperty Name="DeliveryOrder" Relationship="Self.DeliveryOrder_DeliveryDriver_fk" FromRole="Employee" ToRole="DeliveryOrder" />
           <NavigationProperty Name="InventoryReport" Relationship="Self.InventoryReport_Reporter_fk" FromRole="Employee" ToRole="InventoryReport" />
           <NavigationProperty Name="LocalOrder" Relationship="Self.LocalOrder_Waiter_fk" FromRole="Employee" ToRole="LocalOrder" />
-          <NavigationProperty Name="Transaction" Relationship="ItaliasPizzaDBModel.Transaction_RegisteredBy_fk" FromRole="Employee" ToRole="Transaction" />
+          <NavigationProperty Name="Transaction" Relationship="Self.Transaction_RegisteredBy_fk" FromRole="Employee" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="InventoryReport">
           <Key>
@@ -751,7 +751,7 @@
           <Property Name="Reporter" Type="Guid" Nullable="false" />
           <Property Name="Observations" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employee" Relationship="Self.InventoryReport_Reporter_fk" FromRole="InventoryReport" ToRole="Employee" />
-          <NavigationProperty Name="SupplyInventoryReport" Relationship="ItaliasPizzaDBModel.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="InventoryReport" ToRole="SupplyInventoryReport" />
+          <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="InventoryReport" ToRole="SupplyInventoryReport" />
         </EntityType>
         <EntityType Name="LocalOrder">
           <Key>
@@ -823,9 +823,9 @@
         </EntityType>
         <EntityType Name="RecipeSupply">
           <Key>
-            <PropertyRef Name="IdProductSupply" />
+            <PropertyRef Name="IdRecipeSupply" />
           </Key>
-          <Property Name="IdProductSupply" Type="Guid" Nullable="false" />
+          <Property Name="IdRecipeSupply" Type="Guid" Nullable="false" />
           <Property Name="IdRecipe" Type="Guid" Nullable="false" />
           <Property Name="IdSupply" Type="Guid" Nullable="false" />
           <Property Name="SupplyAmount" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
@@ -870,7 +870,7 @@
           <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdSupply_fk" FromRole="Supply" ToRole="OrderedSupply" />
           <NavigationProperty Name="RecipeSupply" Relationship="Self.RecipeSupply_IdSupply_fk" FromRole="Supply" ToRole="RecipeSupply" />
           <NavigationProperty Name="SupplyCategory" Relationship="Self.Supply_IdSupplyCategory_fk" FromRole="Supply" ToRole="SupplyCategory" />
-          <NavigationProperty Name="SupplyInventoryReport" Relationship="ItaliasPizzaDBModel.SupplyInventoryReport_IdSupply_fk" FromRole="Supply" ToRole="SupplyInventoryReport" />
+          <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdSupply_fk" FromRole="Supply" ToRole="SupplyInventoryReport" />
         </EntityType>
         <EntityType Name="SupplyCategory">
           <Key>
@@ -892,8 +892,8 @@
           <Property Name="ExpectedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="ReportedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="DifferingAmountReason" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="InventoryReport" Relationship="ItaliasPizzaDBModel.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="SupplyInventoryReport" ToRole="InventoryReport" />
-          <NavigationProperty Name="Supply" Relationship="ItaliasPizzaDBModel.SupplyInventoryReport_IdSupply_fk" FromRole="SupplyInventoryReport" ToRole="Supply" />
+          <NavigationProperty Name="InventoryReport" Relationship="Self.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="SupplyInventoryReport" ToRole="InventoryReport" />
+          <NavigationProperty Name="Supply" Relationship="Self.SupplyInventoryReport_IdSupply_fk" FromRole="SupplyInventoryReport" ToRole="Supply" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -905,7 +905,7 @@
           <Property Name="Amount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="Description" Type="Int32" Nullable="false" />
           <Property Name="RegisteredBy" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="ItaliasPizzaDBModel.Transaction_RegisteredBy_fk" FromRole="Transaction" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Self.Transaction_RegisteredBy_fk" FromRole="Transaction" ToRole="Employee" />
         </EntityType>
         <Association Name="AccessAccount_IdEmployee_fk">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -1024,6 +1024,30 @@
             </Principal>
             <Dependent Role="LocalOrder">
               <PropertyRef Name="Waiter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Transaction_RegisteredBy_fk">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="IdEmployee" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="RegisteredBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplyInventoryReport_IdInvenroryReport_fk">
+          <End Role="InventoryReport" Type="Self.InventoryReport" Multiplicity="1" />
+          <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryReport">
+              <PropertyRef Name="IdInventoryReport" />
+            </Principal>
+            <Dependent Role="SupplyInventoryReport">
+              <PropertyRef Name="IdInvenroryReport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1159,6 +1183,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="SupplyInventoryReport_IdSupply_fk">
+          <End Role="Supply" Type="Self.Supply" Multiplicity="1" />
+          <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply">
+              <PropertyRef Name="IdSupply" />
+            </Principal>
+            <Dependent Role="SupplyInventoryReport">
+              <PropertyRef Name="IdSupply" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ItaliasPizzaDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccessAccount" EntityType="Self.AccessAccount" />
           <EntitySet Name="Address" EntityType="Self.Address" />
@@ -1222,6 +1258,14 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="LocalOrder" EntitySet="LocalOrder" />
           </AssociationSet>
+          <AssociationSet Name="Transaction_RegisteredBy_fk" Association="Self.Transaction_RegisteredBy_fk">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="SupplyInventoryReport_IdInvenroryReport_fk" Association="Self.SupplyInventoryReport_IdInvenroryReport_fk">
+            <End Role="InventoryReport" EntitySet="InventoryReport" />
+            <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
+          </AssociationSet>
           <AssociationSet Name="LocalOrderProduct_IdLocalOrder_fk" Association="Self.LocalOrderProduct_IdLocalOrder_fk">
             <End Role="LocalOrder" EntitySet="LocalOrder" />
             <End Role="LocalOrderProduct" EntitySet="LocalOrderProduct" />
@@ -1266,55 +1310,11 @@
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
             <End Role="Supply" EntitySet="Supply" />
           </AssociationSet>
-          <AssociationSet Name="SupplyInventoryReport_IdInvenroryReport_fk" Association="ItaliasPizzaDBModel.SupplyInventoryReport_IdInvenroryReport_fk">
-            <End Role="InventoryReport" EntitySet="InventoryReport" />
-            <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
-          </AssociationSet>
-          <AssociationSet Name="SupplyInventoryReport_IdSupply_fk" Association="ItaliasPizzaDBModel.SupplyInventoryReport_IdSupply_fk">
+          <AssociationSet Name="SupplyInventoryReport_IdSupply_fk" Association="Self.SupplyInventoryReport_IdSupply_fk">
             <End Role="Supply" EntitySet="Supply" />
             <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
           </AssociationSet>
-          <AssociationSet Name="Transaction_RegisteredBy_fk" Association="ItaliasPizzaDBModel.Transaction_RegisteredBy_fk">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Transaction" EntitySet="Transaction" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="SupplyInventoryReport_IdInvenroryReport_fk">
-          <End Type="ItaliasPizzaDBModel.InventoryReport" Role="InventoryReport" Multiplicity="1" />
-          <End Type="ItaliasPizzaDBModel.SupplyInventoryReport" Role="SupplyInventoryReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InventoryReport">
-              <PropertyRef Name="IdInventoryReport" />
-            </Principal>
-            <Dependent Role="SupplyInventoryReport">
-              <PropertyRef Name="IdInvenroryReport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SupplyInventoryReport_IdSupply_fk">
-          <End Type="ItaliasPizzaDBModel.Supply" Role="Supply" Multiplicity="1" />
-          <End Type="ItaliasPizzaDBModel.SupplyInventoryReport" Role="SupplyInventoryReport" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="IdSupply" />
-            </Principal>
-            <Dependent Role="SupplyInventoryReport">
-              <PropertyRef Name="IdSupply" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Transaction_RegisteredBy_fk">
-          <End Type="ItaliasPizzaDBModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="ItaliasPizzaDBModel.Transaction" Role="Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="IdEmployee" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="RegisteredBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1489,7 +1489,7 @@
           <EntitySetMapping Name="RecipeSupply">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.RecipeSupply">
               <MappingFragment StoreEntitySet="RecipeSupply">
-                <ScalarProperty Name="IdProductSupply" ColumnName="IdProductSupply" />
+                <ScalarProperty Name="IdRecipeSupply" ColumnName="IdRecipeSupply" />
                 <ScalarProperty Name="IdRecipe" ColumnName="IdRecipe" />
                 <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
                 <ScalarProperty Name="SupplyAmount" ColumnName="SupplyAmount" />
