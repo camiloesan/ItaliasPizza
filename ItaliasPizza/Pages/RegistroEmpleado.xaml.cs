@@ -29,9 +29,9 @@ namespace ItaliasPizza.Pages
 
         public RegistroEmpleado(bool test) {}
 
-        private bool IsPasswordMatch()
+        public bool IsPasswordMatch(string password, string confirmedPassword)
         {
-            return TxtPassword.Password == TxtConfirmPassword.Password;
+            return password == confirmedPassword;
         }
 
         private bool AreFieldsFilled()
@@ -45,13 +45,13 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(TxtConfirmPassword.Password);
         }
 
-        private void SaveEmployee(Employee employee, AccessAccount accessAccount)
+        public int SaveEmployee(Employee employee, AccessAccount accessAccount)
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
                 db.Employee.Add(employee);
                 db.AccessAccount.Add(accessAccount);
-                db.SaveChanges();
+                return db.SaveChanges();
             }
         }
 
@@ -63,9 +63,9 @@ namespace ItaliasPizza.Pages
             }
         }
 
-            private void Btn_Save(object sender, RoutedEventArgs e)
+        private void Btn_Save(object sender, RoutedEventArgs e)
         {
-            if (!IsPasswordMatch())
+            if (!IsPasswordMatch(TxtPassword.Password, TxtConfirmPassword.Password))
             {
                 MessageBox.Show("Las contraseñas no coinciden");
                 return;
@@ -99,7 +99,7 @@ namespace ItaliasPizza.Pages
                     LastName = lastName, 
                     Phone = phone, 
                     Status = status, 
-                    Charge = charge 
+                    IdCharge = charge.IdCharge
                 };
 
                 AccessAccount accessAccount = new AccessAccount
