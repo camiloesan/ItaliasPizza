@@ -37,7 +37,7 @@
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,236,0,8">
                 <Button Margin="5" Content="Guardar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-                <Button Margin="5" Content="Desactivar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Deactivate"/>
+                <Button Margin="5" Content="Desactivar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Eliminate"/>
                 <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
             </StackPanel>
         </StackPanel>
