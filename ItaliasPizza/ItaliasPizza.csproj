@@ -92,6 +92,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\SupplyRegister.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\ModificacionEmpleado.xaml.cs">
@@ -99,6 +103,9 @@
     </Compile>
     <Compile Include="Pages\RegistroEmpleado.xaml.cs">
       <DependentUpon>RegistroEmpleado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SupplyRegister.xaml.cs">
+      <DependentUpon>SupplyRegister.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
