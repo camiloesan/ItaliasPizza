@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,35 @@ namespace ItaliasPizza.Pages
         public SupplierRegister()
         {
             InitializeComponent();
+            CbCategory.ItemsSource = GetCategories();
+        }
+
+        private List<String> GetCategories()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.SupplyCategory.Select(c => c.SupplyCategory1).ToList();
+            }
+        }
+
+        private bool AreFieldsFilled()
+        {
+            return !string.IsNullOrEmpty(TxtName.Text)
+                && !string.IsNullOrEmpty(CbCategory.Text)
+                && !string.IsNullOrEmpty(TxtPhone.Text);
+        }
+
+        private void Btn_Save(object sender, RoutedEventArgs e)
+        {
+            if (!AreFieldsFilled())
+            {
+                MessageBox.Show("Todos los campos deben contener información");
+            }
+        }
+
+        private void Btn_Cancel(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
