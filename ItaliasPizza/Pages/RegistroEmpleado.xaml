@@ -24,20 +24,20 @@
 
             <Label Content="Campo obligatorio (*)" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>
             <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
             <Label Content="Apellidos (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtLastName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="TxtLastName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
             <Label Content="Teléfono (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtPhone" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="TxtPhone" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
             <Label Content="Cargo (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <ComboBox x:Name="CbCharge" DisplayMemberPath="Name" SelectedValuePath="Id" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
 
             <Label Content="Correo electrónico (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtEmail" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="TxtEmail" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="64"/>
             <Label Content="Contraseña (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <PasswordBox x:Name="TxtPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <PasswordBox x:Name="TxtPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="16"/>
             <Label Content="Confirmar contraseña (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <PasswordBox x:Name="TxtConfirmPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <PasswordBox x:Name="TxtConfirmPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="16"/>
 
             <Label Content="Estado (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <ComboBox x:Name="CbStatus" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">

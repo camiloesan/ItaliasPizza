@@ -2,23 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ItaliasPizza.Pages
 {
-    /// <summary>
-    /// Interaction logic for RegistroEmpleado.xaml
-    /// </summary>
     public partial class RegistroEmpleado : Page
     {
         public RegistroEmpleado()
@@ -27,7 +17,7 @@ namespace ItaliasPizza.Pages
             CbCharge.ItemsSource = GetCharges();
         }
 
-        public RegistroEmpleado(bool test) {}
+        public RegistroEmpleado(bool _) {}
 
         public bool IsPasswordMatch(string password, string confirmedPassword)
         {
@@ -36,13 +26,112 @@ namespace ItaliasPizza.Pages
 
         private bool AreFieldsFilled()
         {
-            return !string.IsNullOrEmpty(TxtName.Text) 
-                && !string.IsNullOrEmpty(TxtLastName.Text) 
-                && !string.IsNullOrEmpty(TxtPhone.Text) 
-                && !string.IsNullOrEmpty(TxtEmail.Text) 
-                && !string.IsNullOrEmpty(TxtPassword.Password)
+            return !string.IsNullOrEmpty(TxtName.Text)
+                && !string.IsNullOrEmpty(TxtLastName.Text)
+                && !string.IsNullOrEmpty(TxtPhone.Text)
                 && !string.IsNullOrEmpty(CbCharge.Text)
-                && !string.IsNullOrEmpty(TxtConfirmPassword.Password);
+                && !string.IsNullOrEmpty(TxtEmail.Text)
+                && !string.IsNullOrEmpty(TxtPassword.Password)
+                && !string.IsNullOrEmpty(TxtConfirmPassword.Password)
+                && !string.IsNullOrEmpty(CbStatus.Text);
+        }
+
+        public bool IsPhoneRegistered(string phone)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Employee.Any(e => e.Phone == phone);
+            }
+        }
+
+        public bool IsEmailRegistered(string email)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.AccessAccount.Any(a => a.Email == email);
+            }
+        }
+
+        public bool IsEmailValid(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(email);
+        }
+
+        private bool HighlightInvalidFields()
+        {
+            string name = TxtName.Text.Trim();
+            string lastName = TxtLastName.Text.Trim();
+            string phone = TxtPhone.Text.Trim();
+            string email = TxtEmail.Text.Trim();
+            string password = TxtPassword.Password.Trim();
+            string confirmPassword = TxtConfirmPassword.Password.Trim();
+            string status = CbStatus.Text.Trim();
+            ResetTextFormBorders();
+
+            bool isPhoneRegistered = IsPhoneRegistered(phone);
+            bool isEmailRegistered = IsEmailRegistered(email);
+            bool isEmailValid = IsEmailValid(email);
+
+            bool isValid = false;
+            if (string.IsNullOrEmpty(name))
+            {
+                TxtName.BorderBrush = Brushes.Red;
+                TxtName.BorderThickness = new Thickness(2);
+            }
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                TxtLastName.BorderBrush = Brushes.Red;
+                TxtLastName.BorderThickness = new Thickness(2);
+            }
+
+            if (string.IsNullOrEmpty(phone) || isPhoneRegistered)
+            {
+                TxtPhone.BorderBrush = Brushes.Red;
+                TxtPhone.BorderThickness = new Thickness(2);
+            }
+
+            if (string.IsNullOrEmpty(email) || isEmailValid || isEmailRegistered)
+            {
+                TxtEmail.BorderBrush = Brushes.Red;
+                TxtEmail.BorderThickness = new Thickness(2);
+            }
+
+            if (string.IsNullOrEmpty(password) || !password.Equals(confirmPassword))
+            {
+                TxtPassword.BorderBrush = Brushes.Red;
+                TxtPassword.BorderThickness = new Thickness(2);
+            }
+
+            if (string.IsNullOrEmpty(confirmPassword) || password.Equals(confirmPassword))
+            {
+                TxtConfirmPassword.BorderBrush = Brushes.Red;
+                TxtConfirmPassword.BorderThickness = new Thickness(2);
+            }
+
+            return isValid;
+        }
+
+        private void ResetTextFormBorders()
+        {
+            TxtName.BorderBrush = Brushes.Black;
+            TxtName.BorderThickness = new Thickness(1);
+            TxtLastName.BorderBrush = Brushes.Black;
+            TxtLastName.BorderThickness = new Thickness(1);
+            TxtPhone.BorderBrush = Brushes.Black;
+            TxtPhone.BorderThickness = new Thickness(1);
+            TxtEmail.BorderBrush = Brushes.Black;
+            TxtEmail.BorderThickness = new Thickness(1);
+            TxtPassword.BorderBrush = Brushes.Black;
+            TxtPassword.BorderThickness = new Thickness(1);
+            TxtConfirmPassword.BorderBrush = Brushes.Black;
+            TxtConfirmPassword.BorderThickness = new Thickness(1);
+            CbStatus.BorderBrush = Brushes.Black;
+            CbStatus.BorderThickness = new Thickness(1);
+            CbCharge.BorderBrush = Brushes.Black;
+            CbCharge.BorderThickness = new Thickness(1);
         }
 
         public int SaveEmployee(Employee employee, AccessAccount accessAccount)
@@ -65,6 +154,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
+            HighlightInvalidFields();
             if (!IsPasswordMatch(TxtPassword.Password, TxtConfirmPassword.Password))
             {
                 MessageBox.Show("Las contraseñas no coinciden");
@@ -74,7 +164,17 @@ namespace ItaliasPizza.Pages
             {
                 MessageBox.Show("Por favor llene todos los campos");
                 return;
-            } 
+            }
+            else if (IsPhoneRegistered(TxtPhone.Text))
+            {
+                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno nuevo");
+                return;
+            }
+            else if (IsEmailRegistered(TxtEmail.Text))
+            {
+                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno nuevo");
+                return;
+            }
             else
             {
                 var employeeId = Guid.NewGuid();
@@ -111,9 +211,17 @@ namespace ItaliasPizza.Pages
                     Status = status
                 };
 
-                SaveEmployee(employee, accessAccount);
-
-                MessageBox.Show("Empleado registrado exitosamente");
+                int result = SaveEmployee(employee, accessAccount);
+                if (result == 0)
+                {
+                    MessageBox.Show("No se pudo registrar al empleado, inténtalo de nuevo más tarde");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Empleado registrado exitosamente");
+                    ResetTextFormBorders();
+                }
             }
         }
 

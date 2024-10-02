@@ -40,7 +40,6 @@ namespace ItaliasPizza.Pages.Tests
                 else
                 {
                     result = false;
-                    break;
                 }
             }
 
@@ -99,6 +98,99 @@ namespace ItaliasPizza.Pages.Tests
         {
             RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
             bool result = registroEmpleado.IsPasswordMatch("shenzhen", "pokemon");
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod()]
+        public void IsPhoneRegisteredIsRegisteredTest()
+        {
+            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            var idEmployee = Guid.NewGuid();
+            var employee = new Employee
+            {
+                IdEmployee = idEmployee,
+                FirstName = "Test",
+                LastName = "Test",
+                Phone = "1234567890",
+                Status = true,
+                IdCharge = 1
+            };
+            AccessAccount accessAccount = new AccessAccount
+            {
+                UserName = "robertoll22",
+                Password = "shenzhen",
+                IdEmployee = idEmployee,
+                Email = "roberto@gmail.com",
+                Status = true,
+            };
+            registroEmpleado.SaveEmployee(employee, accessAccount);
+            
+            bool result = registroEmpleado.IsPhoneRegistered("1234567890");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Employee.Attach(employee);
+                db.AccessAccount.Attach(accessAccount);
+
+                db.Employee.Remove(employee);
+                db.AccessAccount.Remove(accessAccount);
+                db.SaveChanges();
+            }
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void IsPhoneRegisteredIsNotRegisteredTest()
+        {
+            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            var idEmployee = Guid.NewGuid();
+            var employee = new Employee
+            {
+                IdEmployee = idEmployee,
+                FirstName = "Test",
+                LastName = "Test",
+                Phone = "1234567890",
+                Status = true,
+                IdCharge = 1
+            };
+            AccessAccount accessAccount = new AccessAccount
+            {
+                UserName = "robertoll22",
+                Password = "shenzhen",
+                IdEmployee = idEmployee,
+                Email = "roberto@gmail.com",
+                Status = true,
+            };
+            registroEmpleado.SaveEmployee(employee, accessAccount);
+
+            bool result = registroEmpleado.IsPhoneRegistered("1111111111");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Employee.Attach(employee);
+                db.AccessAccount.Attach(accessAccount);
+
+                db.Employee.Remove(employee);
+                db.AccessAccount.Remove(accessAccount);
+                db.SaveChanges();
+            }
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod()]
+        public void IsEmailValidIsValidTest()
+        {
+            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            bool result = registroEmpleado.IsEmailValid("roberto@gmail.com");
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void IsEmailValidIsNotValidTest()
+        {
+            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            bool result = registroEmpleado.IsEmailValid("robert o@.gmail.com");
             Assert.IsFalse(result);
         }
     }
