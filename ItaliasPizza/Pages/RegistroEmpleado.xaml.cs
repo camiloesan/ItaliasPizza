@@ -145,17 +145,17 @@ namespace ItaliasPizza.Pages
             }
             else if (EmployeeOperations.IsPhoneRegistered(TxtPhone.Text))
             {
-                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno nuevo");
+                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno diferente");
                 return;
             }
             else if (EmployeeOperations.IsEmailRegistered(TxtEmail.Text))
             {
-                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno nuevo");
+                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno diferente");
                 return;
             }
             else if (!IsEmailValid(TxtEmail.Text))
             {
-                MessageBox.Show("El correo electrónico no es válido, ingrese uno válido");
+                MessageBox.Show("El correo electrónico no es válido, ingrese un formato válido");
                 return;
             }
             else if (CbStatus.SelectedIndex == 0)
