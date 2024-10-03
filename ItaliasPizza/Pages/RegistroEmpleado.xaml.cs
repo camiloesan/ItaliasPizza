@@ -33,7 +33,7 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(TxtEmail.Text)
                 && !string.IsNullOrEmpty(TxtPassword.Password)
                 && !string.IsNullOrEmpty(TxtConfirmPassword.Password)
-                && !string.IsNullOrEmpty(CbStatus.Text);
+                && CbStatus.SelectedIndex != 0;
         }
 
         public bool IsPhoneRegistered(string phone)
@@ -67,7 +67,6 @@ namespace ItaliasPizza.Pages
             string email = TxtEmail.Text.Trim();
             string password = TxtPassword.Password.Trim();
             string confirmPassword = TxtConfirmPassword.Password.Trim();
-            string status = CbStatus.Text.Trim();
             ResetTextFormBorders();
 
             bool isPhoneRegistered = IsPhoneRegistered(phone);
@@ -93,7 +92,7 @@ namespace ItaliasPizza.Pages
                 TxtPhone.BorderThickness = new Thickness(2);
             }
 
-            if (string.IsNullOrEmpty(email) || isEmailValid || isEmailRegistered)
+            if (string.IsNullOrEmpty(email) || !isEmailValid || !isEmailRegistered)
             {
                 TxtEmail.BorderBrush = Brushes.Red;
                 TxtEmail.BorderThickness = new Thickness(2);
@@ -105,7 +104,7 @@ namespace ItaliasPizza.Pages
                 TxtPassword.BorderThickness = new Thickness(2);
             }
 
-            if (string.IsNullOrEmpty(confirmPassword) || password.Equals(confirmPassword))
+            if (string.IsNullOrEmpty(confirmPassword) || !password.Equals(confirmPassword))
             {
                 TxtConfirmPassword.BorderBrush = Brushes.Red;
                 TxtConfirmPassword.BorderThickness = new Thickness(2);
@@ -173,6 +172,16 @@ namespace ItaliasPizza.Pages
             else if (IsEmailRegistered(TxtEmail.Text))
             {
                 MessageBox.Show("El correo electrónico ya está registrado, ingrese uno nuevo");
+                return;
+            }
+            else if (!IsEmailValid(TxtEmail.Text))
+            {
+                MessageBox.Show("El correo electrónico no es válido, ingrese uno válido");
+                return;
+            }
+            else if (CbStatus.SelectedIndex == 0)
+            {
+                MessageBox.Show("Por favor seleccione un estado");
                 return;
             }
             else
