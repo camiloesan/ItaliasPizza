@@ -36,7 +36,19 @@ namespace ItaliasPizza.DataAccessLayer
             using (var db = new ItaliasPizzaDBEntities())
             {
                 var accessAccount = db.AccessAccount.FirstOrDefault(a => a.Email == email);
+                if (accessAccount == null)
+                {
+                    return Guid.Empty;
+                }
                 return accessAccount.IdEmployee;
+            }
+        }
+
+        public static string GetEmployeePassword(string email)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.AccessAccount.FirstOrDefault(a => a.Email == email).Password;
             }
         }
     }

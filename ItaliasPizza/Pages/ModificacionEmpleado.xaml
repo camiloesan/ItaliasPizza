@@ -8,39 +8,51 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="ModificacionEmpleado">
 
-    <Grid Margin="10" VerticalAlignment="Center" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Page.Background>
+        <ImageBrush ImageSource="../Assets/Images/background.jpg"/>
+    </Page.Background>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="500">
-            <Label Content="Modificación empleado" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Margin="0,5,0,20"/>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <Label Content="Campo obligatorio (*)" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-            <Label Content="Nombre (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <Label Content="Apellidos (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <Label Content="Teléfono (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <Label Content="Cargo (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
-                <ComboBoxItem IsEnabled="False" Content="Selecciona un cargo" />
-                <ComboBoxItem>Cajero</ComboBoxItem>
-                <ComboBoxItem>Mesero</ComboBoxItem>
-                <ComboBoxItem>Personal de cocina</ComboBoxItem>
-            </ComboBox>
-            <Label Content="Dirección(es) (*)" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <TextBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="500">
+                <Label Content="Modificar empleado" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
+                <Label Content="Campo obligatorio (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+                <Label Content="Nombre (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBox x:Name="TxtName" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
-                <Button Margin="5" Content="Guardar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-                <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
+                <Label Content="Apellidos (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBox x:Name="TxtLastName" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
+
+                <Label Content="Teléfono (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBox x:Name="TxtPhone" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
+
+                <Label Content="Cargo (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <ComboBox x:Name="CbCharge" DisplayMemberPath="Name" FontSize="14" SelectedValuePath="Id" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
+
+                <Label Content="Correo electrónico (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBox x:Name="TxtEmail" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
+
+                <Label Content="Contraseña (*)" Foreground="White" HorizontalAlignment="Left" FontSize="14" Margin="5,0,0,0"/>
+                <PasswordBox x:Name="TxtPassword" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="14" MaxLength="16"/>
+
+                <Label Content="Estado (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="14"/>
+                <ComboBox x:Name="CbStatus" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" FontSize="14" Margin="5">
+                    <ComboBoxItem IsEnabled="False" Content="Selecciona el estado" />
+                    <ComboBoxItem>Activo</ComboBoxItem>
+                    <ComboBoxItem>Inactivo</ComboBoxItem>
+                </ComboBox>
+
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
+                    <Button Margin="5" Content="Guardar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
+                    <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>
