@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Database;
+using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ItaliasPizza.Pages
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Page
     {
         public Login()
@@ -29,24 +18,66 @@ namespace ItaliasPizza.Pages
         {
             if (e.Key == Key.Return)
             {
-                //Application.Current.MainWindow.Content = new MainMenu();
-                //todo
+                LogIn();
+            }
+        }
+
+        private bool AreFieldsEmpty()
+        {
+            return string.IsNullOrEmpty(TBoxEmail.Text) || string.IsNullOrEmpty(TBoxPassword.Password);
+        }
+
+        private void LogIn()
+        {
+            if (AreFieldsEmpty())
+            {
+                MessageBox.Show("Por favor, ingrese un usuario válido.");
+                return;
+            }
+
+            string email = TBoxEmail.Text;
+            bool isUserValid = AccessAccountOperations.AreCredentialsValid(email, TBoxPassword.Password);
+            if (isUserValid) 
+            {
+                var account = AccessAccountOperations.GetAccessAccountByEmail(email);
+                SessionDetails.UserId = account.IdAccessAccount;
+                SessionDetails.UserType = AccessAccountOperations.GetEmployeeCharge(email);
+                SessionDetails.IdEmployee = AccessAccountOperations.GetEmployeeId(email);
+                ChangePageByUser(SessionDetails.UserType);
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.");
+            }
+        }
+
+        private void ChangePageByUser(string userType)
+        {
+            switch (userType) {
+                case "Gerente":
+                    Application.Current.MainWindow.Content = new RegistroEmpleado();
+                    break;
+                case "Cajero":
+                    //Application.Current.MainWindow.Content = new MainMenu();
+                    break;
+                case "Cocinero":
+                    //Application.Current.MainWindow.Content = new MainMenu();
+                    break;
+                case "Repartidor":
+                    //Application.Current.MainWindow.Content = new MainMenu();
+                    break;
+                case "Mesero":
+                    //Application.Current.MainWindow.Content = new MainMenu();
+                    break;
+                default:
+                    MessageBox.Show("Usuario no válido.");
+                    break;
             }
         }
 
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Content = new RegistroEmpleado();
-        }
-
-        private void BtnCancelEvent(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LblResetPasswordEvent(object sender, MouseEventArgs e)
-        {
-            //todo
+            LogIn();
         }
     }
 }

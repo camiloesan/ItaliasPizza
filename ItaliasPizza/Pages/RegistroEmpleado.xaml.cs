@@ -1,4 +1,5 @@
 ﻿using Database;
+using ItaliasPizza.DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,21 +37,7 @@ namespace ItaliasPizza.Pages
                 && CbStatus.SelectedIndex != 0;
         }
 
-        public bool IsPhoneRegistered(string phone)
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                return db.Employee.Any(e => e.Phone == phone);
-            }
-        }
-
-        public bool IsEmailRegistered(string email)
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                return db.AccessAccount.Any(a => a.Email == email);
-            }
-        }
+        
 
         public bool IsEmailValid(string email)
         {
@@ -69,8 +56,8 @@ namespace ItaliasPizza.Pages
             string confirmPassword = TxtConfirmPassword.Password.Trim();
             ResetTextFormBorders();
 
-            bool isPhoneRegistered = IsPhoneRegistered(phone);
-            bool isEmailRegistered = IsEmailRegistered(email);
+            bool isPhoneRegistered = EmployeeOperations.IsPhoneRegistered(phone);
+            bool isEmailRegistered = EmployeeOperations.IsEmailRegistered(email);
             bool isEmailValid = IsEmailValid(email);
 
             bool isValid = false;
@@ -133,15 +120,7 @@ namespace ItaliasPizza.Pages
             CbCharge.BorderThickness = new Thickness(1);
         }
 
-        public int SaveEmployee(Employee employee, AccessAccount accessAccount)
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                db.Employee.Add(employee);
-                db.AccessAccount.Add(accessAccount);
-                return db.SaveChanges();
-            }
-        }
+        
 
         public List<Charge> GetCharges()
         {
@@ -164,12 +143,12 @@ namespace ItaliasPizza.Pages
                 MessageBox.Show("Por favor llene todos los campos");
                 return;
             }
-            else if (IsPhoneRegistered(TxtPhone.Text))
+            else if (EmployeeOperations.IsPhoneRegistered(TxtPhone.Text))
             {
                 MessageBox.Show("El número de teléfono ya está registrado, ingrese uno nuevo");
                 return;
             }
-            else if (IsEmailRegistered(TxtEmail.Text))
+            else if (EmployeeOperations.IsEmailRegistered(TxtEmail.Text))
             {
                 MessageBox.Show("El correo electrónico ya está registrado, ingrese uno nuevo");
                 return;
@@ -220,7 +199,7 @@ namespace ItaliasPizza.Pages
                     Status = status
                 };
 
-                int result = SaveEmployee(employee, accessAccount);
+                int result = EmployeeOperations.SaveEmployee(employee, accessAccount);
                 if (result == 0)
                 {
                     MessageBox.Show("No se pudo registrar al empleado, inténtalo de nuevo más tarde");
