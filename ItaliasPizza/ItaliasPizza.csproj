@@ -93,6 +93,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\RegistroProductoMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SupplierOrderRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +124,9 @@
     </Compile>
     <Compile Include="Pages\RegistroEmpleado.xaml.cs">
       <DependentUpon>RegistroEmpleado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RegistroProductoMenu.xaml.cs">
+      <DependentUpon>RegistroProductoMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SupplierOrderRegister.xaml.cs">
       <DependentUpon>SupplierOrderRegister.xaml</DependentUpon>
