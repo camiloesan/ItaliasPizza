@@ -37,8 +37,6 @@ namespace ItaliasPizza.Pages
                 && CbStatus.SelectedIndex != 0;
         }
 
-        
-
         public bool IsEmailValid(string email)
         {
             string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
@@ -121,7 +119,6 @@ namespace ItaliasPizza.Pages
         }
 
         
-
         public List<Charge> GetCharges()
         {
             using (var db = new ItaliasPizzaDBEntities())
