@@ -25,7 +25,7 @@
             <Label Content="Campo obligatorio (*)" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>
             <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <Label Content="Cantidad en Kilogramos (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <Label Content="Cantidad (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtAmount" Margin="5" HorizontalAlignment="Left" Width="200"/>
             <Label Content="Fecha de caducidad (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <DatePicker x:Name="DtpExpiration" Margin="5" HorizontalAlignment="Left" Width="200"/>
