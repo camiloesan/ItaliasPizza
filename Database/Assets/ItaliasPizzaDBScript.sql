@@ -70,7 +70,7 @@ CREATE TABLE Product (
 );
 GO
 
-CREATE TABLE ProducType (
+CREATE TABLE ProductType (
     IdProductType INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Type] VARCHAR(50) NOT NULL
 );
@@ -155,7 +155,7 @@ CREATE TABLE RecipeSupply (
     IdRecipe UNIQUEIDENTIFIER NOT NULL,
     IdSupply UNIQUEIDENTIFIER NOT NULL,
     SupplyAmount DECIMAL(12, 3) NOT NULL,
-    MeasurementUnit BIGINT
+    MeasurementUnit VARCHAR(100) NOT NULL
 );
 GO
 
@@ -199,7 +199,7 @@ CREATE TABLE SupplyInventoryReport (
     MeasurementUnit VARCHAR NOT NULL,
     ExpectedAmount DECIMAL(12, 2)NOT NULL,
     ReportedAmount DECIMAL(12, 2) NOT NULL,
-    DifferingAmountReason VARCHAR
+    DifferingAmountReason VARCHAR (100) NOT NULL
 );
 
 CREATE TABLE [Transaction] (
@@ -286,7 +286,7 @@ ALTER TABLE Employee
 GO
 
 ALTER TABLE Product
-    ADD CONSTRAINT Product_IdType_fk FOREIGN KEY (IdType) REFERENCES ProducType (IdProductType);
+    ADD CONSTRAINT Product_IdType_fk FOREIGN KEY (IdType) REFERENCES ProductType (IdProductType);
 GO
 
 ALTER TABLE Supply
