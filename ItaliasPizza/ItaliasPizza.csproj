@@ -67,6 +67,9 @@
     </ApplicationDefinition>
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
+    <Compile Include="Pages\Orders\AddLocalOrder.xaml.cs">
+      <DependentUpon>AddLocalOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\SessionDetails.cs" />
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
@@ -89,6 +92,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\ModificacionEmpleado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Orders\AddLocalOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +170,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\Jost-VariableFont_wght.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -189,6 +197,28 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\loginBackground.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\cancel_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\check_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\return_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\tablecloth-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\remove_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\add_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\add_icon_black.png" />
+    <Resource Include="Assets\Images\remove_icon_black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
