@@ -66,9 +66,11 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		{
 			var expected = new List<Product>
 			{
+				// Los GUID varian en cada base de datos, por lo que se deben cambiar
+				// TODO: constructor de datos de prueba para que los GUID sean iguales
 				new Product
 				{
-					IdProduct = Guid.Parse("92cfdaed-6426-450f-85de-abd572136f7d"),
+					IdProduct = Guid.Parse("e4021288-5e41-4385-9b26-3b4f294fa5eb"),
 					Name = "Pizza Margarita",
 					IdType = 1,
 					Price = 100,
@@ -76,7 +78,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				},
 				new Product
 				{
-					IdProduct = Guid.Parse("13ef1c10-de14-4e8e-a738-cf5f3f2202e8"),
+					IdProduct = Guid.Parse("e378aeca-3c97-4ca1-ad86-c81f47fa6e4d"),
 					Name = "Pizza Pepperoni",
 					IdType = 1,
 					Price = 120,
@@ -84,7 +86,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				},
 				new Product
 				{
-					IdProduct = Guid.Parse("6d1a7b07-72aa-4cfd-afec-d660f6edc08c"),
+					IdProduct = Guid.Parse("d401dbf2-cc35-4abd-9156-e67076f3708a"),
 					Name = "Pizza Mexicana",
 					IdType = 1,
 					Price = 140,
@@ -92,7 +94,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				},
 				new Product
 				{
-					IdProduct = Guid.Parse("d83c28df-9151-4c33-ba52-e5a9e40f2d57"),
+					IdProduct = Guid.Parse("6fb66d23-7e34-4572-ab34-ea5030def8ac"),
 					Name = "Pizza Vegetariana",
 					IdType = 1,
 					Price = 110,
@@ -100,7 +102,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				},
 				new Product
 				{
-					IdProduct = Guid.Parse("4d318789-288b-4d5d-aefc-f8d6ae8f621d"),
+					IdProduct = Guid.Parse("ba7aafa9-d418-40fd-af76-eea03f4d979c"),
 					Name = "Pizza Hawaiana",
 					IdType = 1,
 					Price = 130,
@@ -124,7 +126,9 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		[TestMethod]
 		public void GetPreparableProductQuantityTest()
 		{
-			var stringIdProduct = "92CFDAED-6426-450F-85DE-ABD572136F7D";
+			// Los GUID varian en cada base de datos, por lo que se deben cambiar
+			// TODO: constructor de datos de prueba para que los GUID sean igualess
+			var stringIdProduct = "e4021288-5e41-4385-9b26-3b4f294fa5eb";
 			var idProduct = Guid.Parse(stringIdProduct);
 
 			Product product = new Product

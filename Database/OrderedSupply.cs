@@ -18,8 +18,9 @@ namespace Database
         public System.Guid IdSupply { get; set; }
         public System.Guid IdSupplierOrder { get; set; }
         public int Quantity { get; set; }
-        public string MeasurementUnit { get; set; }
+        public int IdMeasurementUnit { get; set; }
     
+        public virtual MeasurementUnit MeasurementUnit { get; set; }
         public virtual SupplierOrder SupplierOrder { get; set; }
         public virtual Supply Supply { get; set; }
     }
