@@ -114,7 +114,7 @@
 						<DataGridTemplateColumn Header="Acción" Width="55">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<Button Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
+									<Button x:Name="BtnAddProduct" Click="BtnAddProduct_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
 										<Image Source="../../Assets/Images/add_icon_black.png" Width="45" Height="45" Stretch="Uniform"/>
 									</Button>
 								</DataTemplate>
@@ -159,7 +159,7 @@
 						<DataGridTemplateColumn Header="Acción" Width="55">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<Button Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
+									<Button x:Name="RemoveProduct" Click="RemoveProduct_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
 										<Image Source="../../Assets/Images/remove_icon_black.png" Width="45" Height="45" Stretch="Uniform"/>
 									</Button>
 								</DataTemplate>
