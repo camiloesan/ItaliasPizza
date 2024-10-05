@@ -15,14 +15,15 @@ namespace Database
     public partial class SupplyInventoryReport
     {
         public System.Guid IdSupplyInventoryReport { get; set; }
-        public System.Guid IdInvenroryReport { get; set; }
+        public System.Guid IdInventoryReport { get; set; }
         public System.Guid IdSupply { get; set; }
-        public string MeasurementUnit { get; set; }
+        public int IdMeasurementUnit { get; set; }
         public decimal ExpectedAmount { get; set; }
         public decimal ReportedAmount { get; set; }
         public string DifferingAmountReason { get; set; }
     
         public virtual InventoryReport InventoryReport { get; set; }
+        public virtual MeasurementUnit MeasurementUnit { get; set; }
         public virtual Supply Supply { get; set; }
     }
 }
