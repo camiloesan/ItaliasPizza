@@ -22,7 +22,7 @@ namespace Database
     
         public System.Guid IdSupplier { get; set; }
         public string Name { get; set; }
-        public int IdSupplyCategory { get; set; }
+        public int IdSupplierCategory { get; set; }
         public string Phone { get; set; }
     
         public virtual SupplyCategory SupplyCategory { get; set; }

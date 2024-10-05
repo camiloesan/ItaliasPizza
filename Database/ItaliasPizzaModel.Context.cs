@@ -36,9 +36,10 @@ namespace Database
         public virtual DbSet<InventoryReport> InventoryReport { get; set; }
         public virtual DbSet<LocalOrder> LocalOrder { get; set; }
         public virtual DbSet<LocalOrderProduct> LocalOrderProduct { get; set; }
+        public virtual DbSet<MeasurementUnit> MeasurementUnit { get; set; }
         public virtual DbSet<OrderedSupply> OrderedSupply { get; set; }
         public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<ProducType> ProducType { get; set; }
+        public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<RecipeSupply> RecipeSupply { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }

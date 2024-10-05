@@ -103,13 +103,16 @@
     <Compile Include="LocalOrderProduct.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MeasurementUnit.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderedSupply.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProducType.cs">
+    <Compile Include="ProductType.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
