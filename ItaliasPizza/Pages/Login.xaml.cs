@@ -55,7 +55,7 @@ namespace ItaliasPizza.Pages
         {
             switch (userType) {
                 case "Gerente":
-                    Application.Current.MainWindow.Content = new RegistroEmpleado();
+                    Application.Current.MainWindow.Content = new EmployeeModification();
                     break;
                 case "Cajero":
                     //Application.Current.MainWindow.Content = new MainMenu();

@@ -1,9 +1,6 @@
 ﻿using Database;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ItaliasPizza.DataAccessLayer
 {
@@ -47,7 +44,7 @@ namespace ItaliasPizza.DataAccessLayer
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
-                return db.AccessAccount.Find(idEmployee).Email;
+                return db.AccessAccount.Where(a => a.IdEmployee == idEmployee).Select(a => a.Email).FirstOrDefault();
             }
         }
 
@@ -69,7 +66,7 @@ namespace ItaliasPizza.DataAccessLayer
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
-                AccessAccount accessAccount = db.AccessAccount.Find(idEmployee);
+                AccessAccount accessAccount = db.AccessAccount.Where(a => a.IdEmployee == idEmployee).FirstOrDefault();
                 accessAccount.Password = password;
                 accessAccount.Email = email;
                 return db.SaveChanges();

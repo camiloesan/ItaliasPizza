@@ -92,7 +92,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
         [TestMethod()]
         public void IsPhoneRegisteredIsNotRegisteredTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
             var idEmployee = Guid.NewGuid();
             var employee = new Employee
             {

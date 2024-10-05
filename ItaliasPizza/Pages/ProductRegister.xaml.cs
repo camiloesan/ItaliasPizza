@@ -6,9 +6,9 @@ using System.Windows.Controls;
 
 namespace ItaliasPizza.Pages
 {
-    public partial class RegistroProductoMenu : Page
+    public partial class ProductRegister : Page
     {
-        public RegistroProductoMenu()
+        public ProductRegister()
         {
             InitializeComponent();
             CbProductType.ItemsSource = GetProductTypes();

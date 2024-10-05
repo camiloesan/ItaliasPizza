@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Database;
+using ItaliasPizza.DataAccessLayer;
 
 namespace ItaliasPizza.Pages.Tests
 {
@@ -15,8 +16,7 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void GetChargesCorrectAmountTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
-            var charges = registroEmpleado.GetCharges();
+            var charges = ChargesOperations.GetCharges();
             var expected = 5;
             var actual = charges.Count;
             Assert.AreEqual(expected, actual);
@@ -25,8 +25,8 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void GetChargesCorrectEntriesTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
-            var charges = registroEmpleado.GetCharges();
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
+            var charges = ChargesOperations.GetCharges();
 
             var expected = new List<string> { "Mesero", "Cajero", "Repartidor", "Cocinero" };
 
@@ -49,7 +49,7 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void IsPasswordMatchMatchesTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
             bool result = registroEmpleado.IsPasswordMatch("shenzhen", "shenzhen");
             Assert.IsTrue(result);
         }
@@ -57,7 +57,7 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void IsPasswordMatchDoesNotMatchTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
             bool result = registroEmpleado.IsPasswordMatch("shenzhen", "pokemon");
             Assert.IsFalse(result);
         }
@@ -65,7 +65,7 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void IsEmailValidIsValidTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
             bool result = registroEmpleado.IsEmailValid("roberto@gmail.com");
             Assert.IsTrue(result);
         }
@@ -73,7 +73,7 @@ namespace ItaliasPizza.Pages.Tests
         [TestMethod()]
         public void IsEmailValidIsNotValidTest()
         {
-            RegistroEmpleado registroEmpleado = new RegistroEmpleado(true);
+            EmployeeRegister registroEmpleado = new EmployeeRegister(true);
             bool result = registroEmpleado.IsEmailValid("robert o@.gmail.com");
             Assert.IsFalse(result);
         }
