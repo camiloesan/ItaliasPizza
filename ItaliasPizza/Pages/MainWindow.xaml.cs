@@ -1,4 +1,5 @@
 ﻿using ItaliasPizza.Pages;
+using ItaliasPizza.Pages.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,9 @@ namespace ItaliasPizza
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //Closing += OnWindowClosing;
-            Login login = new Login();
-            Content = login;
+            //Login login = new Login();
+            var addLocalOrder = new AddLocalOrder();
+			Content = addLocalOrder;
         }
     }
 }

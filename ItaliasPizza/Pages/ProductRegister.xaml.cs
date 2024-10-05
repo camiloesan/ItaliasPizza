@@ -14,11 +14,11 @@ namespace ItaliasPizza.Pages
             CbProductType.ItemsSource = GetProductTypes();
         }
 
-        public List<ProducType> GetProductTypes()
+        public List<ProductType> GetProductTypes()
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
-                return db.ProducType.ToList();
+                return db.ProductType.ToList();
             }
         }
 
