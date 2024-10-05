@@ -37,8 +37,6 @@ namespace ItaliasPizza.Pages
                 && CbStatus.SelectedIndex != 0;
         }
 
-        
-
         public bool IsEmailValid(string email)
         {
             string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
@@ -121,7 +119,6 @@ namespace ItaliasPizza.Pages
         }
 
         
-
         public List<Charge> GetCharges()
         {
             using (var db = new ItaliasPizzaDBEntities())
@@ -145,17 +142,17 @@ namespace ItaliasPizza.Pages
             }
             else if (EmployeeOperations.IsPhoneRegistered(TxtPhone.Text))
             {
-                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno nuevo");
+                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno diferente");
                 return;
             }
             else if (EmployeeOperations.IsEmailRegistered(TxtEmail.Text))
             {
-                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno nuevo");
+                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno diferente");
                 return;
             }
             else if (!IsEmailValid(TxtEmail.Text))
             {
-                MessageBox.Show("El correo electrónico no es válido, ingrese uno válido");
+                MessageBox.Show("El correo electrónico no es válido, ingrese un formato válido");
                 return;
             }
             else if (CbStatus.SelectedIndex == 0)

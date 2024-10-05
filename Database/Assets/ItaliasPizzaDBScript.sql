@@ -70,7 +70,7 @@ CREATE TABLE Product (
 );
 GO
 
-CREATE TABLE ProducType (
+CREATE TABLE ProductType (
     IdProductType INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Type] VARCHAR(50) NOT NULL
 );
@@ -139,7 +139,7 @@ CREATE TABLE OrderedSupply (
     IdSupply UNIQUEIDENTIFIER NOT NULL,
     IdSupplierOrder UNIQUEIDENTIFIER NOT NULL,
     Quantity INT NOT NULL,
-    MeasurementUnit VARCHAR(20) NOT NULL
+    IdMeasurementUnit INT NOT NULL
 );
 GO
 
@@ -150,19 +150,25 @@ CREATE TABLE Recipe (
 );
 GO
 
+CREATE TABLE MeasurementUnit (
+	IdMeasurementUnit INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	MeasurementUnit VARCHAR(20) NOT NULL
+	);
+GO
+
 CREATE TABLE RecipeSupply (
     IdRecipeSupply UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdRecipe UNIQUEIDENTIFIER NOT NULL,
     IdSupply UNIQUEIDENTIFIER NOT NULL,
     SupplyAmount DECIMAL(12, 3) NOT NULL,
-    MeasurementUnit BIGINT
+    IdMeasurementUnit INT NOT NULL
 );
 GO
 
 CREATE TABLE Supplier (
     IdSupplier UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [Name] VARCHAR(50) NOT NULL,
-    IdSupplyCategory INT NOT NULL,
+    IdSupplierCategory INT NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
 GO
@@ -182,7 +188,7 @@ CREATE TABLE Supply (
     [Name] VARCHAR(50) NOT NULL,
     Quantity DECIMAL(12, 3) NOT NULL,
     IdSupplyCategory INT NOT NULL,
-    MeasurementUnit VARCHAR(20) NOT NULL,
+    IdMeasurementUnit INT NOT NULL,
     [Status] BIT NOT NULL
 );
 GO
@@ -194,12 +200,12 @@ CREATE TABLE SupplyCategory (
 
 CREATE TABLE SupplyInventoryReport (
     IdSupplyInventoryReport UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    IdInvenroryReport UNIQUEIDENTIFIER NOT NULL,
+    IdInventoryReport UNIQUEIDENTIFIER NOT NULL,
     IdSupply UNIQUEIDENTIFIER NOT NULL,
-    MeasurementUnit VARCHAR NOT NULL,
+    IdMeasurementUnit INT NOT NULL,
     ExpectedAmount DECIMAL(12, 2)NOT NULL,
     ReportedAmount DECIMAL(12, 2) NOT NULL,
-    DifferingAmountReason VARCHAR
+    DifferingAmountReason VARCHAR (100) NOT NULL
 );
 
 CREATE TABLE [Transaction] (
@@ -286,7 +292,7 @@ ALTER TABLE Employee
 GO
 
 ALTER TABLE Product
-    ADD CONSTRAINT Product_IdType_fk FOREIGN KEY (IdType) REFERENCES ProducType (IdProductType);
+    ADD CONSTRAINT Product_IdType_fk FOREIGN KEY (IdType) REFERENCES ProductType (IdProductType);
 GO
 
 ALTER TABLE Supply
@@ -294,11 +300,11 @@ ALTER TABLE Supply
 GO
 
 ALTER TABLE Supplier
-    ADD CONSTRAINT Supplier_IdSupplyCategory_fk FOREIGN KEY (IdSupplyCategory) REFERENCES SupplyCategory (IdSupplyCategory);
+    ADD CONSTRAINT Supplier_IdSupplyCategory_fk FOREIGN KEY (IdSupplierCategory) REFERENCES SupplyCategory (IdSupplyCategory);
 GO
 
 ALTER TABLE SupplyInventoryReport
-    ADD CONSTRAINT SupplyInventoryReport_IdInvenroryReport_fk FOREIGN KEY (IdInvenroryReport) REFERENCES InventoryReport (IdInventoryReport);
+    ADD CONSTRAINT SupplyInventoryReport_IdInventoryReport_fk FOREIGN KEY (IdInventoryReport) REFERENCES InventoryReport (IdInventoryReport);
 GO
 
 ALTER TABLE SupplyInventoryReport
@@ -307,4 +313,50 @@ GO
 
 ALTER TABLE [Transaction]
     ADD CONSTRAINT Transaction_RegisteredBy_fk FOREIGN KEY (RegisteredBy) REFERENCES Employee (IdEmployee);
+GO
+
+ALTER TABLE OrderedSupply
+	ADD CONSTRAINT OrderedSupply_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
+GO
+
+ALTER TABLE RecipeSupply
+	ADD CONSTRAINT RecipeSupply_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
+GO
+
+ALTER TABLE Supply
+	ADD CONSTRAINT Supply_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
+GO
+
+ALTER TABLE SupplyInventoryReport
+	ADD CONSTRAINT SupplyInventoryReport_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
+GO
+
+--Agregar datos de precarga
+INSERT INTO Charge ([Name])
+VALUES 
+    ('Mesero'),
+    ('Repartidor'),
+    ('Cocinero'),
+    ('Cajero'),
+    ('Gerente');
+GO
+
+INSERT INTO MeasurementUnit (MeasurementUnit)
+VALUES 
+    ('Kilogramos'),
+    ('Unidades'),
+    ('Litros');
+GO
+
+INSERT INTO SupplyCategory ([SupplyCategory])
+VALUES
+	('Harinas'),
+	('Salsas'),
+	('Quesos'),
+	('Carnes'),
+	('Vegetales'),
+	('Frutas'),
+	('Condimentos'),
+	('Aceites'),
+	('Bebidas')
 GO

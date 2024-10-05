@@ -30,7 +30,7 @@
             <Label Content="Fecha de caducidad (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <DatePicker x:Name="DtpExpiration" Margin="5" HorizontalAlignment="Left" Width="200"/>
             <Label Content="Categoría (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox x:Name="CbCategory" DisplayMemberPath="Name" SelectedValuePath="Id" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
+            <ComboBox x:Name="CbCategory" DisplayMemberPath="SupplyCategory1" SelectedValuePath="IdSupplyCategory" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
 
             
 
