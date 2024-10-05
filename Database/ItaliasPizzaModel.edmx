@@ -569,6 +569,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_CalculateMaxProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="ItaliasPizzaDBModelStoreContainer">
           <EntitySet Name="AccessAccount" EntityType="Self.AccessAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
