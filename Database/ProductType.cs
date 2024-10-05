@@ -12,10 +12,10 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class ProducType
+    public partial class ProductType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProducType()
+        public ProductType()
         {
             this.Product = new HashSet<Product>();
         }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="IdAccessAccount" />
@@ -120,6 +120,13 @@
           <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="MeasurementUnit">
+          <Key>
+            <PropertyRef Name="IdMeasurementUnit" />
+          </Key>
+          <Property Name="IdMeasurementUnit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeasurementUnit" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrderedSupply">
           <Key>
             <PropertyRef Name="IdOrderedSupply" />
@@ -128,7 +135,7 @@
           <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupplierOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -140,7 +147,7 @@
           <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="ProducType">
+        <EntityType Name="ProductType">
           <Key>
             <PropertyRef Name="IdProductType" />
           </Key>
@@ -163,7 +170,7 @@
           <Property Name="IdRecipe" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="SupplyAmount" Type="decimal" Precision="12" Scale="3" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="bigint" />
+          <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -171,7 +178,7 @@
           </Key>
           <Property Name="IdSupplier" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdSupplyCategory" Type="int" Nullable="false" />
+          <Property Name="IdSupplierCategory" Type="int" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierOrder">
@@ -193,7 +200,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="IdSupplyCategory" Type="int" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplyCategory">
@@ -208,12 +215,12 @@
             <PropertyRef Name="IdSupplyInventoryReport" />
           </Key>
           <Property Name="IdSupplyInventoryReport" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="IdInvenroryReport" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdInventoryReport" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
           <Property Name="ExpectedAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="ReportedAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="DifferingAmountReason" Type="varchar" MaxLength="1" />
+          <Property Name="DifferingAmountReason" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -370,6 +377,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="OrderedSupply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="OrderedSupply" Type="Self.OrderedSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="OrderedSupply">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="OrderedSupply_IdSupplierOrder_fk">
           <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="1" />
           <End Role="OrderedSupply" Type="Self.OrderedSupply" Multiplicity="*" />
@@ -395,10 +414,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Product_IdType_fk">
-          <End Role="ProducType" Type="Self.ProducType" Multiplicity="1" />
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProducType">
+            <Principal Role="ProductType">
               <PropertyRef Name="IdProductType" />
             </Principal>
             <Dependent Role="Product">
@@ -415,6 +434,18 @@
             </Principal>
             <Dependent Role="Recipe">
               <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeSupply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="RecipeSupply" Type="Self.RecipeSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="RecipeSupply">
+              <PropertyRef Name="IdMeasurementUnit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -450,7 +481,7 @@
               <PropertyRef Name="IdSupplyCategory" />
             </Principal>
             <Dependent Role="Supplier">
-              <PropertyRef Name="IdSupplyCategory" />
+              <PropertyRef Name="IdSupplierCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -466,6 +497,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Supply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Supply_IdSupplyCategory_fk">
           <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
           <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
@@ -478,7 +521,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SupplyInventoryReport_IdInvenroryReport_fk">
+        <Association Name="SupplyInventoryReport_IdInventoryReport_fk">
           <End Role="InventoryReport" Type="Self.InventoryReport" Multiplicity="1" />
           <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -486,7 +529,19 @@
               <PropertyRef Name="IdInventoryReport" />
             </Principal>
             <Dependent Role="SupplyInventoryReport">
-              <PropertyRef Name="IdInvenroryReport" />
+              <PropertyRef Name="IdInventoryReport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplyInventoryReport_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="SupplyInventoryReport">
+              <PropertyRef Name="IdMeasurementUnit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -526,9 +581,10 @@
           <EntitySet Name="InventoryReport" EntityType="Self.InventoryReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalOrder" EntityType="Self.LocalOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalOrderProduct" EntityType="Self.LocalOrderProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeasurementUnit" EntityType="Self.MeasurementUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderedSupply" EntityType="Self.OrderedSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProducType" EntityType="Self.ProducType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecipeSupply" EntityType="Self.RecipeSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
@@ -585,6 +641,10 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="LocalOrderProduct" EntitySet="LocalOrderProduct" />
           </AssociationSet>
+          <AssociationSet Name="OrderedSupply_IdMeasurementUnit_fk" Association="Self.OrderedSupply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="OrderedSupply" EntitySet="OrderedSupply" />
+          </AssociationSet>
           <AssociationSet Name="OrderedSupply_IdSupplierOrder_fk" Association="Self.OrderedSupply_IdSupplierOrder_fk">
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
             <End Role="OrderedSupply" EntitySet="OrderedSupply" />
@@ -594,12 +654,16 @@
             <End Role="OrderedSupply" EntitySet="OrderedSupply" />
           </AssociationSet>
           <AssociationSet Name="Product_IdType_fk" Association="Self.Product_IdType_fk">
-            <End Role="ProducType" EntitySet="ProducType" />
+            <End Role="ProductType" EntitySet="ProductType" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="Recipe_IdProduct_fk" Association="Self.Recipe_IdProduct_fk">
             <End Role="Product" EntitySet="Product" />
             <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeSupply_IdMeasurementUnit_fk" Association="Self.RecipeSupply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="RecipeSupply" EntitySet="RecipeSupply" />
           </AssociationSet>
           <AssociationSet Name="RecipeSupply_IdRecipe_fk" Association="Self.RecipeSupply_IdRecipe_fk">
             <End Role="Recipe" EntitySet="Recipe" />
@@ -617,12 +681,20 @@
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
           </AssociationSet>
+          <AssociationSet Name="Supply_IdMeasurementUnit_fk" Association="Self.Supply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="Supply" EntitySet="Supply" />
+          </AssociationSet>
           <AssociationSet Name="Supply_IdSupplyCategory_fk" Association="Self.Supply_IdSupplyCategory_fk">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
             <End Role="Supply" EntitySet="Supply" />
           </AssociationSet>
-          <AssociationSet Name="SupplyInventoryReport_IdInvenroryReport_fk" Association="Self.SupplyInventoryReport_IdInvenroryReport_fk">
+          <AssociationSet Name="SupplyInventoryReport_IdInventoryReport_fk" Association="Self.SupplyInventoryReport_IdInventoryReport_fk">
             <End Role="InventoryReport" EntitySet="InventoryReport" />
+            <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
+          </AssociationSet>
+          <AssociationSet Name="SupplyInventoryReport_IdMeasurementUnit_fk" Association="Self.SupplyInventoryReport_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
             <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
           </AssociationSet>
           <AssociationSet Name="SupplyInventoryReport_IdSupply_fk" Association="Self.SupplyInventoryReport_IdSupply_fk">
@@ -634,7 +706,8 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ItaliasPizzaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -751,7 +824,7 @@
           <Property Name="Reporter" Type="Guid" Nullable="false" />
           <Property Name="Observations" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employee" Relationship="Self.InventoryReport_Reporter_fk" FromRole="InventoryReport" ToRole="Employee" />
-          <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="InventoryReport" ToRole="SupplyInventoryReport" />
+          <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdInventoryReport_fk" FromRole="InventoryReport" ToRole="SupplyInventoryReport" />
         </EntityType>
         <EntityType Name="LocalOrder">
           <Key>
@@ -777,6 +850,17 @@
           <NavigationProperty Name="LocalOrder" Relationship="Self.LocalOrderProduct_IdLocalOrder_fk" FromRole="LocalOrderProduct" ToRole="LocalOrder" />
           <NavigationProperty Name="Product" Relationship="Self.LocalOrderProduct_IdProduct_fk" FromRole="LocalOrderProduct" ToRole="Product" />
         </EntityType>
+        <EntityType Name="MeasurementUnit">
+          <Key>
+            <PropertyRef Name="IdMeasurementUnit" />
+          </Key>
+          <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeasurementUnit1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdMeasurementUnit_fk" FromRole="MeasurementUnit" ToRole="OrderedSupply" />
+          <NavigationProperty Name="RecipeSupply" Relationship="Self.RecipeSupply_IdMeasurementUnit_fk" FromRole="MeasurementUnit" ToRole="RecipeSupply" />
+          <NavigationProperty Name="Supply" Relationship="Self.Supply_IdMeasurementUnit_fk" FromRole="MeasurementUnit" ToRole="Supply" />
+          <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdMeasurementUnit_fk" FromRole="MeasurementUnit" ToRole="SupplyInventoryReport" />
+        </EntityType>
         <EntityType Name="OrderedSupply">
           <Key>
             <PropertyRef Name="IdOrderedSupply" />
@@ -785,7 +869,8 @@
           <Property Name="IdSupply" Type="Guid" Nullable="false" />
           <Property Name="IdSupplierOrder" Type="Guid" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MeasurementUnit" Relationship="Self.OrderedSupply_IdMeasurementUnit_fk" FromRole="OrderedSupply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.OrderedSupply_IdSupplierOrder_fk" FromRole="OrderedSupply" ToRole="SupplierOrder" />
           <NavigationProperty Name="Supply" Relationship="Self.OrderedSupply_IdSupply_fk" FromRole="OrderedSupply" ToRole="Supply" />
         </EntityType>
@@ -800,16 +885,16 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DeliveryOrderProduct" Relationship="Self.DeliveryOrderProduct_IdProduct_fk" FromRole="Product" ToRole="DeliveryOrderProduct" />
           <NavigationProperty Name="LocalOrderProduct" Relationship="Self.LocalOrderProduct_IdProduct_fk" FromRole="Product" ToRole="LocalOrderProduct" />
-          <NavigationProperty Name="ProducType" Relationship="Self.Product_IdType_fk" FromRole="Product" ToRole="ProducType" />
+          <NavigationProperty Name="ProductType" Relationship="Self.Product_IdType_fk" FromRole="Product" ToRole="ProductType" />
           <NavigationProperty Name="Recipe" Relationship="Self.Recipe_IdProduct_fk" FromRole="Product" ToRole="Recipe" />
         </EntityType>
-        <EntityType Name="ProducType">
+        <EntityType Name="ProductType">
           <Key>
             <PropertyRef Name="IdProductType" />
           </Key>
           <Property Name="IdProductType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.Product_IdType_fk" FromRole="ProducType" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="Self.Product_IdType_fk" FromRole="ProductType" ToRole="Product" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -829,7 +914,8 @@
           <Property Name="IdRecipe" Type="Guid" Nullable="false" />
           <Property Name="IdSupply" Type="Guid" Nullable="false" />
           <Property Name="SupplyAmount" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="Int64" />
+          <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MeasurementUnit" Relationship="Self.RecipeSupply_IdMeasurementUnit_fk" FromRole="RecipeSupply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="Recipe" Relationship="Self.RecipeSupply_IdRecipe_fk" FromRole="RecipeSupply" ToRole="Recipe" />
           <NavigationProperty Name="Supply" Relationship="Self.RecipeSupply_IdSupply_fk" FromRole="RecipeSupply" ToRole="Supply" />
         </EntityType>
@@ -839,7 +925,7 @@
           </Key>
           <Property Name="IdSupplier" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdSupplyCategory" Type="Int32" Nullable="false" />
+          <Property Name="IdSupplierCategory" Type="Int32" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="SupplyCategory" Relationship="Self.Supplier_IdSupplyCategory_fk" FromRole="Supplier" ToRole="SupplyCategory" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.SupplierOrder_IdSupplier_fk" FromRole="Supplier" ToRole="SupplierOrder" />
@@ -865,8 +951,9 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Quantity" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="IdSupplyCategory" Type="Int32" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MeasurementUnit" Relationship="Self.Supply_IdMeasurementUnit_fk" FromRole="Supply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdSupply_fk" FromRole="Supply" ToRole="OrderedSupply" />
           <NavigationProperty Name="RecipeSupply" Relationship="Self.RecipeSupply_IdSupply_fk" FromRole="Supply" ToRole="RecipeSupply" />
           <NavigationProperty Name="SupplyCategory" Relationship="Self.Supply_IdSupplyCategory_fk" FromRole="Supply" ToRole="SupplyCategory" />
@@ -886,13 +973,14 @@
             <PropertyRef Name="IdSupplyInventoryReport" />
           </Key>
           <Property Name="IdSupplyInventoryReport" Type="Guid" Nullable="false" />
-          <Property Name="IdInvenroryReport" Type="Guid" Nullable="false" />
+          <Property Name="IdInventoryReport" Type="Guid" Nullable="false" />
           <Property Name="IdSupply" Type="Guid" Nullable="false" />
-          <Property Name="MeasurementUnit" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
           <Property Name="ExpectedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="ReportedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="DifferingAmountReason" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="InventoryReport" Relationship="Self.SupplyInventoryReport_IdInvenroryReport_fk" FromRole="SupplyInventoryReport" ToRole="InventoryReport" />
+          <Property Name="DifferingAmountReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="InventoryReport" Relationship="Self.SupplyInventoryReport_IdInventoryReport_fk" FromRole="SupplyInventoryReport" ToRole="InventoryReport" />
+          <NavigationProperty Name="MeasurementUnit" Relationship="Self.SupplyInventoryReport_IdMeasurementUnit_fk" FromRole="SupplyInventoryReport" ToRole="MeasurementUnit" />
           <NavigationProperty Name="Supply" Relationship="Self.SupplyInventoryReport_IdSupply_fk" FromRole="SupplyInventoryReport" ToRole="Supply" />
         </EntityType>
         <EntityType Name="Transaction">
@@ -1039,7 +1127,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SupplyInventoryReport_IdInvenroryReport_fk">
+        <Association Name="SupplyInventoryReport_IdInventoryReport_fk">
           <End Role="InventoryReport" Type="Self.InventoryReport" Multiplicity="1" />
           <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1047,7 +1135,7 @@
               <PropertyRef Name="IdInventoryReport" />
             </Principal>
             <Dependent Role="SupplyInventoryReport">
-              <PropertyRef Name="IdInvenroryReport" />
+              <PropertyRef Name="IdInventoryReport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1072,6 +1160,54 @@
             </Principal>
             <Dependent Role="LocalOrderProduct">
               <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderedSupply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="OrderedSupply" Type="Self.OrderedSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="OrderedSupply">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RecipeSupply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="RecipeSupply" Type="Self.RecipeSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="RecipeSupply">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Supply_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplyInventoryReport_IdMeasurementUnit_fk">
+          <End Role="MeasurementUnit" Type="Self.MeasurementUnit" Multiplicity="1" />
+          <End Role="SupplyInventoryReport" Type="Self.SupplyInventoryReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasurementUnit">
+              <PropertyRef Name="IdMeasurementUnit" />
+            </Principal>
+            <Dependent Role="SupplyInventoryReport">
+              <PropertyRef Name="IdMeasurementUnit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1100,10 +1236,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Product_IdType_fk">
-          <End Role="ProducType" Type="Self.ProducType" Multiplicity="1" />
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProducType">
+            <Principal Role="ProductType">
               <PropertyRef Name="IdProductType" />
             </Principal>
             <Dependent Role="Product">
@@ -1155,7 +1291,7 @@
               <PropertyRef Name="IdSupplyCategory" />
             </Principal>
             <Dependent Role="Supplier">
-              <PropertyRef Name="IdSupplyCategory" />
+              <PropertyRef Name="IdSupplierCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1207,9 +1343,10 @@
           <EntitySet Name="InventoryReport" EntityType="Self.InventoryReport" />
           <EntitySet Name="LocalOrder" EntityType="Self.LocalOrder" />
           <EntitySet Name="LocalOrderProduct" EntityType="Self.LocalOrderProduct" />
+          <EntitySet Name="MeasurementUnit" EntityType="Self.MeasurementUnit" />
           <EntitySet Name="OrderedSupply" EntityType="Self.OrderedSupply" />
           <EntitySet Name="Product" EntityType="Self.Product" />
-          <EntitySet Name="ProducType" EntityType="Self.ProducType" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" />
           <EntitySet Name="RecipeSupply" EntityType="Self.RecipeSupply" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" />
@@ -1262,7 +1399,7 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
-          <AssociationSet Name="SupplyInventoryReport_IdInvenroryReport_fk" Association="Self.SupplyInventoryReport_IdInvenroryReport_fk">
+          <AssociationSet Name="SupplyInventoryReport_IdInventoryReport_fk" Association="Self.SupplyInventoryReport_IdInventoryReport_fk">
             <End Role="InventoryReport" EntitySet="InventoryReport" />
             <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
           </AssociationSet>
@@ -1274,6 +1411,22 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="LocalOrderProduct" EntitySet="LocalOrderProduct" />
           </AssociationSet>
+          <AssociationSet Name="OrderedSupply_IdMeasurementUnit_fk" Association="Self.OrderedSupply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="OrderedSupply" EntitySet="OrderedSupply" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeSupply_IdMeasurementUnit_fk" Association="Self.RecipeSupply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="RecipeSupply" EntitySet="RecipeSupply" />
+          </AssociationSet>
+          <AssociationSet Name="Supply_IdMeasurementUnit_fk" Association="Self.Supply_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="Supply" EntitySet="Supply" />
+          </AssociationSet>
+          <AssociationSet Name="SupplyInventoryReport_IdMeasurementUnit_fk" Association="Self.SupplyInventoryReport_IdMeasurementUnit_fk">
+            <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
+            <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
+          </AssociationSet>
           <AssociationSet Name="OrderedSupply_IdSupplierOrder_fk" Association="Self.OrderedSupply_IdSupplierOrder_fk">
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
             <End Role="OrderedSupply" EntitySet="OrderedSupply" />
@@ -1283,7 +1436,7 @@
             <End Role="OrderedSupply" EntitySet="OrderedSupply" />
           </AssociationSet>
           <AssociationSet Name="Product_IdType_fk" Association="Self.Product_IdType_fk">
-            <End Role="ProducType" EntitySet="ProducType" />
+            <End Role="ProductType" EntitySet="ProductType" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="Recipe_IdProduct_fk" Association="Self.Recipe_IdProduct_fk">
@@ -1447,6 +1600,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MeasurementUnit">
+            <EntityTypeMapping TypeName="ItaliasPizzaDBModel.MeasurementUnit">
+              <MappingFragment StoreEntitySet="MeasurementUnit">
+                <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
+                <ScalarProperty Name="MeasurementUnit1" ColumnName="MeasurementUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="OrderedSupply">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.OrderedSupply">
               <MappingFragment StoreEntitySet="OrderedSupply">
@@ -1454,7 +1615,7 @@
                 <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
                 <ScalarProperty Name="IdSupplierOrder" ColumnName="IdSupplierOrder" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1469,9 +1630,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProducType">
-            <EntityTypeMapping TypeName="ItaliasPizzaDBModel.ProducType">
-              <MappingFragment StoreEntitySet="ProducType">
+          <EntitySetMapping Name="ProductType">
+            <EntityTypeMapping TypeName="ItaliasPizzaDBModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
                 <ScalarProperty Name="IdProductType" ColumnName="IdProductType" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
@@ -1493,7 +1654,7 @@
                 <ScalarProperty Name="IdRecipe" ColumnName="IdRecipe" />
                 <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
                 <ScalarProperty Name="SupplyAmount" ColumnName="SupplyAmount" />
-                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1502,7 +1663,7 @@
               <MappingFragment StoreEntitySet="Supplier">
                 <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdSupplyCategory" ColumnName="IdSupplyCategory" />
+                <ScalarProperty Name="IdSupplierCategory" ColumnName="IdSupplierCategory" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1526,7 +1687,7 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IdSupplyCategory" ColumnName="IdSupplyCategory" />
-                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1543,9 +1704,9 @@
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.SupplyInventoryReport">
               <MappingFragment StoreEntitySet="SupplyInventoryReport">
                 <ScalarProperty Name="IdSupplyInventoryReport" ColumnName="IdSupplyInventoryReport" />
-                <ScalarProperty Name="IdInvenroryReport" ColumnName="IdInvenroryReport" />
+                <ScalarProperty Name="IdInventoryReport" ColumnName="IdInventoryReport" />
                 <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
-                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
                 <ScalarProperty Name="ExpectedAmount" ColumnName="ExpectedAmount" />
                 <ScalarProperty Name="ReportedAmount" ColumnName="ReportedAmount" />
                 <ScalarProperty Name="DifferingAmountReason" ColumnName="DifferingAmountReason" />

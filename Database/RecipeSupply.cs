@@ -18,8 +18,9 @@ namespace Database
         public System.Guid IdRecipe { get; set; }
         public System.Guid IdSupply { get; set; }
         public decimal SupplyAmount { get; set; }
-        public Nullable<long> MeasurementUnit { get; set; }
+        public int IdMeasurementUnit { get; set; }
     
+        public virtual MeasurementUnit MeasurementUnit { get; set; }
         public virtual Recipe Recipe { get; set; }
         public virtual Supply Supply { get; set; }
     }
