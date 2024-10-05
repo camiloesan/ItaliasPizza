@@ -190,6 +190,9 @@
   <ItemGroup>
     <Resource Include="Assets\Images\loginBackground.jpeg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\tablecloth.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

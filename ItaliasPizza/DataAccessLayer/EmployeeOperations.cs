@@ -34,5 +34,46 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.SaveChanges();
             }
         }
+
+        public static Employee GetEmployeeById(Guid idEmployee)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Employee.Find(idEmployee);
+            }
+        }
+
+        public static string GetEmployeeEmail(Guid idEmployee)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.AccessAccount.Find(idEmployee).Email;
+            }
+        }
+
+        public static int UpdateEmployee(Employee employee)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                Employee employeeToUpdate = db.Employee.Find(employee.IdEmployee);
+                employeeToUpdate.FirstName = employee.FirstName;
+                employeeToUpdate.LastName = employee.LastName;
+                employeeToUpdate.Phone = employee.Phone;
+                employeeToUpdate.Status = employee.Status;
+                employeeToUpdate.IdCharge = employee.IdCharge;
+                return db.SaveChanges();
+            }
+        }
+
+        public static int UpdateEmployeePasswordAndEmail(Guid idEmployee, string password, string email)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                AccessAccount accessAccount = db.AccessAccount.Find(idEmployee);
+                accessAccount.Password = password;
+                accessAccount.Email = email;
+                return db.SaveChanges();
+            }
+        }
     }
 }
