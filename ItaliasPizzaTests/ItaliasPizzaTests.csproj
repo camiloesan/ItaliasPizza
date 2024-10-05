@@ -68,6 +68,8 @@
   <ItemGroup>
     <Compile Include="DataAccessLayer\AccessAccountOperationsTests.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\LocalOrderOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\ProductOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistroEmpleadoTests.cs" />
   </ItemGroup>
