@@ -70,6 +70,7 @@
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
+    <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
     <Compile Include="Pages\ProductModification.xaml.cs">
       <DependentUpon>ProductModification.xaml</DependentUpon>
     </Compile>
