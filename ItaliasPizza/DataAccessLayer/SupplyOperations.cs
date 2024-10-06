@@ -9,11 +9,19 @@ namespace ItaliasPizza.DataAccessLayer
 {
     public class SupplyOperations
     {
-        public static List<SupplyCategory> GetSupplyCategoriesNames()
+        public static List<SupplyCategory> GetSupplyCategories()
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
                 return db.SupplyCategory.ToList();
+            }
+        }
+        
+        public static List<MeasurementUnit> GetMeasurementUnits()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.MeasurementUnit.ToList();
             }
         }
 

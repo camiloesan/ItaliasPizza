@@ -1,6 +1,7 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -26,15 +27,25 @@ namespace ItaliasPizza.Pages
     /// </summary>
     public partial class SupplyRegister : Page
     {
+        private const int KILOGRAMS_ID = 1;
+        private const int UNITS_ID = 2;
+        private const int LITERS_ID = 3;
+
         public SupplyRegister()
         {
             InitializeComponent();
             CbCategory.ItemsSource = GetCategories();
+            CbMeasurementUnit.ItemsSource = GetMeasurementUnits();
         }
 
         private List<SupplyCategory> GetCategories()
         {
-            return SupplyOperations.GetSupplyCategoriesNames();
+            return SupplyOperations.GetSupplyCategories();
+        }
+
+        private List<MeasurementUnit> GetMeasurementUnits()
+        {
+            return SupplyOperations.GetMeasurementUnits();
         }
 
         private bool AreFieldsFilled()
@@ -72,18 +83,17 @@ namespace ItaliasPizza.Pages
             }
             else
             {
-                var supplyId = Guid.NewGuid();
-                string name = TxtName.Text;
-                decimal amount = decimal.Parse(TxtAmount.Text);
                 SupplyCategory supplyCategory = (SupplyCategory)CbCategory.SelectedItem;
+                MeasurementUnit measurementUnit = (MeasurementUnit)CbMeasurementUnit.SelectedItem;
 
                 Supply supply = new Supply
                 {
-                    IdSupply = supplyId,
-                    Name = name,
-                    Quantity = amount,
+                    IdSupply = Guid.NewGuid(),
+                    Name = TxtName.Text,
+                    Quantity = decimal.Parse(TxtAmount.Text),
                     IdSupplyCategory = supplyCategory.IdSupplyCategory,
-                    //MeasurementUnit = DtpExpiration.Text,
+                    IdMeasurementUnit = measurementUnit.IdMeasurementUnit,
+                    ExpirationDate = DtpExpiration.SelectedDate.Value,
                     Status = true,
                 };
 
@@ -105,6 +115,27 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CbMeasurementUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SupplyCategory supplyCategory = (SupplyCategory)CbCategory.SelectedItem;
+
+            switch (supplyCategory.IdSupplyCategory)
+            {
+                case 2:
+                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+                    break;
+                case 8:
+                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+                    break;
+                case 9:
+                    CbMeasurementUnit.SelectedIndex = UNITS_ID - 1;
+                    break;
+                default:
+                    CbMeasurementUnit.SelectedIndex = KILOGRAMS_ID - 1;
+                    break;
+            }
         }
     }
 }

@@ -77,7 +77,8 @@ namespace ItaliasPizza.Pages
 
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
-            LogIn();
+            //LogIn();
+            Application.Current.MainWindow.Content = new SupplyRegister();
         }
     }
 }

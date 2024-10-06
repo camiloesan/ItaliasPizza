@@ -31,7 +31,7 @@ namespace ItaliasPizza.Pages
 
         private List<SupplyCategory> GetCategories()
         {
-            return SupplyOperations.GetSupplyCategoriesNames();
+            return SupplyOperations.GetSupplyCategories();
         }
 
         private bool AreFieldsFilled()
