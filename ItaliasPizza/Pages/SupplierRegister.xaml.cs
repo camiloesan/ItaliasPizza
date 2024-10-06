@@ -26,7 +26,6 @@ namespace ItaliasPizza.Pages
         public SupplierRegister()
         {
             InitializeComponent();
-            CbCategory.ItemsSource = GetCategories();
         }
 
         private List<SupplyCategory> GetCategories()
@@ -37,7 +36,6 @@ namespace ItaliasPizza.Pages
         private bool AreFieldsFilled()
         {
             return !string.IsNullOrEmpty(TxtName.Text)
-                && !string.IsNullOrEmpty(CbCategory.Text)
                 && !string.IsNullOrEmpty(TxtPhone.Text);
         }
 
@@ -46,6 +44,13 @@ namespace ItaliasPizza.Pages
             string pattern = @"^\d{10}$";
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(TxtPhone.Text);
+        }
+
+        private bool IsNumOfCategoriesValid()
+        {
+            string pattern = @"^[1-9]$";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(TxtCategoryCount.Text);
         }
 
         private void ResetForm()
@@ -63,16 +68,16 @@ namespace ItaliasPizza.Pages
             else if (!IsPhoneValid())
             {
                 MessageBox.Show("El número solo debe contener 10 números");
+            }else if (!IsNumOfCategoriesValid())
+            {
+                MessageBox.Show("La cantidad de proveedores solo deben ser números del 1 al 9");
             }
             else
             {
-                SupplyCategory supplierCategory = (SupplyCategory)CbCategory.SelectedItem;
-
                 Supplier supplier = new Supplier
                 {
                     IdSupplier = Guid.NewGuid(),
                     Name = TxtName.Text,
-                    IdSupplierCategory = supplierCategory.IdSupplyCategory,
                     Phone = TxtPhone.Text,
                 };
 
@@ -94,6 +99,35 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void TxtCategoryCount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CategoryPanel.Children.Clear();
+
+            if (int.TryParse(TxtCategoryCount.Text, out int categoryCount) && categoryCount > 0)
+            {
+                LblCategories.Content = "Categorías(*)";
+
+                for (int i = 0; i < categoryCount; i++)
+                {
+                    ComboBox cb = new ComboBox
+                    {
+                        Name = $"CbCategory_{i + 1}",
+                        DisplayMemberPath = "SupplyCategory1",
+                        SelectedValuePath = "IdSupplyCategory",
+                        IsEditable = false,
+                        Width = 200,
+                        Margin = new Thickness(5)
+                    };
+
+                    cb.ItemsSource = SupplyOperations.GetSupplyCategories();
+                    CategoryPanel.Children.Add(cb);
+                }
+            } else
+            {
+                LblCategories.Content = "Categorías(*) Selecciona un número de proveedores";
+            }
         }
     }
 }

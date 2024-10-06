@@ -34,7 +34,7 @@ namespace ItaliasPizza.Pages
             CbSupplier.ItemsSource = GetSuppliers();
             CbMeasurementUnit.ItemsSource = GetMeasurementUnits();
             Supplier supplier = (Supplier)CbSupplier.SelectedItem;
-            CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
+            //CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
         }
 
         private List<Supplier> GetSuppliers()
@@ -126,24 +126,24 @@ namespace ItaliasPizza.Pages
 
         private void CbSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Supplier supplier = (Supplier)CbSupplier.SelectedItem;
-            CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
+            //Supplier supplier = (Supplier)CbSupplier.SelectedItem;
+            //CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
 
-            switch (supplier.IdSupplierCategory)
-            {
-                case 2:
-                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
-                    break;
-                case 8:
-                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
-                    break;
-                case 9:
-                    CbMeasurementUnit.SelectedIndex = UNITS_ID - 1;
-                    break;
-                default:
-                    CbMeasurementUnit.SelectedIndex = KILOGRAMS_ID - 1;
-                    break;
-            }
+            //switch (supplier.IdSupplierCategory)
+            //{
+            //    case 2:
+            //        CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+            //        break;
+            //    case 8:
+            //        CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+            //        break;
+            //    case 9:
+            //        CbMeasurementUnit.SelectedIndex = UNITS_ID - 1;
+            //        break;
+            //    default:
+            //        CbMeasurementUnit.SelectedIndex = KILOGRAMS_ID - 1;
+            //        break;
+            //}
         }
     }
 }
