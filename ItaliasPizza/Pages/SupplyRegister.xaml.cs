@@ -68,7 +68,6 @@ namespace ItaliasPizza.Pages
             TxtName.Text = string.Empty;
             TxtAmount.Text = string.Empty;
             DtpExpiration.Text = string.Empty;
-            CbCategory.Text = string.Empty;
         }
 
         private void Btn_Save(object sender, RoutedEventArgs e)
@@ -79,7 +78,7 @@ namespace ItaliasPizza.Pages
             }
             else if (!IsQuantityValid())
             {
-                MessageBox.Show("El número solo debe contener 10 números");
+                MessageBox.Show("La cantidad solo debe contener números (con decimales si lo desea)");
             }
             else
             {

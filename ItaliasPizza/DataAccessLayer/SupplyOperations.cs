@@ -33,5 +33,59 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.SaveChanges();
             }
         }
+
+        public static Supply GetSupplyById(Guid id)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Supply.FirstOrDefault(s => s.IdSupply == id);
+            }
+        }
+
+        public static bool UpdateSupplyStatus(Guid id, bool status)
+        {
+            bool result = false;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingSupply = db.Supply.FirstOrDefault(s => s.IdSupply == id);
+
+                if (existingSupply != null)
+                {
+                    existingSupply.Status = status;
+                    if (db.SaveChanges() == 1)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static bool UpdateSupplyInfo(Supply supply)
+        {
+            bool result = false;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingSupply = db.Supply.FirstOrDefault(s => s.IdSupply == supply.IdSupply);
+
+                if (existingSupply != null)
+                {
+                    existingSupply.Name = supply.Name;
+                    existingSupply.Quantity = supply.Quantity;
+                    existingSupply.IdSupplyCategory = supply.IdSupplyCategory;
+                    existingSupply.IdMeasurementUnit = supply.IdMeasurementUnit;
+                    existingSupply.ExpirationDate = supply.ExpirationDate;
+                    if (db.SaveChanges() == 1)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }
