@@ -79,7 +79,7 @@ GO
 CREATE TABLE DeliveryOrder (
     IdDeliveryOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdClient UNIQUEIDENTIFIER NOT NULL,
-    [Status] BIT NOT NULL,
+    IdOrderStatus INT NOT NULL,
     [Date] DATETIME NOT NULL,
     Total DECIMAL(12, 2) NOT NULL,
     DeliveryDriver UNIQUEIDENTIFIER NOT NULL,
@@ -119,7 +119,7 @@ GO
 CREATE TABLE LocalOrder (
     IdLocalOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     Waiter UNIQUEIDENTIFIER NOT NULL,
-    [Status] BIT NOT NULL,
+    IdOrderStatus INT NOT NULL,
     [Table] INT NOT NULL,
     [Date] DATETIME NOT NULL,
     Total DECIMAL(12, 2) NOT NULL
@@ -176,10 +176,17 @@ GO
 CREATE TABLE SupplierOrder (
     IdSupplierOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdSupplier UNIQUEIDENTIFIER NOT NULL,
+	IdSupply UNIQUEIDENTIFIER NOT NULL,
     OrderDate DATE NOT NULL,
     ExpectedDate DATE NOT NULL,
     ArrivalDate DATE NOT NULL,
-    [Status] BIT NOT NULL
+    IdOrderStatus INT NOT NULL
+);
+GO
+
+CREATE TABLE OrderStatus (
+    IdOrderStatus INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [Status] VARCHAR(20) NOT NULL
 );
 GO
 
@@ -332,6 +339,18 @@ ALTER TABLE SupplyInventoryReport
 	ADD CONSTRAINT SupplyInventoryReport_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
 GO
 
+ALTER TABLE DeliveryOrder
+	ADD CONSTRAINT DeliveryOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE LocalOrder
+	ADD CONSTRAINT LocalOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE SupplierOrder
+	ADD CONSTRAINT SupplierOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
 --Agregar datos de precarga
 INSERT INTO Charge ([Name])
 VALUES 
@@ -360,4 +379,13 @@ VALUES
 	('Condimentos'),
 	('Aceites'),
 	('Bebidas')
+GO
+
+INSERT INTO OrderStatus([Status])
+VALUES
+	('Realizado'),
+	('Entregado'),
+	('En camino'),
+	('Cancelado'),
+	('No entregado')
 GO

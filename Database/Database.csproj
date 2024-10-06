@@ -109,6 +109,9 @@
     <Compile Include="OrderedSupply.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderStatus.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>

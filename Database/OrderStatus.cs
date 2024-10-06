@@ -12,26 +12,24 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class DeliveryOrder
+    public partial class OrderStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DeliveryOrder()
+        public OrderStatus()
         {
-            this.DeliveryOrderProduct = new HashSet<DeliveryOrderProduct>();
+            this.DeliveryOrder = new HashSet<DeliveryOrder>();
+            this.LocalOrder = new HashSet<LocalOrder>();
+            this.SupplierOrder = new HashSet<SupplierOrder>();
         }
     
-        public System.Guid IdDeliveryOrder { get; set; }
-        public System.Guid IdClient { get; set; }
         public int IdOrderStatus { get; set; }
-        public System.DateTime Date { get; set; }
-        public decimal Total { get; set; }
-        public System.Guid DeliveryDriver { get; set; }
-        public string NotDeliveredReason { get; set; }
+        public string Status { get; set; }
     
-        public virtual Client Client { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual OrderStatus OrderStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderProduct> DeliveryOrderProduct { get; set; }
+        public virtual ICollection<DeliveryOrder> DeliveryOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LocalOrder> LocalOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
     }
 }

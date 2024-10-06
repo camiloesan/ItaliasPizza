@@ -87,5 +87,13 @@ namespace ItaliasPizza.DataAccessLayer
 
             return result;
         }
+
+        public static List<Supply> GetAllSupplies()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Supply.ToList();
+            }
+        }
     }
 }

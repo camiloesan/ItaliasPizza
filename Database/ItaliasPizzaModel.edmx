@@ -66,7 +66,7 @@
           </Key>
           <Property Name="IdDeliveryOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdClient" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="DeliveryDriver" Type="uniqueidentifier" Nullable="false" />
@@ -106,7 +106,7 @@
           </Key>
           <Property Name="IdLocalOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Waiter" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="int" Nullable="false" />
           <Property Name="Table" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
@@ -136,6 +136,13 @@
           <Property Name="IdSupplierOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="IdOrderStatus" />
+          </Key>
+          <Property Name="IdOrderStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -187,10 +194,11 @@
           </Key>
           <Property Name="IdSupplierOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupplier" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="OrderDate" Type="date" Nullable="false" />
           <Property Name="ExpectedDate" Type="date" Nullable="false" />
           <Property Name="ArrivalDate" Type="date" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Supply">
           <Key>
@@ -294,6 +302,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DeliveryOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="IdOrderStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DeliveryOrderProduct_IdDeliveryOrder_fk">
           <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="1" />
           <End Role="DeliveryOrderProduct" Type="Self.DeliveryOrderProduct" Multiplicity="*" />
@@ -339,6 +359,18 @@
             </Principal>
             <Dependent Role="InventoryReport">
               <PropertyRef Name="Reporter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocalOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="LocalOrder" Type="Self.LocalOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="LocalOrder">
+              <PropertyRef Name="IdOrderStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -486,6 +518,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="SupplierOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="IdOrderStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="SupplierOrder_IdSupplier_fk">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
           <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
@@ -587,6 +631,7 @@
           <EntitySet Name="LocalOrderProduct" EntityType="Self.LocalOrderProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MeasurementUnit" EntityType="Self.MeasurementUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderedSupply" EntityType="Self.OrderedSupply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
@@ -617,6 +662,10 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryOrder_IdOrderStatus_fk" Association="Self.DeliveryOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
+          </AssociationSet>
           <AssociationSet Name="DeliveryOrderProduct_IdDeliveryOrder_fk" Association="Self.DeliveryOrderProduct_IdDeliveryOrder_fk">
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
             <End Role="DeliveryOrderProduct" EntitySet="DeliveryOrderProduct" />
@@ -632,6 +681,10 @@
           <AssociationSet Name="InventoryReport_Reporter_fk" Association="Self.InventoryReport_Reporter_fk">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="InventoryReport" EntitySet="InventoryReport" />
+          </AssociationSet>
+          <AssociationSet Name="LocalOrder_IdOrderStatus_fk" Association="Self.LocalOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="LocalOrder" EntitySet="LocalOrder" />
           </AssociationSet>
           <AssociationSet Name="LocalOrder_Waiter_fk" Association="Self.LocalOrder_Waiter_fk">
             <End Role="Employee" EntitySet="Employee" />
@@ -680,6 +733,10 @@
           <AssociationSet Name="Supplier_IdSupplyCategory_fk" Association="Self.Supplier_IdSupplyCategory_fk">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
             <End Role="Supplier" EntitySet="Supplier" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierOrder_IdOrderStatus_fk" Association="Self.SupplierOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrder" />
           </AssociationSet>
           <AssociationSet Name="SupplierOrder_IdSupplier_fk" Association="Self.SupplierOrder_IdSupplier_fk">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -782,13 +839,14 @@
           </Key>
           <Property Name="IdDeliveryOrder" Type="Guid" Nullable="false" />
           <Property Name="IdClient" Type="Guid" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Total" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="DeliveryDriver" Type="Guid" Nullable="false" />
           <Property Name="NotDeliveredReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Client" Relationship="Self.DeliveryOrder_IdClient_fk" FromRole="DeliveryOrder" ToRole="Client" />
           <NavigationProperty Name="Employee" Relationship="Self.DeliveryOrder_DeliveryDriver_fk" FromRole="DeliveryOrder" ToRole="Employee" />
+          <NavigationProperty Name="OrderStatus" Relationship="Self.DeliveryOrder_IdOrderStatus_fk" FromRole="DeliveryOrder" ToRole="OrderStatus" />
           <NavigationProperty Name="DeliveryOrderProduct" Relationship="Self.DeliveryOrderProduct_IdDeliveryOrder_fk" FromRole="DeliveryOrder" ToRole="DeliveryOrderProduct" />
         </EntityType>
         <EntityType Name="DeliveryOrderProduct">
@@ -836,11 +894,12 @@
           </Key>
           <Property Name="IdLocalOrder" Type="Guid" Nullable="false" />
           <Property Name="Waiter" Type="Guid" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" />
           <Property Name="Table" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Total" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.LocalOrder_Waiter_fk" FromRole="LocalOrder" ToRole="Employee" />
+          <NavigationProperty Name="OrderStatus" Relationship="Self.LocalOrder_IdOrderStatus_fk" FromRole="LocalOrder" ToRole="OrderStatus" />
           <NavigationProperty Name="LocalOrderProduct" Relationship="Self.LocalOrderProduct_IdLocalOrder_fk" FromRole="LocalOrder" ToRole="LocalOrderProduct" />
         </EntityType>
         <EntityType Name="LocalOrderProduct">
@@ -877,6 +936,16 @@
           <NavigationProperty Name="MeasurementUnit" Relationship="Self.OrderedSupply_IdMeasurementUnit_fk" FromRole="OrderedSupply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.OrderedSupply_IdSupplierOrder_fk" FromRole="OrderedSupply" ToRole="SupplierOrder" />
           <NavigationProperty Name="Supply" Relationship="Self.OrderedSupply_IdSupply_fk" FromRole="OrderedSupply" ToRole="Supply" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="IdOrderStatus" />
+          </Key>
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DeliveryOrder" Relationship="Self.DeliveryOrder_IdOrderStatus_fk" FromRole="OrderStatus" ToRole="DeliveryOrder" />
+          <NavigationProperty Name="LocalOrder" Relationship="Self.LocalOrder_IdOrderStatus_fk" FromRole="OrderStatus" ToRole="LocalOrder" />
+          <NavigationProperty Name="SupplierOrder" Relationship="Self.SupplierOrder_IdOrderStatus_fk" FromRole="OrderStatus" ToRole="SupplierOrder" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -940,11 +1009,13 @@
           </Key>
           <Property Name="IdSupplierOrder" Type="Guid" Nullable="false" />
           <Property Name="IdSupplier" Type="Guid" Nullable="false" />
+          <Property Name="IdSupply" Type="Guid" Nullable="false" />
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ExpectedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdSupplierOrder_fk" FromRole="SupplierOrder" ToRole="OrderedSupply" />
+          <NavigationProperty Name="OrderStatus" Relationship="Self.SupplierOrder_IdOrderStatus_fk" FromRole="SupplierOrder" ToRole="OrderStatus" />
           <NavigationProperty Name="Supplier" Relationship="Self.SupplierOrder_IdSupplier_fk" FromRole="SupplierOrder" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="Supply">
@@ -1072,6 +1143,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DeliveryOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="IdOrderStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DeliveryOrderProduct_IdDeliveryOrder_fk">
           <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="1" />
           <End Role="DeliveryOrderProduct" Type="Self.DeliveryOrderProduct" Multiplicity="*" />
@@ -1141,6 +1224,18 @@
             </Principal>
             <Dependent Role="SupplyInventoryReport">
               <PropertyRef Name="IdInventoryReport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocalOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="LocalOrder" Type="Self.LocalOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="LocalOrder">
+              <PropertyRef Name="IdOrderStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1237,6 +1332,18 @@
             </Principal>
             <Dependent Role="OrderedSupply">
               <PropertyRef Name="IdSupply" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierOrder_IdOrderStatus_fk">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="IdOrderStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1350,6 +1457,7 @@
           <EntitySet Name="LocalOrderProduct" EntityType="Self.LocalOrderProduct" />
           <EntitySet Name="MeasurementUnit" EntityType="Self.MeasurementUnit" />
           <EntitySet Name="OrderedSupply" EntityType="Self.OrderedSupply" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" />
@@ -1384,6 +1492,10 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryOrder_IdOrderStatus_fk" Association="Self.DeliveryOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
+          </AssociationSet>
           <AssociationSet Name="DeliveryOrderProduct_IdDeliveryOrder_fk" Association="Self.DeliveryOrderProduct_IdDeliveryOrder_fk">
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
             <End Role="DeliveryOrderProduct" EntitySet="DeliveryOrderProduct" />
@@ -1407,6 +1519,10 @@
           <AssociationSet Name="SupplyInventoryReport_IdInventoryReport_fk" Association="Self.SupplyInventoryReport_IdInventoryReport_fk">
             <End Role="InventoryReport" EntitySet="InventoryReport" />
             <End Role="SupplyInventoryReport" EntitySet="SupplyInventoryReport" />
+          </AssociationSet>
+          <AssociationSet Name="LocalOrder_IdOrderStatus_fk" Association="Self.LocalOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="LocalOrder" EntitySet="LocalOrder" />
           </AssociationSet>
           <AssociationSet Name="LocalOrderProduct_IdLocalOrder_fk" Association="Self.LocalOrderProduct_IdLocalOrder_fk">
             <End Role="LocalOrder" EntitySet="LocalOrder" />
@@ -1439,6 +1555,10 @@
           <AssociationSet Name="OrderedSupply_IdSupply_fk" Association="Self.OrderedSupply_IdSupply_fk">
             <End Role="Supply" EntitySet="Supply" />
             <End Role="OrderedSupply" EntitySet="OrderedSupply" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierOrder_IdOrderStatus_fk" Association="Self.SupplierOrder_IdOrderStatus_fk">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrder" />
           </AssociationSet>
           <AssociationSet Name="Product_IdType_fk" Association="Self.Product_IdType_fk">
             <End Role="ProductType" EntitySet="ProductType" />
@@ -1544,7 +1664,7 @@
               <MappingFragment StoreEntitySet="DeliveryOrder">
                 <ScalarProperty Name="IdDeliveryOrder" ColumnName="IdDeliveryOrder" />
                 <ScalarProperty Name="IdClient" ColumnName="IdClient" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="DeliveryDriver" ColumnName="DeliveryDriver" />
@@ -1588,7 +1708,7 @@
               <MappingFragment StoreEntitySet="LocalOrder">
                 <ScalarProperty Name="IdLocalOrder" ColumnName="IdLocalOrder" />
                 <ScalarProperty Name="Waiter" ColumnName="Waiter" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
                 <ScalarProperty Name="Table" ColumnName="Table" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
@@ -1621,6 +1741,14 @@
                 <ScalarProperty Name="IdSupplierOrder" ColumnName="IdSupplierOrder" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="ItaliasPizzaDBModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1678,10 +1806,11 @@
               <MappingFragment StoreEntitySet="SupplierOrder">
                 <ScalarProperty Name="IdSupplierOrder" ColumnName="IdSupplierOrder" />
                 <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
+                <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="ExpectedDate" ColumnName="ExpectedDate" />
                 <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
