@@ -169,7 +169,6 @@ GO
 CREATE TABLE Supplier (
     IdSupplier UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [Name] VARCHAR(50) NOT NULL,
-    IdSupplierCategory INT NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
 GO
@@ -205,6 +204,12 @@ GO
 CREATE TABLE SupplyCategory (
     IdSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [SupplyCategory] VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE SupplierSupplyCategory (
+    IdSupplierSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    IdSupplier UNIQUEIDENTIFIER NOT NULL,
+    IdSupplyCategory INT NOT NULL
 );
 
 CREATE TABLE SupplyInventoryReport (
@@ -308,10 +313,6 @@ ALTER TABLE Supply
     ADD CONSTRAINT Supply_IdSupplyCategory_fk FOREIGN KEY (IdSupplyCategory) REFERENCES SupplyCategory (IdSupplyCategory);
 GO
 
-ALTER TABLE Supplier
-    ADD CONSTRAINT Supplier_IdSupplyCategory_fk FOREIGN KEY (IdSupplierCategory) REFERENCES SupplyCategory (IdSupplyCategory);
-GO
-
 ALTER TABLE SupplyInventoryReport
     ADD CONSTRAINT SupplyInventoryReport_IdInventoryReport_fk FOREIGN KEY (IdInventoryReport) REFERENCES InventoryReport (IdInventoryReport);
 GO
@@ -350,6 +351,14 @@ GO
 
 ALTER TABLE SupplierOrder
 	ADD CONSTRAINT SupplierOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE SupplierSupplyCategory
+    ADD CONSTRAINT SupplierSupplyCategory_IdSupplier_fk FOREIGN KEY (IdSupplier) REFERENCES Supplier (IdSupplier); 
+GO
+
+ALTER TABLE SupplierSupplyCategory
+    ADD CONSTRAINT SupplierSupplyCategory_IdSupplyCategory_fk FOREIGN KEY (IdSupplyCategory) REFERENCES SupplyCategory (IdSupplyCategory); 
 GO
 
 --Agregar datos de precarga

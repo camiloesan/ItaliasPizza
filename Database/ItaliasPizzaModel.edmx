@@ -186,7 +186,6 @@
           </Key>
           <Property Name="IdSupplier" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdSupplierCategory" Type="int" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierOrder">
@@ -200,6 +199,14 @@
           <Property Name="ExpectedDate" Type="date" Nullable="false" />
           <Property Name="ArrivalDate" Type="date" Nullable="false" />
           <Property Name="IdOrderStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierSupplyCategory">
+          <Key>
+            <PropertyRef Name="IdSupplierSupplyCategory" />
+          </Key>
+          <Property Name="IdSupplierSupplyCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSupplier" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdSupplyCategory" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Supply">
           <Key>
@@ -507,18 +514,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Supplier_IdSupplyCategory_fk">
-          <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplyCategory">
-              <PropertyRef Name="IdSupplyCategory" />
-            </Principal>
-            <Dependent Role="Supplier">
-              <PropertyRef Name="IdSupplierCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="SupplierOrder_IdOrderStatus_fk">
           <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
           <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
@@ -540,6 +535,30 @@
             </Principal>
             <Dependent Role="SupplierOrder">
               <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplyCategory_IdSupplier_fk">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="SupplierSupplyCategory" Type="Self.SupplierSupplyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="IdSupplier" />
+            </Principal>
+            <Dependent Role="SupplierSupplyCategory">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplyCategory_IdSupplyCategory_fk">
+          <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
+          <End Role="SupplierSupplyCategory" Type="Self.SupplierSupplyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplyCategory">
+              <PropertyRef Name="IdSupplyCategory" />
+            </Principal>
+            <Dependent Role="SupplierSupplyCategory">
+              <PropertyRef Name="IdSupplyCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -636,6 +655,7 @@
           <EntitySet Name="RecipeSupply" EntityType="Self.RecipeSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierOrder" EntityType="Self.SupplierOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierSupplyCategory" EntityType="Self.SupplierSupplyCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supply" EntityType="Self.Supply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplyCategory" EntityType="Self.SupplyCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplyInventoryReport" EntityType="Self.SupplyInventoryReport" Schema="dbo" store:Type="Tables" />
@@ -728,10 +748,6 @@
             <End Role="Supply" EntitySet="Supply" />
             <End Role="RecipeSupply" EntitySet="RecipeSupply" />
           </AssociationSet>
-          <AssociationSet Name="Supplier_IdSupplyCategory_fk" Association="Self.Supplier_IdSupplyCategory_fk">
-            <End Role="SupplyCategory" EntitySet="SupplyCategory" />
-            <End Role="Supplier" EntitySet="Supplier" />
-          </AssociationSet>
           <AssociationSet Name="SupplierOrder_IdOrderStatus_fk" Association="Self.SupplierOrder_IdOrderStatus_fk">
             <End Role="OrderStatus" EntitySet="OrderStatus" />
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
@@ -739,6 +755,14 @@
           <AssociationSet Name="SupplierOrder_IdSupplier_fk" Association="Self.SupplierOrder_IdSupplier_fk">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplyCategory_IdSupplier_fk" Association="Self.SupplierSupplyCategory_IdSupplier_fk">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierSupplyCategory" EntitySet="SupplierSupplyCategory" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplyCategory_IdSupplyCategory_fk" Association="Self.SupplierSupplyCategory_IdSupplyCategory_fk">
+            <End Role="SupplyCategory" EntitySet="SupplyCategory" />
+            <End Role="SupplierSupplyCategory" EntitySet="SupplierSupplyCategory" />
           </AssociationSet>
           <AssociationSet Name="Supply_IdMeasurementUnit_fk" Association="Self.Supply_IdMeasurementUnit_fk">
             <End Role="MeasurementUnit" EntitySet="MeasurementUnit" />
@@ -996,10 +1020,9 @@
           </Key>
           <Property Name="IdSupplier" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdSupplierCategory" Type="Int32" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="SupplyCategory" Relationship="Self.Supplier_IdSupplyCategory_fk" FromRole="Supplier" ToRole="SupplyCategory" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.SupplierOrder_IdSupplier_fk" FromRole="Supplier" ToRole="SupplierOrder" />
+          <NavigationProperty Name="SupplierSupplyCategory" Relationship="Self.SupplierSupplyCategory_IdSupplier_fk" FromRole="Supplier" ToRole="SupplierSupplyCategory" />
         </EntityType>
         <EntityType Name="SupplierOrder">
           <Key>
@@ -1015,6 +1038,16 @@
           <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdSupplierOrder_fk" FromRole="SupplierOrder" ToRole="OrderedSupply" />
           <NavigationProperty Name="OrderStatus" Relationship="Self.SupplierOrder_IdOrderStatus_fk" FromRole="SupplierOrder" ToRole="OrderStatus" />
           <NavigationProperty Name="Supplier" Relationship="Self.SupplierOrder_IdSupplier_fk" FromRole="SupplierOrder" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="SupplierSupplyCategory">
+          <Key>
+            <PropertyRef Name="IdSupplierSupplyCategory" />
+          </Key>
+          <Property Name="IdSupplierSupplyCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSupplier" Type="Guid" Nullable="false" />
+          <Property Name="IdSupplyCategory" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Self.SupplierSupplyCategory_IdSupplier_fk" FromRole="SupplierSupplyCategory" ToRole="Supplier" />
+          <NavigationProperty Name="SupplyCategory" Relationship="Self.SupplierSupplyCategory_IdSupplyCategory_fk" FromRole="SupplierSupplyCategory" ToRole="SupplyCategory" />
         </EntityType>
         <EntityType Name="Supply">
           <Key>
@@ -1039,7 +1072,7 @@
           </Key>
           <Property Name="IdSupplyCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SupplyCategory1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Supplier" Relationship="Self.Supplier_IdSupplyCategory_fk" FromRole="SupplyCategory" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierSupplyCategory" Relationship="Self.SupplierSupplyCategory_IdSupplyCategory_fk" FromRole="SupplyCategory" ToRole="SupplierSupplyCategory" />
           <NavigationProperty Name="Supply" Relationship="Self.Supply_IdSupplyCategory_fk" FromRole="SupplyCategory" ToRole="Supply" />
         </EntityType>
         <EntityType Name="SupplyInventoryReport">
@@ -1393,18 +1426,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Supplier_IdSupplyCategory_fk">
-          <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplyCategory">
-              <PropertyRef Name="IdSupplyCategory" />
-            </Principal>
-            <Dependent Role="Supplier">
-              <PropertyRef Name="IdSupplierCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="SupplierOrder_IdSupplier_fk">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
           <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
@@ -1414,6 +1435,30 @@
             </Principal>
             <Dependent Role="SupplierOrder">
               <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplyCategory_IdSupplier_fk">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="SupplierSupplyCategory" Type="Self.SupplierSupplyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="IdSupplier" />
+            </Principal>
+            <Dependent Role="SupplierSupplyCategory">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplyCategory_IdSupplyCategory_fk">
+          <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
+          <End Role="SupplierSupplyCategory" Type="Self.SupplierSupplyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplyCategory">
+              <PropertyRef Name="IdSupplyCategory" />
+            </Principal>
+            <Dependent Role="SupplierSupplyCategory">
+              <PropertyRef Name="IdSupplyCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1462,6 +1507,7 @@
           <EntitySet Name="RecipeSupply" EntityType="Self.RecipeSupply" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" />
           <EntitySet Name="SupplierOrder" EntityType="Self.SupplierOrder" />
+          <EntitySet Name="SupplierSupplyCategory" EntityType="Self.SupplierSupplyCategory" />
           <EntitySet Name="Supply" EntityType="Self.Supply" />
           <EntitySet Name="SupplyCategory" EntityType="Self.SupplyCategory" />
           <EntitySet Name="SupplyInventoryReport" EntityType="Self.SupplyInventoryReport" />
@@ -1574,13 +1620,17 @@
             <End Role="Supply" EntitySet="Supply" />
             <End Role="RecipeSupply" EntitySet="RecipeSupply" />
           </AssociationSet>
-          <AssociationSet Name="Supplier_IdSupplyCategory_fk" Association="Self.Supplier_IdSupplyCategory_fk">
-            <End Role="SupplyCategory" EntitySet="SupplyCategory" />
-            <End Role="Supplier" EntitySet="Supplier" />
-          </AssociationSet>
           <AssociationSet Name="SupplierOrder_IdSupplier_fk" Association="Self.SupplierOrder_IdSupplier_fk">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierOrder" EntitySet="SupplierOrder" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplyCategory_IdSupplier_fk" Association="Self.SupplierSupplyCategory_IdSupplier_fk">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierSupplyCategory" EntitySet="SupplierSupplyCategory" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplyCategory_IdSupplyCategory_fk" Association="Self.SupplierSupplyCategory_IdSupplyCategory_fk">
+            <End Role="SupplyCategory" EntitySet="SupplyCategory" />
+            <End Role="SupplierSupplyCategory" EntitySet="SupplierSupplyCategory" />
           </AssociationSet>
           <AssociationSet Name="Supply_IdSupplyCategory_fk" Association="Self.Supply_IdSupplyCategory_fk">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
@@ -1795,7 +1845,6 @@
               <MappingFragment StoreEntitySet="Supplier">
                 <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdSupplierCategory" ColumnName="IdSupplierCategory" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1810,6 +1859,15 @@
                 <ScalarProperty Name="ExpectedDate" ColumnName="ExpectedDate" />
                 <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
                 <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierSupplyCategory">
+            <EntityTypeMapping TypeName="ItaliasPizzaDBModel.SupplierSupplyCategory">
+              <MappingFragment StoreEntitySet="SupplierSupplyCategory">
+                <ScalarProperty Name="IdSupplierSupplyCategory" ColumnName="IdSupplierSupplyCategory" />
+                <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
+                <ScalarProperty Name="IdSupplyCategory" ColumnName="IdSupplyCategory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

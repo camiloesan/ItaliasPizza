@@ -17,7 +17,7 @@ namespace Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SupplyCategory()
         {
-            this.Supplier = new HashSet<Supplier>();
+            this.SupplierSupplyCategory = new HashSet<SupplierSupplyCategory>();
             this.Supply = new HashSet<Supply>();
         }
     
@@ -25,7 +25,7 @@ namespace Database
         public string SupplyCategory1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<SupplierSupplyCategory> SupplierSupplyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supply> Supply { get; set; }
     }

@@ -25,5 +25,14 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.Supplier.ToList();
             }
         }
+
+        public static int SaveSupplierSuppliCategory(SupplierSupplyCategory supplierSupplyCategory)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.SupplierSupplyCategory.Add(supplierSupplyCategory);
+                return db.SaveChanges();
+            }
+        }
     }
 }

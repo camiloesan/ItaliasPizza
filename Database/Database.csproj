@@ -132,6 +132,9 @@
     <Compile Include="SupplierOrder.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SupplierSupplyCategory.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Supply.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>

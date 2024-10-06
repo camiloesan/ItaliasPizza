@@ -28,7 +28,7 @@ namespace ItaliasPizza.Pages
 
             var items = new ObservableCollection<Supplier>
             {
-                new Supplier { Name = "Bryam", IdSupplierCategory = 1, Phone = "2282739074" },
+                new Supplier { Name = "Bryam", Phone = "2282739074" },
             };
 
             DtgSuppliers.ItemsSource = items;
