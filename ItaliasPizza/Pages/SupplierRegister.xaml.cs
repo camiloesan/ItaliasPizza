@@ -48,6 +48,12 @@ namespace ItaliasPizza.Pages
             return regex.IsMatch(TxtPhone.Text);
         }
 
+        private void ResetForm()
+        {
+            TxtName.Text = string.Empty;
+            TxtPhone.Text = string.Empty;
+        }
+
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
             if (!AreFieldsFilled())
@@ -60,7 +66,28 @@ namespace ItaliasPizza.Pages
             }
             else
             {
-                
+                SupplyCategory supplierCategory = (SupplyCategory)CbCategory.SelectedItem;
+
+                Supplier supplier = new Supplier
+                {
+                    IdSupplier = Guid.NewGuid(),
+                    Name = TxtName.Text,
+                    IdSupplierCategory = supplierCategory.IdSupplyCategory,
+                    Phone = TxtPhone.Text,
+                };
+
+                int result = SupplierOperations.SaveSupplier(supplier);
+
+                if (result == 0)
+                {
+                    MessageBox.Show("No se pudo registrar el proveedor, inténtalo de nuevo más tarde");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Proveedor registrado exitosamente");
+                    ResetForm();
+                }
             }
         }
 
