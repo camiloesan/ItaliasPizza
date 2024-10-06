@@ -26,14 +26,20 @@
             <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
             <Label Content="Número de categorías del proveedor (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtCategoryCount" Margin="5" Width="200" HorizontalAlignment="Left" TextChanged="TxtCategoryCount_TextChanged"/>
-            <Label x:Name="LblCategories" Content="Categorías(*) Selecciona un número de proveedores" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
+                <TextBox x:Name="TxtCategoryCount" IsReadOnly="True" Text="1" Margin="5" Width="50" HorizontalAlignment="Left" TextChanged="TxtCategoryCount_TextChanged"/>
+                <Button Content="▲" Width="30" Click="Btn_IncreaseCategory" />
+                <Button Content="▼" Width="30" Click="Btn_DecreaseCategory" />
+            </StackPanel>
+
+            <Label Content="Categorías(*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <WrapPanel x:Name="CategoryPanel" Margin="5,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal"/>
             <Label Content="Teléfono (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtPhone" Margin="5" HorizontalAlignment="Left" Width="200"/>
 
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,296,0,8">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="0,100,0,0">
                 <Button Margin="5" Content="Guardar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
                 <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
             </StackPanel>
