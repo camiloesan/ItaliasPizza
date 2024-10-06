@@ -68,6 +68,9 @@
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
     <Compile Include="DataAccessLayer\ChargesOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
+    <Compile Include="Pages\ProductModification.xaml.cs">
+      <DependentUpon>ProductModification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\SessionDetails.cs" />
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
@@ -94,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmployeeRegister.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProductModification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
