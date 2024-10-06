@@ -16,13 +16,12 @@ namespace ItaliasPizza.Pages
         readonly Employee employee;
         readonly string employeeEmail;
 
-        public EmployeeModification() // add guid parameter
+        public EmployeeModification(Guid employeeId)
         {
-            var employeeId = guid;
             InitializeComponent();
             employee = EmployeeOperations.GetEmployeeById(employeeId);
             employeeEmail = EmployeeOperations.GetEmployeeEmail(employeeId);
-            guid = employeeId;
+            this.guid = employeeId;
             charges = ChargesOperations.GetCharges();
             CbCharge.ItemsSource = charges;
             FillFields(employee);
