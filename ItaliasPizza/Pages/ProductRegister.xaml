@@ -27,7 +27,7 @@
             <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
             <Label Content="Tamaño (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <ComboBox x:Name="CbSize" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
-                <ComboBoxItem IsEnabled="False" Content="Selecciona el estado" />
+                <ComboBoxItem IsEnabled="False" Content="Selecciona el tamaño" />
                 <ComboBoxItem>Chico</ComboBoxItem>
                 <ComboBoxItem>Mediano</ComboBoxItem>
                 <ComboBoxItem>Grande</ComboBoxItem>

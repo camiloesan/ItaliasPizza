@@ -25,5 +25,31 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.Database.SqlQuery<int>("SELECT dbo.fn_CalculateMaxProducts(@idProduct)", new System.Data.SqlClient.SqlParameter("@idProduct", idProduct)).FirstOrDefault();
 			}
 		}
-	}
+
+        public static int SaveProduct(Product product)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Product.Add(product);
+                return db.SaveChanges();
+            }
+        }
+
+        public static int UpdateProduct(Product product)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                return db.SaveChanges();
+            }
+        }
+
+        public static bool IsProductNameDuplicated(string name)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Product.Any(p => p.Name == name);
+            }
+        }
+    }
 }

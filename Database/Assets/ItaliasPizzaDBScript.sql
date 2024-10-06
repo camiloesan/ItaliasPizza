@@ -66,6 +66,7 @@ CREATE TABLE Product (
     [Name] VARCHAR(50) NOT NULL,
     [IdType] INT NOT NULL,
     Price DECIMAL(12, 2) NOT NULL,
+    Size VARCHAR(20) NOT NULL,
     [Status] BIT NOT NULL
 );
 GO

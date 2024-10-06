@@ -68,6 +68,7 @@
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
     <Compile Include="DataAccessLayer\ChargesOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
+    <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
     <Compile Include="Pages\ProductModification.xaml.cs">
       <DependentUpon>ProductModification.xaml</DependentUpon>
     </Compile>
