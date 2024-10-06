@@ -24,22 +24,22 @@ namespace ItaliasPizza.Pages
     /// </summary>
     public partial class SupplierOrderRegister : Page
     {
+        private const int KILOGRAMS_ID = 1;
+        private const int UNITS_ID = 2;
+        private const int LITERS_ID = 3;
+
         public SupplierOrderRegister()
         {
             InitializeComponent();
             CbSupplier.ItemsSource = GetSuppliers();
-            CbSupply.ItemsSource = GetSupplies();
             CbMeasurementUnit.ItemsSource = GetMeasurementUnits();
+            Supplier supplier = (Supplier)CbSupplier.SelectedItem;
+            CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
         }
 
         private List<Supplier> GetSuppliers()
         {
             return SupplierOperations.GetAllSuppliers();
-        }
-
-        private List<Supply> GetSupplies()
-        {
-            return SupplyOperations.GetAllSupplies();
         }
 
         private List<MeasurementUnit> GetMeasurementUnits()
@@ -53,7 +53,8 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(DtpEstimatedArrival.Text)
                 && !string.IsNullOrEmpty(CbSupplier.Text)
                 && !string.IsNullOrEmpty(CbSupply.Text)
-                && !string.IsNullOrEmpty(TxtAmount.Text);
+                && !string.IsNullOrEmpty(TxtAmount.Text)
+                && !string.IsNullOrEmpty(CbMeasurementUnit.Text);
         }
 
         private bool IsQuantityValid()
@@ -68,12 +69,19 @@ namespace ItaliasPizza.Pages
             return DtpOrder.SelectedDate < DtpEstimatedArrival.SelectedDate;
         }
 
+        private void ResetForm()
+        {
+            DtpOrder.Text = string.Empty;
+            DtpEstimatedArrival.Text = string.Empty;
+            TxtAmount.Text = string.Empty;
+        }
+
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
             if (!AreFieldsFilled())
             {
                 MessageBox.Show("Todos los campos deben contener información");
-            } else if (IsDateValid())
+            } else if (!IsDateValid())
             {
                 MessageBox.Show("Las fecha estimada de llegada debe ser posterior a la fecha del pedido");
             } else if (!IsQuantityValid())
@@ -81,13 +89,61 @@ namespace ItaliasPizza.Pages
                 MessageBox.Show("La cantidad solo debe contener números (con decimales si lo desea)");
             } else
             {
+                Supplier supplier = (Supplier)CbSupplier.SelectedItem;
+                Supply supply = (Supply)CbSupply.SelectedItem;
+                MeasurementUnit measurementUnit = (MeasurementUnit)CbMeasurementUnit.SelectedItem;
 
+                SupplierOrder supplierOrder = new SupplierOrder
+                {
+                    IdSupplierOrder = Guid.NewGuid(),
+                    IdSupplier = supplier.IdSupplier,
+                    IdSupply = supply.IdSupply,
+                    OrderDate = (DateTime)DtpOrder.SelectedDate,
+                    ExpectedDate = (DateTime)DtpEstimatedArrival.SelectedDate,
+                    ArrivalDate = (DateTime)DtpEstimatedArrival.SelectedDate,
+                    IdOrderStatus = 1
+                };
+
+                int result = SupplierOrderOperations.SaveSupplierOrder(supplierOrder);
+
+                if (result == 0)
+                {
+                    MessageBox.Show("No se pudo registrar el pedido a proveedor, inténtalo de nuevo más tarde");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Pedido a proveedor registrado exitosamente");
+                    ResetForm();
+                }
             }
         }
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CbSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Supplier supplier = (Supplier)CbSupplier.SelectedItem;
+            CbSupply.ItemsSource = SupplyOperations.GetSuppliesByCategory(supplier.IdSupplierCategory);
+
+            switch (supplier.IdSupplierCategory)
+            {
+                case 2:
+                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+                    break;
+                case 8:
+                    CbMeasurementUnit.SelectedIndex = LITERS_ID - 1;
+                    break;
+                case 9:
+                    CbMeasurementUnit.SelectedIndex = UNITS_ID - 1;
+                    break;
+                default:
+                    CbMeasurementUnit.SelectedIndex = KILOGRAMS_ID - 1;
+                    break;
+            }
         }
     }
 }

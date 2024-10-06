@@ -26,7 +26,7 @@
             <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
             <Label Content="Categoría (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox x:Name="CbCategory" DisplayMemberPath="SupplyCategory1" SelectedValuePath="IdSupplyCategory" IsEditable="False" SelectionChanged="CbMeasurementUnit_SelectionChanged" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"/>
+            <ComboBox x:Name="CbCategory" DisplayMemberPath="SupplyCategory1" SelectedValuePath="IdSupplyCategory" IsEditable="False" SelectionChanged="CbCategory_SelectionChanged" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"/>
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
                 <Label Content="Cantidad (*)" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>

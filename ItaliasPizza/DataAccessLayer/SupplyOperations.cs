@@ -88,11 +88,11 @@ namespace ItaliasPizza.DataAccessLayer
             return result;
         }
 
-        public static List<Supply> GetAllSupplies()
+        public static List<Supply> GetSuppliesByCategory(int IdCategory)
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
-                return db.Supply.ToList();
+                return db.Supply.Where(s => s.IdSupplyCategory == IdCategory).ToList();
             }
         }
     }

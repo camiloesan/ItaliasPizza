@@ -48,7 +48,12 @@ namespace ItaliasPizza.Pages
 
         private void FillFields()
         {
-            Supply supply = SupplyOperations.GetSupplyById(Guid.Parse("5df88935-c789-4bca-a80a-68c1758d766f"));
+            Supply supply;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                supply = db.Supply.FirstOrDefault();
+            }
 
             SupplyDetails.IdSupply = supply.IdSupply;
             SupplyDetails.Name = supply.Name;

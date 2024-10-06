@@ -116,7 +116,7 @@ namespace ItaliasPizza.Pages
 
         }
 
-        private void CbMeasurementUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SupplyCategory supplyCategory = (SupplyCategory)CbCategory.SelectedItem;
 
