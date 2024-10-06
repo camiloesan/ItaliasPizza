@@ -83,7 +83,7 @@ namespace ItaliasPizza.Pages
                     Name = name,
                     Quantity = amount,
                     IdSupplyCategory = supplyCategory.IdSupplyCategory,
-                    MeasurementUnit = DtpExpiration.Text,
+                    //MeasurementUnit = DtpExpiration.Text,
                     Status = true,
                 };
 

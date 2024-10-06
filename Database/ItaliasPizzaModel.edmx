@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="IdAccessAccount" />
@@ -201,6 +201,7 @@
           <Property Name="Quantity" Type="decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="IdSupplyCategory" Type="int" Nullable="false" />
           <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
+          <Property Name="ExpirationDate" Type="date" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplyCategory">
@@ -709,7 +710,8 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ItaliasPizzaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -954,6 +956,7 @@
           <Property Name="Quantity" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
           <Property Name="IdSupplyCategory" Type="Int32" Nullable="false" />
           <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="MeasurementUnit" Relationship="Self.Supply_IdMeasurementUnit_fk" FromRole="Supply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="OrderedSupply" Relationship="Self.OrderedSupply_IdSupply_fk" FromRole="Supply" ToRole="OrderedSupply" />
@@ -1690,6 +1693,7 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IdSupplyCategory" ColumnName="IdSupplyCategory" />
                 <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>

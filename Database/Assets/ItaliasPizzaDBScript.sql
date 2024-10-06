@@ -189,6 +189,7 @@ CREATE TABLE Supply (
     Quantity DECIMAL(12, 3) NOT NULL,
     IdSupplyCategory INT NOT NULL,
     IdMeasurementUnit INT NOT NULL,
+    ExpirationDate DATE NOT NULL,
     [Status] BIT NOT NULL
 );
 GO
