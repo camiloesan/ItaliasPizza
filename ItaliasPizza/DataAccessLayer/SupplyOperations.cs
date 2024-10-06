@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.SupplyCategory.ToList();
             }
         }
-        
+
         public static List<MeasurementUnit> GetMeasurementUnits()
         {
             using (var db = new ItaliasPizzaDBEntities())
@@ -88,11 +89,15 @@ namespace ItaliasPizza.DataAccessLayer
             return result;
         }
 
-        public static List<Supply> GetSuppliesByCategory(int IdCategory)
+        public static List<Supply> GetSuppliesByCategoriesOfSupplier(Guid IdSupplier)
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
-                return db.Supply.Where(s => s.IdSupplyCategory == IdCategory).ToList();
+                return db.Supply.Where(s => db.SupplierSupplyCategory
+                                .Where(ssc => ssc.IdSupplier == IdSupplier)
+                                .Select(ssc => ssc.IdSupplyCategory)
+                                .Contains(s.IdSupplyCategory))
+                                .ToList();
             }
         }
     }
