@@ -18,15 +18,16 @@ namespace Database
         public Supplier()
         {
             this.SupplierOrder = new HashSet<SupplierOrder>();
+            this.SupplierSupplyCategory = new HashSet<SupplierSupplyCategory>();
         }
     
         public System.Guid IdSupplier { get; set; }
         public string Name { get; set; }
-        public int IdSupplierCategory { get; set; }
         public string Phone { get; set; }
     
-        public virtual SupplyCategory SupplyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplierSupplyCategory> SupplierSupplyCategory { get; set; }
     }
 }

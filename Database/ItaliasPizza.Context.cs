@@ -45,6 +45,7 @@ namespace Database
         public virtual DbSet<RecipeSupply> RecipeSupply { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<SupplierOrder> SupplierOrder { get; set; }
+        public virtual DbSet<SupplierSupplyCategory> SupplierSupplyCategory { get; set; }
         public virtual DbSet<Supply> Supply { get; set; }
         public virtual DbSet<SupplyCategory> SupplyCategory { get; set; }
         public virtual DbSet<SupplyInventoryReport> SupplyInventoryReport { get; set; }
