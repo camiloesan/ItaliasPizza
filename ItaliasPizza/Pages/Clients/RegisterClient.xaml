@@ -58,10 +58,9 @@
 				<TextBox x:Name="TxtLastName" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
 
 				<Label Content="Teléfono (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-				<TextBox x:Name="TxtPhone" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
+				<TextBox x:Name="TxtPhone" PreviewTextInput="TxtNumber_PreviewTextInput" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
 
 				<Label Content="Dirección" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="0,5,0,0"/>
-
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
@@ -70,27 +69,23 @@
 					</Grid.ColumnDefinitions>
 
 					<StackPanel Grid.Column="0" Orientation="Vertical">
-
 						<Label Content="Calle (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
 						<TextBox x:Name="TxtStreet" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
-
 
 						<Label Content="Colonia (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
 						<TextBox x:Name="TxtColony" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
 					</StackPanel>
 
 					<StackPanel Grid.Column="2" Orientation="Vertical">
-
 						<Label Content="Numero (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-						<TextBox x:Name="TxtNumber" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
-
+						<TextBox x:Name="TxtNumber" PreviewTextInput="TxtNumber_PreviewTextInput" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
 
 						<Label Content="Código Postal (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-						<TextBox x:Name="TxtPostalCode" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
+						<TextBox x:Name="TxtPostalCode" PreviewTextInput="TxtNumber_PreviewTextInput" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" MaxLength="64"/>
 					</StackPanel>
 				</Grid>
 
-				<Label Content="Referencia (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="14"/>
+				<Label Content="Referencia" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="14"/>
 				<TextBox x:Name="TxtReference" Margin="5" HorizontalAlignment="Stretch" FontSize="14" Height="100"/>
 
 				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="15">

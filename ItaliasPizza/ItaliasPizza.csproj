@@ -66,6 +66,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
+    <Compile Include="DataAccessLayer\AddressOperations.cs" />
+    <Compile Include="DataAccessLayer\ClientOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
     <Compile Include="DataAccessLayer\LocalOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductOperations.cs" />
