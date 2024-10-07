@@ -1,8 +1,6 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,15 +8,15 @@ using System.Windows.Media;
 
 namespace ItaliasPizza.Pages
 {
-    public partial class RegistroEmpleado : Page
+    public partial class EmployeeRegister : Page
     {
-        public RegistroEmpleado()
+        public EmployeeRegister()
         {
             InitializeComponent();
-            CbCharge.ItemsSource = GetCharges();
+            CbCharge.ItemsSource = ChargesOperations.GetCharges();
         }
 
-        public RegistroEmpleado(bool _) {}
+        public EmployeeRegister(bool _) {}
 
         public bool IsPasswordMatch(string password, string confirmedPassword)
         {
@@ -116,15 +114,6 @@ namespace ItaliasPizza.Pages
             CbStatus.BorderThickness = new Thickness(1);
             CbCharge.BorderBrush = Brushes.Black;
             CbCharge.BorderThickness = new Thickness(1);
-        }
-
-        
-        public List<Charge> GetCharges()
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                return db.Charge.ToList();
-            }
         }
 
         private void Btn_Save(object sender, RoutedEventArgs e)

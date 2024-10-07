@@ -66,9 +66,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
+    <Compile Include="DataAccessLayer\ChargesOperations.cs" />
     <Compile Include="DataAccessLayer\AddressOperations.cs" />
     <Compile Include="DataAccessLayer\ClientOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
+    <Compile Include="DataAccessLayer\SupplierOperations.cs" />
+    <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
+    <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
+    <Compile Include="Pages\ProductModification.xaml.cs">
+      <DependentUpon>ProductModification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataAccessLayer\LocalOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductOperations.cs" />
     <Compile Include="Pages\Clients\RegisterClient.xaml.cs">
@@ -102,7 +109,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\ModificacionEmpleado.xaml">
+    <Page Include="Pages\EmployeeModification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,11 +117,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\RegistroEmpleado.xaml">
+    <Page Include="Pages\EmployeeRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\RegistroProductoMenu.xaml">
+    <Page Include="Pages\ProductModification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProductRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,14 +151,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\ModificacionEmpleado.xaml.cs">
-      <DependentUpon>ModificacionEmpleado.xaml</DependentUpon>
+    <Compile Include="Pages\EmployeeModification.xaml.cs">
+      <DependentUpon>EmployeeModification.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RegistroEmpleado.xaml.cs">
-      <DependentUpon>RegistroEmpleado.xaml</DependentUpon>
+    <Compile Include="Pages\EmployeeRegister.xaml.cs">
+      <DependentUpon>EmployeeRegister.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RegistroProductoMenu.xaml.cs">
-      <DependentUpon>RegistroProductoMenu.xaml</DependentUpon>
+    <Compile Include="Pages\ProductRegister.xaml.cs">
+      <DependentUpon>ProductRegister.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SupplierOrderRegister.xaml.cs">
       <DependentUpon>SupplierOrderRegister.xaml</DependentUpon>

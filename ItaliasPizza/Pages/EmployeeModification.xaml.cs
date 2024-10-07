@@ -2,7 +2,6 @@
 using ItaliasPizza.DataAccessLayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,17 +9,23 @@ using System.Windows.Media;
 
 namespace ItaliasPizza.Pages
 {
-    public partial class ModificacionEmpleado : Page
+    public partial class EmployeeModification : Page
     {
-        Guid guid = Guid.Empty;
+        Guid guid = Guid.Parse("ce3b85b5-6c17-45ea-8bbb-e39e7cd1a662");
+        readonly List<Charge> charges = new List<Charge>();
+        readonly Employee employee;
+        readonly string employeeEmail;
 
-        public ModificacionEmpleado(Guid employeeId)
+        public EmployeeModification() // add guid parameter
         {
+            var employeeId = guid;
             InitializeComponent();
-            Employee employee = EmployeeOperations.GetEmployeeById(employeeId);
-            FillFields(employee);
+            employee = EmployeeOperations.GetEmployeeById(employeeId);
+            employeeEmail = EmployeeOperations.GetEmployeeEmail(employeeId);
             guid = employeeId;
-            CbCharge.ItemsSource = GetCharges();
+            charges = ChargesOperations.GetCharges();
+            CbCharge.ItemsSource = charges;
+            FillFields(employee);
         }
 
         private void ResetTextFormBorders()
@@ -49,20 +54,21 @@ namespace ItaliasPizza.Pages
                 MessageBox.Show("Por favor llene todos los campos");
                 return;
             }
-            else if (EmployeeOperations.IsPhoneRegistered(TxtPhone.Text))
+            else if (!employee.Phone.Equals(TxtPhone.Text))
             {
-                MessageBox.Show("El número de teléfono ya está registrado, ingrese uno diferente");
-                return;
+                if (EmployeeOperations.IsPhoneRegistered(TxtPhone.Text))
+                {
+                    MessageBox.Show("El número de teléfono ya está registrado, ingrese uno diferente");
+                    return;
+                }
             }
-            else if (EmployeeOperations.IsEmailRegistered(TxtEmail.Text))
+            else if (!employeeEmail.Equals(TxtEmail.Text))
             {
-                MessageBox.Show("El correo electrónico ya está registrado, ingrese uno diferente");
-                return;
-            }
-            else if (!IsEmailValid(TxtEmail.Text))
-            {
-                MessageBox.Show("El correo electrónico no es válido, ingrese un formato válido");
-                return;
+                if (EmployeeOperations.IsEmailRegistered(TxtEmail.Text))
+                {
+                    MessageBox.Show("El correo electrónico ya está registrado, ingrese uno diferente");
+                    return;
+                }
             }
             else if (CbStatus.SelectedIndex == 0)
             {
@@ -71,6 +77,13 @@ namespace ItaliasPizza.Pages
             }
             else
             {
+                bool confirmSave = ConfirmSave();
+
+                if (!confirmSave)
+                {
+                    return;
+                }
+
                 string name = TxtName.Text;
                 string lastName = TxtLastName.Text;
                 string phone = TxtPhone.Text;
@@ -97,20 +110,35 @@ namespace ItaliasPizza.Pages
                     IdCharge = charge.IdCharge
                 };
 
-                int resultEmployeeUpdate = EmployeeOperations.UpdateEmployee(employee);
-                int resultAccountUpdate = EmployeeOperations.UpdateEmployeePasswordAndEmail(employeeId, password, email);
+                try
+                {
+                    EmployeeOperations.UpdateEmployee(employee);
+                    EmployeeOperations.UpdateEmployeePasswordAndEmail(employeeId, password, email);
+                } catch
+                {
+                    MessageBox.Show("No se pudo modificar al empleado en este momento, inténtelo de nuevo más tarde");
+                }
 
-                if (resultEmployeeUpdate == 0 || resultAccountUpdate == 0)
-                {
-                    MessageBox.Show("No se pudo modificar al empleado, inténtalo de nuevo más tarde");
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("Empleado modificado exitosamente");
-                    ResetTextFormBorders();
-                }
+                MessageBox.Show("Empleado modificado exitosamente");
+                ResetTextFormBorders();
             }
+        }
+
+        private bool ConfirmSave()
+        {
+            MessageBoxResult result = MessageBox.Show(
+                "¿Está seguro de que desea modificar al usuario?",
+                "Confirmación",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question
+            );
+
+            if (result == MessageBoxResult.Cancel)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void Btn_Save(object sender, RoutedEventArgs e)
@@ -123,32 +151,27 @@ namespace ItaliasPizza.Pages
             // todo return previous page
         }
 
-        private List<Charge> GetCharges()
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                return db.Charge.ToList();
-            }
-        }
-
         private void FillFields(Employee employee)
         {
-            string employeeEmail = EmployeeOperations.GetEmployeeEmail(employee.IdEmployee);
             TxtName.Text = employee.FirstName;
             TxtLastName.Text = employee.LastName;
             TxtPhone.Text = employee.Phone;
             TxtEmail.Text = employeeEmail;
-            CbCharge.SelectedIndex = employee.IdCharge;
+
+            int indexCharge = charges.IndexOf(charges.Find(a => a.IdCharge == employee.IdCharge));
+            CbCharge.SelectedIndex = indexCharge;
+
             TxtPassword.Password = AccessAccountOperations.GetEmployeePassword(employeeEmail);
             if (employee.Status)
             {
-                CbStatus.SelectedIndex = 0;
+                CbStatus.SelectedIndex = 1;
             }
             else
             {
-                CbStatus.SelectedIndex = 1;
+                CbStatus.SelectedIndex = 2;
             }
         }
+
         private bool AreFieldsFilled()
         {
             return !string.IsNullOrEmpty(TxtName.Text)
@@ -192,13 +215,13 @@ namespace ItaliasPizza.Pages
                 TxtLastName.BorderThickness = new Thickness(2);
             }
 
-            if (string.IsNullOrEmpty(phone) || isPhoneRegistered)
+            if (string.IsNullOrEmpty(phone) || (!employee.Phone.Equals(phone) && isPhoneRegistered))
             {
                 TxtPhone.BorderBrush = Brushes.Red;
                 TxtPhone.BorderThickness = new Thickness(2);
             }
 
-            if (string.IsNullOrEmpty(email) || !isEmailValid || !isEmailRegistered)
+            if (string.IsNullOrEmpty(email) || !isEmailValid || (!employeeEmail.Equals(email) && isEmailRegistered))
             {
                 TxtEmail.BorderBrush = Brushes.Red;
                 TxtEmail.BorderThickness = new Thickness(2);

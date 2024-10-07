@@ -1,7 +1,4 @@
-﻿using ItaliasPizza.Pages;
-using ItaliasPizza.Pages.Clients;
-using ItaliasPizza.Pages.Orders;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,20 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ItaliasPizza
+namespace ItaliasPizza.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ProductModification.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProductModification : Page
     {
-        public MainWindow()
+        public ProductModification()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //Closing += OnWindowClosing;
-            Login login = new Login();
-			Content = login;
+        }
+
+        private void Btn_Save(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Cancel(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
