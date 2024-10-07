@@ -67,6 +67,8 @@
     </ApplicationDefinition>
     <Compile Include="DataAccessLayer\AccessAccountOperations.cs" />
     <Compile Include="DataAccessLayer\ChargesOperations.cs" />
+    <Compile Include="DataAccessLayer\AddressOperations.cs" />
+    <Compile Include="DataAccessLayer\ClientOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
@@ -76,11 +78,18 @@
     </Compile>
     <Compile Include="DataAccessLayer\LocalOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductOperations.cs" />
+    <Compile Include="Pages\Clients\RegisterClient.xaml.cs">
+      <DependentUpon>RegisterClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Orders\AddLocalOrder.xaml.cs">
       <DependentUpon>AddLocalOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />
+    <Page Include="Pages\Clients\RegisterClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +243,7 @@
     <Resource Include="Assets\Images\add_icon_black.png" />
     <Resource Include="Assets\Images\remove_icon_black.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -18,7 +18,7 @@ namespace Database
         public System.Guid IdClient { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }
-        public short PostalCode { get; set; }
+        public string PostalCode { get; set; }
         public string Colony { get; set; }
         public bool Status { get; set; }
         public string Reference { get; set; }

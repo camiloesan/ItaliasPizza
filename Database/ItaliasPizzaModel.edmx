@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="IdAccessAccount" />
@@ -24,7 +24,7 @@
           <Property Name="IdClient" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Street" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Number" Type="int" Nullable="false" />
-          <Property Name="PostalCode" Type="smallint" Nullable="false" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Colony" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Reference" Type="varchar" MaxLength="100" />
@@ -56,8 +56,8 @@
             <PropertyRef Name="IdClient" />
           </Key>
           <Property Name="IdClient" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="80" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="DeliveryOrder">
@@ -634,6 +634,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_CalculateMaxProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="ItaliasPizzaDBModelStoreContainer">
           <EntitySet Name="AccessAccount" EntityType="Self.AccessAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
@@ -789,7 +792,8 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ItaliasPizzaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -813,7 +817,7 @@
           <Property Name="IdClient" Type="Guid" Nullable="false" />
           <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Number" Type="Int32" Nullable="false" />
-          <Property Name="PostalCode" Type="Int16" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Colony" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Reference" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -848,8 +852,8 @@
             <PropertyRef Name="IdClient" />
           </Key>
           <Property Name="IdClient" Type="Guid" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.Address_IdClient_fk" FromRole="Client" ToRole="Address" />
           <NavigationProperty Name="DeliveryOrder" Relationship="Self.DeliveryOrder_IdClient_fk" FromRole="Client" ToRole="DeliveryOrder" />
@@ -976,12 +980,12 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdType" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Size" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DeliveryOrderProduct" Relationship="Self.DeliveryOrderProduct_IdProduct_fk" FromRole="Product" ToRole="DeliveryOrderProduct" />
           <NavigationProperty Name="LocalOrderProduct" Relationship="Self.LocalOrderProduct_IdProduct_fk" FromRole="Product" ToRole="LocalOrderProduct" />
           <NavigationProperty Name="ProductType" Relationship="Self.Product_IdType_fk" FromRole="Product" ToRole="ProductType" />
           <NavigationProperty Name="Recipe" Relationship="Self.Recipe_IdProduct_fk" FromRole="Product" ToRole="Recipe" />
-          <Property Name="Size" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -1803,11 +1807,11 @@
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdType" ColumnName="IdType" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
