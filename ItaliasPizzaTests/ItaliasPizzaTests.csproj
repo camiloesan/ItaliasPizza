@@ -70,6 +70,7 @@
     <Compile Include="DataAccessLayer\EmployeeOperationsTests.cs" />
     <Compile Include="DataAccessLayer\LocalOrderOperationsTests.cs" />
     <Compile Include="DataAccessLayer\ProductOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\ClientOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistroEmpleadoTests.cs" />
   </ItemGroup>
@@ -81,6 +82,10 @@
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{99F778D9-402B-4DA6-8BB1-45A6C3580999}</Project>
       <Name>Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ItaliasPizza\ItaliasPizza.csproj">
+      <Project>{4EB91D12-20D5-422D-BFF3-0801F94BBAE1}</Project>
+      <Name>ItaliasPizza</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

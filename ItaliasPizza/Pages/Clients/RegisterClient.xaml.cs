@@ -119,7 +119,6 @@ namespace ItaliasPizza.Pages.Clients
 					MessageBox.Show("Cliente registrado exitosamente.");
 				}
 			}
-
 		}
 
 		private void Btn_Cancel(object sender, RoutedEventArgs e)
@@ -225,7 +224,6 @@ namespace ItaliasPizza.Pages.Clients
 		{
 			string pattern = @"^\d+$";
 			return System.Text.RegularExpressions.Regex.IsMatch(input, pattern);
-			//return long.TryParse(input, out _);
 		}
 
 		private bool IsPhoneNumberValid(string phone)
