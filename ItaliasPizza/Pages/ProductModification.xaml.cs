@@ -50,6 +50,13 @@ namespace ItaliasPizza.Pages
             }
             else
             {
+                bool confirmation = ConfirmationModification();
+
+                if (!confirmation)
+                {
+                    return;
+                }
+
                 UpdateProduct();
             }
         }
@@ -57,6 +64,16 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private bool ConfirmationModification()
+        {
+            MessageBoxResult result = MessageBox.Show("¿Estás seguro de que deseas modificar el producto?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool AreFieldsFilled()
