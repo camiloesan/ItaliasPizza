@@ -43,8 +43,8 @@ GO
 
 CREATE TABLE Client (
     IdClient UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(80) NOT NULL,
+    LastName VARCHAR(80) NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
 GO
@@ -54,7 +54,7 @@ CREATE TABLE [Address] (
     IdClient UNIQUEIDENTIFIER NOT NULL,
     Street VARCHAR(100) NOT NULL,
     [Number] INT NOT NULL,
-    PostalCode SMALLINT NOT NULL,
+    PostalCode VARCHAR(20) NOT NULL,
     Colony VARCHAR(50) NOT NULL,
     [Status] BIT NOT NULL,
     Reference VARCHAR(100)
