@@ -26,8 +26,8 @@ namespace Database
         public string Name { get; set; }
         public int IdType { get; set; }
         public decimal Price { get; set; }
-        public bool Status { get; set; }
         public string Size { get; set; }
+        public bool Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderProduct> DeliveryOrderProduct { get; set; }
