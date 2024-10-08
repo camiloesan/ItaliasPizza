@@ -1,4 +1,5 @@
 ﻿using Database;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,37 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.SaveChanges();
             }
         }
+
+        public static List<SupplierDetails> GetAllSuppliersWithCategories()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var supplierCategories = (from supplier in db.Supplier
+                                          join supplierCategory in db.SupplierSupplyCategory
+                                          on supplier.IdSupplier equals supplierCategory.IdSupplier
+                                          join category in db.SupplyCategory
+                                          on supplierCategory.IdSupplyCategory equals category.IdSupplyCategory
+                                          select new
+                                          {
+                                              Supplier = supplier,
+                                              CategoryName = category.SupplyCategory1
+                                          })
+                                          .ToList();
+
+                return supplierCategories
+                             .GroupBy(x => x.Supplier)
+                             .Select(g => new SupplierDetails
+                             {
+                                 IdSupplier = g.Key.IdSupplier,
+                                 Name = g.Key.Name,
+                                 Phone = g.Key.Phone,
+                                 Categories = string.Join(", ", g.Select(c => c.CategoryName))
+                             })
+                             .ToList();
+            }
+        }
+
+
+
     }
 }

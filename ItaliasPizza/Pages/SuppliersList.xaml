@@ -28,7 +28,7 @@
                 <Button Margin="5" Content="Buscar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
             </StackPanel>
             
-            <DataGrid x:Name="DtgSuppliers" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid x:Name="DtgSuppliers" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="White"/>
@@ -50,7 +50,7 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Categoría" Width="*" Binding="{Binding IdSupplyCategory}"/>
+                    <DataGridTextColumn Header="Categorías" Width="*" Binding="{Binding Categories}"/>
                     <DataGridTextColumn Header="Teléfono" Width="*" Binding="{Binding Phone}"/>
 
                     <DataGridTemplateColumn Header="Editar" Width="50">
