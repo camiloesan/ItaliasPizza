@@ -79,6 +79,7 @@
       <DependentUpon>AddLocalOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\SessionDetails.cs" />
+    <Compile Include="Utils\SupplierDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
