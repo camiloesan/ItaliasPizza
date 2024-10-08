@@ -1,0 +1,120 @@
+﻿<Page x:Class="ItaliasPizza.Pages.Orders.ViewOrders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ItaliasPizza.Pages.Orders"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="ViewOrders">
+
+	<Page.Background>
+		<ImageBrush ImageSource="../../Assets/Images/background.jpg"/>
+	</Page.Background>
+
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!--Side bar-->
+		<Border Grid.Column="0" Width="100">
+			<Border.Background>
+				<ImageBrush ImageSource="../../Assets/Images/tablecloth-background.jpg" Stretch="UniformToFill" Opacity=".69"/>
+			</Border.Background>
+			<StackPanel Orientation="Vertical">
+				<Image Height="45" Width="45" MouseLeftButtonDown="ImgReturn_Click" Cursor="Hand"
+			Source="../../Assets/Images/return_icon.png" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+				<Label Content="Regresar" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontWeight="Medium" FontSize="20" HorizontalAlignment="Center"/>
+			</StackPanel>
+		</Border>
+
+		<!-- Main Content -->
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<Label Grid.Row="0" Content="Pedidos" FontFamily="../../Assets/Fonts/#Jost" FontSize="45" FontWeight="SemiBold" Foreground="White" Margin="25,00,0,0"/>
+
+			<!-- Orders list -->
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<DataGrid Grid.Column="1" Grid.Row="0" x:Name="DtgOrders" AutoGenerateColumns="False" 
+					CanUserReorderColumns="False" CanUserResizeColumns="False" IsReadOnly="True" Width="800">
+					<DataGrid.ColumnHeaderStyle>
+						<Style TargetType="DataGridColumnHeader">
+							<Setter Property="FontFamily" Value="../../Assets/Fonts/#Jost"/>
+							<Setter Property="FontSize" Value="14"/>
+							<Setter Property="FontWeight" Value="SemiBold"/>
+							<Setter Property="Background" Value="White"/>
+							<Setter Property="Foreground" Value="Black"/>
+							<Setter Property="BorderBrush" Value="Black"/>
+							<Setter Property="BorderThickness" Value="1"/>
+							<Setter Property="HorizontalContentAlignment" Value="Center"/>
+							<Setter Property="Height" Value="50"/>
+						</Style>
+					</DataGrid.ColumnHeaderStyle>
+
+					<DataGrid.CellStyle>
+						<Style TargetType="DataGridCell">
+							<Setter Property="FontFamily" Value="../../Assets/Fonts/#Jost"/>
+							<Setter Property="FontSize" Value="15"/>
+							<Setter Property="Background" Value="Transparent"/>
+							<Setter Property="BorderBrush" Value="White"/>
+							<Setter Property="BorderThickness" Value="1"/>
+							<Setter Property="Foreground" Value="Black"/>
+							<Setter Property="Height" Value="50"/>
+						</Style>
+					</DataGrid.CellStyle>
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Cliente" Width="*" Binding="{Binding Client}"/>
+						<DataGridTextColumn Header="Mesa" Width="120" Binding="{Binding Table}"/>
+						<DataGridTextColumn Header="Total" Width="120" Binding="{Binding TotalPrice}"/>
+
+						<DataGridTemplateColumn Header="Cancelar" Width="60">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<Button x:Name="BtnCancelOrder" Click="BtnCancelOrder_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
+										<Image Source="../../Assets/Images/cancel_icon.png" Width="45" Height="45" Stretch="Uniform"/>
+									</Button>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+						<DataGridTemplateColumn Header="Ver" Width="60">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<Button x:Name="BtnViewOrder" Click="BtnViewOrder_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
+										<Image Source="../../Assets/Images/view_icon.png" Width="45" Height="45" Stretch="Uniform"/>
+									</Button>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+				</DataGrid>
+
+			</Grid>
+
+			<!-- Button bar -->
+			<StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="25,20,25,20">
+				<Border Width="370" Height="75" MouseLeftButtonDown="BtnAddLocalOrder_Click" Cursor="Hand" Visibility="Visible"
+					Background="#0EB529" BorderBrush="White" BorderThickness="1" CornerRadius="5">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Image Source="../../Assets/Images/check_icon.png" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<Label Content="Agregar pedido local" FontFamily="../../Assets/Fonts/#Jost" FontSize="28" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Page>
