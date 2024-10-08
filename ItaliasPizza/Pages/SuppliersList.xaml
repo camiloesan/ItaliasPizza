@@ -24,12 +24,12 @@
             
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
                 <Label Margin="5" Content="Filtro:" Foreground="White"/>
-                <ComboBox Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="60"/>
-                <TextBox x:Name="TxtSearcher" Margin="5" HorizontalAlignment="Left" Width="300"/>
-                <Button Margin="5" Content="Buscar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="60" Click="Btn_Search"/>
+                <ComboBox x:Name="CbFilter" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
+                <TextBox x:Name="TxtSearcher" Margin="5" HorizontalAlignment="Left" Width="230"/>
+                <Button Margin="5" Content="Buscar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
             </StackPanel>
             
-            <DataGrid x:Name="DtgSuppliers" Margin="0,15" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid x:Name="DtgSuppliers" Margin="0,15" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="White"/>
@@ -58,7 +58,7 @@
                     <DataGridTemplateColumn Header="Editar" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Width="20" Height="20">
+                                <Button Width="20" Height="20" Margin="5" Click="Btn_Edit" Background="Transparent" BorderBrush="Transparent" CommandParameter="{Binding IdSupplier}">
                                     <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
                                 </Button>
                             </DataTemplate>
