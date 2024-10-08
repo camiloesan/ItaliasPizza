@@ -35,11 +35,6 @@ namespace ItaliasPizza.Pages
             DtgSuppliers.ItemsSource = SupplierOperations.GetAllSuppliersWithCategories();
         }
 
-        private void Btn_Filter(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Btn_Search(object sender, RoutedEventArgs e)
         {
 
