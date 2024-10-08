@@ -55,7 +55,7 @@ namespace ItaliasPizza.Pages
         {
             switch (userType) {
                 case "Gerente":
-                    Application.Current.MainWindow.Content = new EmployeeModification();
+                    Application.Current.MainWindow.Content = new EmployeeModification(SessionDetails.IdEmployee);
                     break;
                 case "Cajero":
                     //Application.Current.MainWindow.Content = new MainMenu();
@@ -77,7 +77,8 @@ namespace ItaliasPizza.Pages
 
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
-            LogIn();
+            //LogIn();
+            Application.Current.MainWindow.Content = new SuppliersList();
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Database
         public decimal Quantity { get; set; }
         public int IdSupplyCategory { get; set; }
         public int IdMeasurementUnit { get; set; }
+        public System.DateTime ExpirationDate { get; set; }
         public bool Status { get; set; }
     
         public virtual MeasurementUnit MeasurementUnit { get; set; }

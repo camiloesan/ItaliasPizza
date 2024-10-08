@@ -1,4 +1,6 @@
 ﻿using Database;
+using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,13 +27,12 @@ namespace ItaliasPizza.Pages
         public SuppliersList()
         {
             InitializeComponent();
+            ShowSuppliers();
+        }
 
-            var items = new ObservableCollection<Supplier>
-            {
-                new Supplier { Name = "Bryam", IdSupplierCategory = 1, Phone = "2282739074" },
-            };
-
-            DtgSuppliers.ItemsSource = items;
+        private void ShowSuppliers()
+        {
+            DtgSuppliers.ItemsSource = SupplierOperations.GetAllSuppliersWithCategories();
         }
 
         private void Btn_Filter(object sender, RoutedEventArgs e)

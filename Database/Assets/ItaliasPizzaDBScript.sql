@@ -43,8 +43,8 @@ GO
 
 CREATE TABLE Client (
     IdClient UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(80) NOT NULL,
+    LastName VARCHAR(80) NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
 GO
@@ -54,7 +54,7 @@ CREATE TABLE [Address] (
     IdClient UNIQUEIDENTIFIER NOT NULL,
     Street VARCHAR(100) NOT NULL,
     [Number] INT NOT NULL,
-    PostalCode SMALLINT NOT NULL,
+    PostalCode VARCHAR(20) NOT NULL,
     Colony VARCHAR(50) NOT NULL,
     [Status] BIT NOT NULL,
     Reference VARCHAR(100)
@@ -80,7 +80,7 @@ GO
 CREATE TABLE DeliveryOrder (
     IdDeliveryOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdClient UNIQUEIDENTIFIER NOT NULL,
-    [Status] BIT NOT NULL,
+    IdOrderStatus INT NOT NULL,
     [Date] DATETIME NOT NULL,
     Total DECIMAL(12, 2) NOT NULL,
     DeliveryDriver UNIQUEIDENTIFIER NOT NULL,
@@ -120,7 +120,7 @@ GO
 CREATE TABLE LocalOrder (
     IdLocalOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     Waiter UNIQUEIDENTIFIER NOT NULL,
-    [Status] BIT NOT NULL,
+    IdOrderStatus INT NOT NULL,
     [Table] INT NOT NULL,
     [Date] DATETIME NOT NULL,
     Total DECIMAL(12, 2) NOT NULL
@@ -169,7 +169,6 @@ GO
 CREATE TABLE Supplier (
     IdSupplier UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [Name] VARCHAR(50) NOT NULL,
-    IdSupplierCategory INT NOT NULL,
     Phone VARCHAR(20) NOT NULL
 );
 GO
@@ -177,10 +176,17 @@ GO
 CREATE TABLE SupplierOrder (
     IdSupplierOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdSupplier UNIQUEIDENTIFIER NOT NULL,
+	IdSupply UNIQUEIDENTIFIER NOT NULL,
     OrderDate DATE NOT NULL,
     ExpectedDate DATE NOT NULL,
     ArrivalDate DATE NOT NULL,
-    [Status] BIT NOT NULL
+    IdOrderStatus INT NOT NULL
+);
+GO
+
+CREATE TABLE OrderStatus (
+    IdOrderStatus INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [Status] VARCHAR(20) NOT NULL
 );
 GO
 
@@ -190,6 +196,7 @@ CREATE TABLE Supply (
     Quantity DECIMAL(12, 3) NOT NULL,
     IdSupplyCategory INT NOT NULL,
     IdMeasurementUnit INT NOT NULL,
+    ExpirationDate DATE NOT NULL,
     [Status] BIT NOT NULL
 );
 GO
@@ -197,6 +204,12 @@ GO
 CREATE TABLE SupplyCategory (
     IdSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [SupplyCategory] VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE SupplierSupplyCategory (
+    IdSupplierSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    IdSupplier UNIQUEIDENTIFIER NOT NULL,
+    IdSupplyCategory INT NOT NULL
 );
 
 CREATE TABLE SupplyInventoryReport (
@@ -300,10 +313,6 @@ ALTER TABLE Supply
     ADD CONSTRAINT Supply_IdSupplyCategory_fk FOREIGN KEY (IdSupplyCategory) REFERENCES SupplyCategory (IdSupplyCategory);
 GO
 
-ALTER TABLE Supplier
-    ADD CONSTRAINT Supplier_IdSupplyCategory_fk FOREIGN KEY (IdSupplierCategory) REFERENCES SupplyCategory (IdSupplyCategory);
-GO
-
 ALTER TABLE SupplyInventoryReport
     ADD CONSTRAINT SupplyInventoryReport_IdInventoryReport_fk FOREIGN KEY (IdInventoryReport) REFERENCES InventoryReport (IdInventoryReport);
 GO
@@ -330,6 +339,26 @@ GO
 
 ALTER TABLE SupplyInventoryReport
 	ADD CONSTRAINT SupplyInventoryReport_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
+GO
+
+ALTER TABLE DeliveryOrder
+	ADD CONSTRAINT DeliveryOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE LocalOrder
+	ADD CONSTRAINT LocalOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE SupplierOrder
+	ADD CONSTRAINT SupplierOrder_IdOrderStatus_fk FOREIGN KEY (IdOrderStatus) REFERENCES OrderStatus (IdOrderStatus);
+GO
+
+ALTER TABLE SupplierSupplyCategory
+    ADD CONSTRAINT SupplierSupplyCategory_IdSupplier_fk FOREIGN KEY (IdSupplier) REFERENCES Supplier (IdSupplier); 
+GO
+
+ALTER TABLE SupplierSupplyCategory
+    ADD CONSTRAINT SupplierSupplyCategory_IdSupplyCategory_fk FOREIGN KEY (IdSupplyCategory) REFERENCES SupplyCategory (IdSupplyCategory); 
 GO
 
 --Agregar datos de precarga
@@ -360,4 +389,13 @@ VALUES
 	('Condimentos'),
 	('Aceites'),
 	('Bebidas')
+GO
+
+INSERT INTO OrderStatus([Status])
+VALUES
+	('Realizado'),
+	('Entregado'),
+	('En camino'),
+	('Cancelado'),
+	('No entregado')
 GO

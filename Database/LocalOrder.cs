@@ -22,12 +22,13 @@ namespace Database
     
         public System.Guid IdLocalOrder { get; set; }
         public System.Guid Waiter { get; set; }
-        public bool Status { get; set; }
+        public int IdOrderStatus { get; set; }
         public int Table { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Total { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LocalOrderProduct> LocalOrderProduct { get; set; }
     }

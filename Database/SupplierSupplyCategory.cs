@@ -12,17 +12,13 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Address
+    public partial class SupplierSupplyCategory
     {
-        public System.Guid IdAddress { get; set; }
-        public System.Guid IdClient { get; set; }
-        public string Street { get; set; }
-        public int Number { get; set; }
-        public string PostalCode { get; set; }
-        public string Colony { get; set; }
-        public bool Status { get; set; }
-        public string Reference { get; set; }
+        public int IdSupplierSupplyCategory { get; set; }
+        public System.Guid IdSupplier { get; set; }
+        public int IdSupplyCategory { get; set; }
     
-        public virtual Client Client { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual SupplyCategory SupplyCategory { get; set; }
     }
 }

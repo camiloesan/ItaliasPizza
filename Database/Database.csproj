@@ -109,6 +109,9 @@
     <Compile Include="OrderedSupply.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderStatus.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
@@ -127,6 +130,9 @@
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SupplierOrder.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierSupplyCategory.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Supply.cs">
