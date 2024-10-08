@@ -71,6 +71,8 @@
     <Compile Include="DataAccessLayer\LocalOrderOperationsTests.cs" />
     <Compile Include="DataAccessLayer\ProductOperationsTests.cs" />
     <Compile Include="DataAccessLayer\ClientOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\OrderStatusOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\DeliveryOrderOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistroEmpleadoTests.cs" />
   </ItemGroup>

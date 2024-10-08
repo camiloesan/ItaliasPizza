@@ -1,21 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ItaliasPizza.DataAccessLayer;
 using System;
 using Database;
-using System.Collections.Generic;
-using System.Text;
+using ItaliasPizza.DataAccessLayer;
 
 namespace ItaliasPizzaTests.DataAccessLayer
 {
 	[TestClass]
-	public class LocalOrderOperationsTests
+	public class DeliveryOrderOperationsTests
 	{
 		[TestMethod]
-		public void GetLocalOrdersByStatusTest()
+		public void GetDeliveryOrdersByStatusTest()
 		{
 			var orderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
 
-			List<LocalOrder> result = LocalOrderOperations.GetLocalOrdersByStatus(orderStatus);
+			var result = DeliveryOrderOperations.GetDeliveryOrdersByStatus(orderStatus);
 
 			foreach (var order in result)
 			{
