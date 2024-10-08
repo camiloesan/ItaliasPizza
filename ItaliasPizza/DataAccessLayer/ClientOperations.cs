@@ -26,5 +26,13 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.SaveChanges();
 			}
 		}
+
+		public static Client GetClientByDeliveryOrder(DeliveryOrder deliveryOrder)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Client.FirstOrDefault(c => c.IdClient == deliveryOrder.IdClient);
+			}
+		}
 	}
 }
