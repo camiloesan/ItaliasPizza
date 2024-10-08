@@ -393,9 +393,13 @@ GO
 
 INSERT INTO OrderStatus([Status])
 VALUES
-	('Realizado'),
-	('Entregado'),
-	('En camino'),
-	('Cancelado'),
-	('No entregado')
+    ('En preparacion'),
+    ('Listo para entregar');
+GO
+
+INSERT INTO ProductType ([Type])
+VALUES
+    ('Pizza'),
+    ('Bebida'),
+    ('Postre');
 GO
