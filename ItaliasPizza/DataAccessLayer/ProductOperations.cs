@@ -9,7 +9,7 @@ namespace ItaliasPizza.DataAccessLayer
 {
 	public class ProductOperations
 	{
-		public static ICollection<Product> GetActiveProducts()
+		public static List<Product> GetActiveProducts()
 		{
 			using (var db = new ItaliasPizzaDBEntities())
 			{
@@ -25,7 +25,7 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.Database.SqlQuery<int>("SELECT dbo.fn_CalculateMaxProducts(@idProduct)", new System.Data.SqlClient.SqlParameter("@idProduct", idProduct)).FirstOrDefault();
 			}
 		}
-
+        
         public static int SaveProduct(Product product)
         {
             using (var db = new ItaliasPizzaDBEntities())
