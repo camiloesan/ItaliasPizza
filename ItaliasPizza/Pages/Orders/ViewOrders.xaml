@@ -49,7 +49,7 @@
 				</Grid.ColumnDefinitions>
 
 				<DataGrid Grid.Column="1" Grid.Row="0" x:Name="DtgOrders" AutoGenerateColumns="False" 
-					CanUserReorderColumns="False" CanUserResizeColumns="False" IsReadOnly="True" Width="800">
+					CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" Width="800">
 					<DataGrid.ColumnHeaderStyle>
 						<Style TargetType="DataGridColumnHeader">
 							<Setter Property="FontFamily" Value="../../Assets/Fonts/#Jost"/>
@@ -85,7 +85,7 @@
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<Button x:Name="BtnCancelOrder" Click="BtnCancelOrder_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
-										<Image Source="../../Assets/Images/cancel_icon.png" Width="45" Height="45" Stretch="Uniform"/>
+										<Image Source="../../Assets/Images/cancel_icon_black.png" Width="45" Height="45" Stretch="Uniform"/>
 									</Button>
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
@@ -95,14 +95,13 @@
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<Button x:Name="BtnViewOrder" Click="BtnViewOrder_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
-										<Image Source="../../Assets/Images/view_icon.png" Width="45" Height="45" Stretch="Uniform"/>
+										<Image Source="../../Assets/Images/view_icon_outline.png" Width="45" Height="45" Stretch="Uniform"/>
 									</Button>
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
 					</DataGrid.Columns>
 				</DataGrid>
-
 			</Grid>
 
 			<!-- Button bar -->

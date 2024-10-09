@@ -24,6 +24,8 @@ namespace ItaliasPizza.Pages.Orders
 	/// </summary>
 	public partial class ViewOrders : Page
 	{
+		
+
 		public ViewOrders()
 		{
 			InitializeComponent();
@@ -42,12 +44,16 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void BtnViewOrder_Click(object sender, RoutedEventArgs e)
 		{
+			Button button = sender as Button;
 
+			var order = button.DataContext as OrderDetails;
+
+			Application.Current.MainWindow.Content = new ViewOrderDetails(order);
 		}
 
 		private void BtnAddLocalOrder_Click(object sender, RoutedEventArgs e)
 		{
-
+			Application.Current.MainWindow.Content = new AddLocalOrder();
 		}
 
 		private void FillDtgOrders()
