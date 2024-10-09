@@ -36,5 +36,23 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.SaveChanges();
 			}
 		}
+
+		public static DeliveryOrder GetDeliveryOrderById(Guid id)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.DeliveryOrder.Find(id);
+			}
+		}
+
+		public static int SetNotDeliveredReason(DeliveryOrder deliveryOrder, string reason)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				var order = db.DeliveryOrder.FirstOrDefault(o => o.IdDeliveryOrder == deliveryOrder.IdDeliveryOrder);
+				order.NotDeliveredReason = reason;
+				return db.SaveChanges();
+			}
+		}
 	}
 }
