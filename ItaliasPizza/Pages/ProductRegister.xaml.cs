@@ -63,6 +63,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
+            HighlightInvalidFields();
             if (!AreFieldsFilled())
             {
                 MessageBox.Show("Por favor, llena todos los campos");

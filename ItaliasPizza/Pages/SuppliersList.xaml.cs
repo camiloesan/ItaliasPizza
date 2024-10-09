@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace ItaliasPizza.Pages
 {
-    /// <summary>
-    /// Interaction logic for SuppliersList.xaml
-    /// </summary>
     public partial class SuppliersList : Page
     {
         private const string SUPPLIER_NAME_ATTRIBUTE = "Nombre";
