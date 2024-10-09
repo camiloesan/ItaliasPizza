@@ -1,28 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ItaliasPizza.Pages
 {
-    /// <summary>
-    /// Interaction logic for Employees.xaml
-    /// </summary>
     public partial class Employees : Page
     {
         public Employees()
         {
             InitializeComponent();
+            ShowEmployees();
+        }
+
+        public void ShowEmployees()
+        {
+            DtgEmployees.ItemsSource = EmployeeOperations.GetEmployeeInfo();
+        }
+
+        private void EditEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button.DataContext is EmployeeDetails selectedEmployee)
+            {
+                Application.Current.MainWindow.Content = new EmployeeModification(selectedEmployee.IdEmployee);
+            }
+        }
+
+
+        private void Btn_Filter(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Search(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_RegisterNewEmployee(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new EmployeeRegister();
         }
     }
 }

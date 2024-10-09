@@ -87,6 +87,7 @@
     <Compile Include="Pages\Orders\AddLocalOrder.xaml.cs">
       <DependentUpon>AddLocalOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\EmployeeDetails.cs" />
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplierDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />

@@ -1,6 +1,9 @@
 ﻿using Database;
+using ItaliasPizza.Utils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace ItaliasPizza.DataAccessLayer
 {
@@ -70,6 +73,29 @@ namespace ItaliasPizza.DataAccessLayer
                 accessAccount.Password = password;
                 accessAccount.Email = email;
                 return db.SaveChanges();
+            }
+        }
+
+        public static List<EmployeeDetails> GetEmployeeInfo()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var employeeDetailsList = (from e in db.Employee
+                                           join a in db.AccessAccount
+                                           on e.IdEmployee equals a.IdEmployee
+                                           join c in db.Charge
+                                           on e.IdCharge equals c.IdCharge
+                                           select new EmployeeDetails
+                                           {
+                                               IdEmployee = e.IdEmployee,
+                                               FirstName = e.FirstName,
+                                               LastName = e.LastName,
+                                               Email = a.Email, // Associated email
+                                               Phone = e.Phone,
+                                               Charge = c.Name // Charge name from the Charge table
+                                           }).ToList();
+
+                return employeeDetailsList;
             }
         }
     }

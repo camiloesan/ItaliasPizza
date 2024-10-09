@@ -147,7 +147,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-            // todo return previous page
+            Application.Current.MainWindow.Content = new Employees();
         }
 
         private void FillFields(Employee employee)

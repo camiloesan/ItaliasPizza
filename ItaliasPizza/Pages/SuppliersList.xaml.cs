@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace ItaliasPizza.Pages
 {
-    /// <summary>
-    /// Interaction logic for SuppliersList.xaml
-    /// </summary>
     public partial class SuppliersList : Page
     {
         public SuppliersList()
@@ -47,7 +44,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_RegisterNewSupplier(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new EmployeeRegister();
         }
     }
 }

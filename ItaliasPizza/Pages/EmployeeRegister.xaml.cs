@@ -202,6 +202,7 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
             // todo return to previous page or main menu
+            Application.Current.MainWindow.Content = new Employees();
         }
     }
 }
