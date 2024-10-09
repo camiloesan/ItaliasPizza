@@ -38,7 +38,11 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 
-			<Label Grid.Row="0" Content="Pedidos" FontFamily="../../Assets/Fonts/#Jost" FontSize="45" FontWeight="SemiBold" Foreground="White" Margin="25,00,0,0"/>
+			<!--Title-->
+			<StackPanel Grid.Row="0" Orientation="Horizontal">
+				<Label Content="Pedidos - " FontFamily="../../Assets/Fonts/#Jost" FontSize="45" FontWeight="SemiBold" Foreground="White" Margin="25,0,0,0"/>
+				<Label x:Name="UserTypeLabel" FontFamily="../../Assets/Fonts/#Jost" FontSize="45" FontWeight="SemiBold" Foreground="White"/>
+			</StackPanel>
 
 			<!-- Orders list -->
 			<Grid Grid.Row="1">
@@ -47,6 +51,38 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
+
+				<!--Cook Filter bar-->
+				<StackPanel Grid.Column="0" x:Name="CookFilterBar" Orientation="Vertical" Visibility="Hidden">
+					<StackPanel Orientation="Vertical">
+						<Label Content="Filtro:" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="20,0,0,0"/>
+						<Label x:Name="CookCurrentFilter" Content="[Filtro]" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="Regular" Foreground="White" Margin="5,0,0,0"/>
+					</StackPanel>
+					<Button x:Name="BtnFilterPending" Click="BtnFilterPending_Click" Content="Pendientes"  FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="20,20,20,0"/>
+					<Button x:Name="BtnFilterInPreparation" Click="BtnFilterInPreparation_Click" Content="En preparación" FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="18,20,18,0"/>
+					<Button x:Name="BtnFilterReadyToDeliver" Click="BtnFilterReadyToDeliver_Click" Content="Listo para entrega" FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="18,20,18,0"/>
+				</StackPanel>
+
+				<!--Waiter Filter bar-->
+				<StackPanel Grid.Column="0" x:Name="WaiterFilterBar" Orientation="Vertical" Visibility="Hidden">
+					<StackPanel Orientation="Vertical">
+						<Label Content="Filtro:" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="20,0,0,0"/>
+						<Label x:Name="WaiterCurrentFilter" Content="[Filtro]" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="Regular" Foreground="White" Margin="5,0,0,0"/>
+					</StackPanel>
+					<Button x:Name="BtnFilterPendingWaiter" Click="BtnFilterPending_Click" Content="Pendientes"  FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="20,20,20,0"/>
+					<Button x:Name="BtnFilterInPreparationWaiter" Click="BtnFilterInPreparation_Click" Content="En preparación"  FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="20,20,20,0"/>
+					<Button x:Name="BtnFilterReadyToDeliverWaiter" Click="BtnFilterReadyToDeliver_Click" Content="Listo para entrega" FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="18,20,18,0"/>
+				</StackPanel>
+
+				<!--Delivery Filter bar-->
+				<StackPanel Grid.Column="0" x:Name="DeliveryFilterBar" Orientation="Vertical" Visibility="Visible">
+					<StackPanel Orientation="Vertical">
+						<Label Content="Filtro:" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="20,0,0,0"/>
+						<Label x:Name="DeliveryCurrentFilter" Content="[Filtro]" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="Regular" Foreground="White" Margin="5,0,0,0"/>
+					</StackPanel>
+					<Button x:Name="BtnFilterReadyToDeliverDriver" Click="BtnFilterReadyToDeliver_Click" Content="Listo para entrega"  FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="20,20,20,0"/>
+					<Button x:Name="BtnFilterInTransit" Click="BtnFilterInTransit_Click" Content="En transito" FontFamily="../../Assets/Fonts/#Jost" FontSize="18" FontWeight="Regular" Height="40" Margin="18,20,18,0"/>
+				</StackPanel>
 
 				<DataGrid Grid.Column="1" Grid.Row="0" x:Name="DtgOrders" AutoGenerateColumns="False" 
 					CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" Width="800">
@@ -106,7 +142,7 @@
 
 			<!-- Button bar -->
 			<StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="25,20,25,20">
-				<Border Width="370" Height="75" MouseLeftButtonDown="BtnAddLocalOrder_Click" Cursor="Hand" Visibility="Visible"
+				<Border Width="370" Height="75" x:Name="BtnAddLocalOrder" MouseLeftButtonDown="BtnAddLocalOrder_Click" Cursor="Hand" Visibility="Visible"
 					Background="#0EB529" BorderBrush="White" BorderThickness="1" CornerRadius="5">
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 						<Image Source="../../Assets/Images/check_icon.png" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center"/>
