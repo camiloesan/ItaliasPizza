@@ -51,5 +51,13 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.Product.Any(p => p.Name == name);
             }
         }
-    }
+
+        public static Product GetProductById (Guid id)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Product.Find(id);
+			}
+		}
+	}
 }
