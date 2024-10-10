@@ -74,7 +74,6 @@
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
     <Compile Include="DataAccessLayer\LocalOrderProductOperations.cs" />
     <Compile Include="DataAccessLayer\OrderStatusOperations.cs" />
-    <Compile Include="DataAccessLayer\RecipeOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
