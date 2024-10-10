@@ -14,23 +14,8 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		public void GetLocalOrdersByStatusTest()
 		{
 			var idEmployee = Guid.NewGuid();
-			var testEmployee = new Employee
-			{
-				IdEmployee = idEmployee,
-				FirstName = "John",
-				LastName = "Doe",
-				Phone = "1234567890",
-				Status = true,
-				IdCharge = 1
-			};
-			var accessAccount = new AccessAccount
-			{
-				UserName = "johndoe22",
-				Password = "password123",
-				IdEmployee = idEmployee,
-				Email = "johndoe@gmail.com",
-				Status = true,
-			};
+			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
 			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
 
 			var orderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
@@ -70,34 +55,13 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		public void UpdateLocalOrderStatusTest()
 		{
 			var idEmployee = Guid.NewGuid();
-			var testEmployee = new Employee
-			{
-				IdEmployee = idEmployee,
-				FirstName = "John",
-				LastName = "Doe",
-				Phone = "1234567890",
-				Status = true,
-				IdCharge = 1
-			};
-			var accessAccount = new AccessAccount
-			{
-				UserName = "johndoe22",
-				Password = "password123",
-				IdEmployee = idEmployee,
-				Email = "johndoe@gmail.com",
-				Status = true,
-			};
+			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
 			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
 			var localOrder1 = new LocalOrder
-			{
-				IdLocalOrder = Guid.NewGuid(),
-				Waiter = idEmployee,
-				IdOrderStatus = defaultStatus.IdOrderStatus,
-				Date = DateTime.Now,
-				Total = 120.0m
-			};
+			{ IdLocalOrder = Guid.NewGuid(), Waiter = idEmployee, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m };
 			LocalOrderOperations.SaveLocalOrder(localOrder1);
 
 			var newStatus = OrderStatusOperations.GetOrderStatusByName("Cancelado");

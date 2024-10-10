@@ -9,7 +9,15 @@ namespace ItaliasPizza.DataAccessLayer
 {
 	public class DeliveryOrderProductOperations
 	{
-		//UNIT TEST
+		public static int SaveDeliveryOrderProduct(DeliveryOrderProduct deliveryOrderProduct)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				db.DeliveryOrderProduct.Add(deliveryOrderProduct);
+				return db.SaveChanges();
+			}
+		}
+
 		public static List<DeliveryOrderProduct> GetDeliveryOrderProductsByOrderId(Guid deliveryOrderId)
 		{
 			using (var db = new ItaliasPizzaDBEntities())

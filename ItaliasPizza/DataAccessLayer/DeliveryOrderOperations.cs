@@ -26,7 +26,6 @@ namespace ItaliasPizza.DataAccessLayer
 			}
 		}
 
-		//TODO: UNIT TEST
 		public static int UpdateDeliveryOrderStatus(DeliveryOrder deliveryOrder, OrderStatus orderStatus)
 		{
 			using (var db = new ItaliasPizzaDBEntities())
