@@ -69,12 +69,22 @@
     <Compile Include="DataAccessLayer\ChargesOperations.cs" />
     <Compile Include="DataAccessLayer\AddressOperations.cs" />
     <Compile Include="DataAccessLayer\ClientOperations.cs" />
+    <Compile Include="DataAccessLayer\DeliveryOrderOperations.cs" />
+    <Compile Include="DataAccessLayer\DeliveryOrderProductOperations.cs" />
     <Compile Include="DataAccessLayer\EmployeeOperations.cs" />
+    <Compile Include="DataAccessLayer\LocalOrderProductOperations.cs" />
+    <Compile Include="DataAccessLayer\OrderStatusOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
     <Compile Include="Pages\Employees.xaml.cs">
       <DependentUpon>Employees.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Orders\ViewOrderDetails.xaml.cs">
+      <DependentUpon>ViewOrderDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Orders\ViewOrders.xaml.cs">
+      <DependentUpon>ViewOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProductModification.xaml.cs">
       <DependentUpon>ProductModification.xaml</DependentUpon>
@@ -87,6 +97,8 @@
     <Compile Include="Pages\Orders\AddLocalOrder.xaml.cs">
       <DependentUpon>AddLocalOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\OrderDetails.cs" />
+    <Compile Include="Utils\OrderProductDetails.cs" />
     <Compile Include="Utils\EmployeeDetails.cs" />
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplierDetails.cs" />
@@ -128,6 +140,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmployeeRegister.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Orders\ViewOrderDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Orders\ViewOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,7 +272,19 @@
     <Resource Include="Assets\Images\add_icon_black.png" />
     <Resource Include="Assets\Images\remove_icon_black.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Images\cancel_icon_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\view_icon_outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\bike_icon.png" />
+    <Resource Include="Assets\Images\cook_icon.png" />
+    <Resource Include="Assets\Images\delivered_icon.png" />
+    <Resource Include="Assets\Images\not-delivered_icon.png" />
+    <Resource Include="Assets\Images\pizza_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

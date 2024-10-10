@@ -88,5 +88,57 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			Assert.IsTrue(result);
 		}
+
+		[TestMethod]
+		public void GetClientByDeliveryOrderTest()
+		{
+			var idClient = Guid.NewGuid();
+			var client = new Client
+			{
+				IdClient = idClient,
+				Phone = "1234567890",
+				FirstName = "John",
+				LastName = "Doe",
+			};
+
+			var idAddress = Guid.NewGuid();
+			var address = new Address
+			{
+				Street = "Test",
+				Number = 123,
+				Colony = "Test",
+				PostalCode = "12345",
+				Reference = "Test",
+				Status = true,
+				IdClient = idClient
+			};
+			ClientOperations.SaveClient(client,address);
+
+			var idDeliveryOrder = Guid.NewGuid();
+			var deliveryOrder = new DeliveryOrder
+			{
+				IdDeliveryOrder = idDeliveryOrder,
+				IdClient = idClient,
+				Date = DateTime.Now,
+				IdOrderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente").IdOrderStatus
+			};
+			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
+
+			var result = ClientOperations.GetClientByDeliveryOrder(deliveryOrder);
+
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				db.Client.Attach(client);
+				db.Address.Attach(address);
+				db.DeliveryOrder.Attach(deliveryOrder);
+
+				db.Client.Remove(client);
+				db.Address.Remove(address);
+				db.DeliveryOrder.Remove(deliveryOrder);
+				db.SaveChanges();
+			}
+
+			Assert.AreEqual(client.IdClient, result.IdClient);
+		}
 	}
 }

@@ -1,70 +1,108 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ItaliasPizza.DataAccessLayer;
 using System;
+using Database;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ItaliasPizzaTests.DataAccessLayer
 {
-	/// <summary>
-	/// Summary description for LocalOrderOperationsTests
-	/// </summary>
 	[TestClass]
 	public class LocalOrderOperationsTests
 	{
-		public LocalOrderOperationsTests()
+		[TestMethod]
+		public void GetLocalOrdersByStatusTest()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
+			var idEmployee = Guid.NewGuid();
+			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
+			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
 
-		private TestContext testContextInstance;
+			var orderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
+			var localOrder1 = new LocalOrder { IdLocalOrder = Guid.NewGuid(), Waiter = idEmployee, IdOrderStatus = orderStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m };
+			LocalOrderOperations.SaveLocalOrder(localOrder1);
 
-		/// <summary>
-		///Gets or sets the test context which provides
-		///information about and functionality for the current test run.
-		///</summary>
-		public TestContext TestContext
-		{
-			get
+			List<LocalOrder> result = LocalOrderOperations.GetLocalOrdersByStatus(orderStatus);
+
+			using (var db = new ItaliasPizzaDBEntities())
 			{
-				return testContextInstance;
+				db.Employee.Attach(testEmployee);
+				db.AccessAccount.Attach(accessAccount);
+				db.LocalOrder.Attach(localOrder1);
+
+				db.Employee.Remove(testEmployee);
+				db.AccessAccount.Remove(accessAccount);
+				db.LocalOrder.Remove(localOrder1);
+
+				db.SaveChanges();
 			}
-			set
+
+			foreach (var order in result)
 			{
-				testContextInstance = value;
+				Assert.AreEqual(order.IdOrderStatus, orderStatus.IdOrderStatus);
 			}
 		}
-
-		#region Additional test attributes
-		//
-		// You can use the following additional attributes as you write your tests:
-		//
-		// Use ClassInitialize to run code before running the first test in the class
-		// [ClassInitialize()]
-		// public static void MyClassInitialize(TestContext testContext) { }
-		//
-		// Use ClassCleanup to run code after all tests in a class have run
-		// [ClassCleanup()]
-		// public static void MyClassCleanup() { }
-		//
-		// Use TestInitialize to run code before running each test 
-		// [TestInitialize()]
-		// public void MyTestInitialize() { }
-		//
-		// Use TestCleanup to run code after each test has run
-		// [TestCleanup()]
-		// public void MyTestCleanup() { }
-		//
-		#endregion
 
 		[TestMethod]
-		public void TestMethod1()
+		public void UpdateLocalOrderStatusTest()
 		{
-			//
-			// TODO: Add test logic here
-			//
+			var idEmployee = Guid.NewGuid();
+			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
+			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
+
+			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
+			var localOrder1 = new LocalOrder
+			{ IdLocalOrder = Guid.NewGuid(), Waiter = idEmployee, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m };
+			LocalOrderOperations.SaveLocalOrder(localOrder1);
+
+			var newStatus = OrderStatusOperations.GetOrderStatusByName("Cancelado");
+			var result = LocalOrderOperations.UpdateLocalOrderStatus(localOrder1, newStatus);
+
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				db.Employee.Attach(testEmployee);
+				db.AccessAccount.Attach(accessAccount);
+				db.LocalOrder.Attach(localOrder1);
+
+				db.Employee.Remove(testEmployee);
+				db.AccessAccount.Remove(accessAccount);
+				db.LocalOrder.Remove(localOrder1);
+
+				db.SaveChanges();
+			}
+
+			Assert.AreEqual(1, result);
+		}
+
+		[TestMethod]
+		public void GetLocalOrderById()
+		{
+			var idEmployee = Guid.NewGuid();
+			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
+			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
+
+			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
+			var localOrderTest = new LocalOrder { IdLocalOrder = Guid.NewGuid(), Waiter = idEmployee, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m };
+			LocalOrderOperations.SaveLocalOrder(localOrderTest);
+
+			var result = LocalOrderOperations.GetLocalOrderById(localOrderTest.IdLocalOrder);
+
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				db.Employee.Attach(testEmployee);
+				db.AccessAccount.Attach(accessAccount);
+				db.LocalOrder.Attach(localOrderTest);
+
+				db.Employee.Remove(testEmployee);
+				db.AccessAccount.Remove(accessAccount);
+				db.LocalOrder.Remove(localOrderTest);
+
+				db.SaveChanges();
+			}
+
+			Assert.AreEqual(localOrderTest.IdLocalOrder, result.IdLocalOrder);
 		}
 	}
 }

@@ -94,7 +94,5 @@ namespace ItaliasPizza.Pages.Orders
 			var items = new ObservableCollection<Product>(activeProducts);
 			DtgActiveProducts.ItemsSource = items;
 		}
-
-		
 	}
 }
