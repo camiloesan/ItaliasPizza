@@ -15,14 +15,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		{
 			var idEmployee = Guid.NewGuid();
 			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };
-			var accessAccount = new AccessAccount
-			{
-				UserName = "johndoe22",
-				Password = "password123",
-				IdEmployee = idEmployee,
-				Email = "johndoe@gmail.com",
-				Status = true
-			};
+			var accessAccount = new AccessAccount { UserName = "johndoe22", Password = "password123", IdEmployee = idEmployee, Email = "johndoe@gmail.com", Status = true };
 			EmployeeOperations.SaveEmployee(testEmployee, accessAccount);
 
 			var idClient = Guid.NewGuid();

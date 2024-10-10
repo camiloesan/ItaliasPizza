@@ -38,15 +38,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 			}
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder
-			{
-				IdDeliveryOrder = Guid.NewGuid(),
-				IdClient = idClient,
-				IdOrderStatus = defaultStatus.IdOrderStatus,
-				Date = DateTime.Now,
-				Total = 120.0m,
-				DeliveryDriver = idEmployee
-			};
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var newStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
@@ -87,15 +79,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 			}
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder
-			{
-				IdDeliveryOrder = Guid.NewGuid(),
-				IdClient = idClient,
-				IdOrderStatus = defaultStatus.IdOrderStatus,
-				Date = DateTime.Now,
-				Total = 120.0m,
-				DeliveryDriver = idEmployee
-			};
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var result = DeliveryOrderOperations.GetDeliveryOrderById(deliveryOrder.IdDeliveryOrder);
@@ -135,15 +119,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 			}
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder
-			{
-				IdDeliveryOrder = Guid.NewGuid(),
-				IdClient = idClient,
-				IdOrderStatus = defaultStatus.IdOrderStatus,
-				Date = DateTime.Now,
-				Total = 120.0m,
-				DeliveryDriver = idEmployee
-			};
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var result = DeliveryOrderOperations.SetNotDeliveredReason(deliveryOrder, "No se encontró la dirección");
