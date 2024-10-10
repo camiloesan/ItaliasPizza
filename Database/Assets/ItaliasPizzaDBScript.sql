@@ -393,6 +393,12 @@ GO
 
 INSERT INTO OrderStatus([Status])
 VALUES
+    ('Realizado'),
+	('Entregado'),
+	('En camino'),
+	('Cancelado'),
+	('No entregado'),
+    ('Pendiente'),
     ('En preparacion'),
     ('Listo para entregar');
 GO
