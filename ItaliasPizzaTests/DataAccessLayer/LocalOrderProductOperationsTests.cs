@@ -29,7 +29,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 			LocalOrderOperations.SaveLocalOrder(localOrder);
 
 			var idPizza = Guid.NewGuid();
-			var testPizza = new Product { Name = "Pizza", IdType = 1, Price = 10.0m, Size = "Grande", Status = true };
+			var testPizza = new Product { IdProduct = Guid.NewGuid(), Name = "Pizza", IdType = 1, Price = 10.0m, Size = "Grande", Status = true };
 			ProductOperations.SaveProduct(testPizza);
 
 			var localOrderProduct = new LocalOrderProduct { IdLocalOrderProduct = Guid.NewGuid(), IdLocalOrder = localOrder.IdLocalOrder, IdProduct = testPizza.IdProduct, Quantity = 2 };
