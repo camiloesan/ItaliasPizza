@@ -29,12 +29,11 @@
 
         <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" MaxHeight="300" MinHeight="200">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" Height="500">
             <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
@@ -44,7 +43,7 @@
                 <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
             </StackPanel>
 
-                <DataGrid x:Name="DtgSuppliers" Margin="0,15" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid x:Name="DtgSuppliers" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="White"/>
