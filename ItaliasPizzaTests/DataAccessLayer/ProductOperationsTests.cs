@@ -189,7 +189,8 @@ namespace ItaliasPizzaTests.DataAccessLayer
 			{
 				foreach (var recipe in recipes)
 				{
-					RecipeOperations.SaveRecipe(recipe);
+					db.Recipe.Add(recipe);
+					db.SaveChanges();
 				}
 			}
 
