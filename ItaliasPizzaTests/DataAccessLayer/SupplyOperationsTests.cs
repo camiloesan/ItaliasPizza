@@ -12,9 +12,9 @@ namespace ItaliasPizzaTests.DataAccessLayer
         [TestMethod]
         public void GetSupplyCategoriesTest()
         {
-            var resut = SupplyOperations.GetSupplyCategories().Count;
+            var result = SupplyOperations.GetSupplyCategories().Count;
 
-            Assert.AreEqual(9, resut);
+            Assert.AreEqual(11, result);
         }
 
         [TestMethod]

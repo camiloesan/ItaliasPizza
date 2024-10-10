@@ -99,5 +99,30 @@ namespace ItaliasPizza.Pages
         {
             Application.Current.MainWindow.Content = new SupplierRegister();
         }
+
+        private void Btn_Employees(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Employees();
+        }
+
+        private void Btn_Supplies(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Orders(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Suppliers(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Reports(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
