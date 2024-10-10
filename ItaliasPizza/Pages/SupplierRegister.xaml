@@ -39,10 +39,11 @@
             <TextBox x:Name="TxtPhone" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="200"/>
 
 
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="0,100,0,0">
-                <Button Margin="5" Content="Guardar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-                <Button Margin="5" Content="Cancelar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
-            </StackPanel>
+       
+        </StackPanel>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="330,0">
+            <Button Margin="5" Content="Guardar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
+            <Button Margin="5" Content="Cancelar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
         </StackPanel>
     </Grid>
 </Page>
