@@ -29,8 +29,6 @@ namespace ItaliasPizza.Pages.Orders
 		public ViewOrders()
 		{
 			InitializeComponent();
-			
-			SessionDetails.UserType = "Repartidor";
 
 			UserTypeLabel.Content = SessionDetails.UserType;
 			if (SessionDetails.UserType == "Repartidor")
