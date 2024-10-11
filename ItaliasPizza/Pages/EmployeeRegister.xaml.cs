@@ -75,7 +75,7 @@ namespace ItaliasPizza.Pages
                 TxtPhone.BorderThickness = new Thickness(2);
             }
 
-            if (string.IsNullOrEmpty(email) || !isEmailValid || !isEmailRegistered)
+            if (string.IsNullOrEmpty(email) || !isEmailValid || isEmailRegistered)
             {
                 TxtEmail.BorderBrush = Brushes.Red;
                 TxtEmail.BorderThickness = new Thickness(2);

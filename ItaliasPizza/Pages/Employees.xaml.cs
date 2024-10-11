@@ -1,5 +1,7 @@
 ﻿using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,15 +9,18 @@ namespace ItaliasPizza.Pages
 {
     public partial class Employees : Page
     {
+        private List<EmployeeDetails> employeeDetailsList = EmployeeOperations.GetEmployeeInfo();
+
         public Employees()
         {
             InitializeComponent();
             ShowEmployees();
+            FillCbFilter();
         }
 
         public void ShowEmployees()
         {
-            DtgEmployees.ItemsSource = EmployeeOperations.GetEmployeeInfo();
+            DtgEmployees.ItemsSource = employeeDetailsList;
         }
 
         private void EditEmployee_Click(object sender, RoutedEventArgs e)
@@ -29,6 +34,25 @@ namespace ItaliasPizza.Pages
         }
 
 
+        private const string EMPLOYEE_NAME_ATTRIBUTE = "Nombre";
+        private const string EMPLOYEE_LASTNAME_ATTRIBUTE = "Apellido";
+        private const string EMPLOYEE_EMAIL_ATTRIBUTE = "Correo";
+        private const string EMPLOYEE_PHONE_ATTRIBUTE = "Teléfono";
+        private void FillCbFilter()
+        {
+            List<string> filters = new List<string>
+            {
+                EMPLOYEE_NAME_ATTRIBUTE,
+                EMPLOYEE_LASTNAME_ATTRIBUTE,
+                EMPLOYEE_EMAIL_ATTRIBUTE,
+                EMPLOYEE_PHONE_ATTRIBUTE
+            };
+
+            CbFilter.ItemsSource = filters;
+            CbFilter.SelectedIndex = 0;
+        }
+
+
         private void Btn_Filter(object sender, RoutedEventArgs e)
         {
 
@@ -36,7 +60,42 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Search(object sender, RoutedEventArgs e)
         {
+            string searchText = TxtSearcher.Text.ToLower();
+            List<EmployeeDetails> filteredList = new List<EmployeeDetails>();
 
+            switch (CbFilter.Text)
+            {
+                case EMPLOYEE_NAME_ATTRIBUTE:
+                    filteredList = employeeDetailsList
+                        .Where(s => s.FirstName.ToLower().Contains(searchText))
+                        .ToList();
+                    break;
+                case EMPLOYEE_LASTNAME_ATTRIBUTE:
+                    filteredList = employeeDetailsList
+                        .Where(s => s.LastName.ToLower().Contains(searchText))
+                        .ToList();
+                    break;
+                case EMPLOYEE_EMAIL_ATTRIBUTE:
+                    filteredList = employeeDetailsList
+                        .Where(s => s.Email.ToLower().Contains(searchText))
+                        .ToList();
+                    break;
+                case EMPLOYEE_PHONE_ATTRIBUTE:
+                    filteredList = employeeDetailsList
+                        .Where(s => s.Phone.Contains(searchText))
+                        .ToList();
+                    break;
+            }
+
+            if (employeeDetailsList != filteredList && filteredList.Count > 0)
+            {
+                DtgEmployees.ItemsSource = filteredList;
+            }
+            else
+            {
+                MessageBox.Show("No existen coincidencias");
+                DtgEmployees.ItemsSource = employeeDetailsList;
+            }
         }
 
         private void Btn_RegisterNewEmployee(object sender, RoutedEventArgs e)
