@@ -57,7 +57,7 @@ CREATE TABLE [Address] (
     PostalCode VARCHAR(20) NOT NULL,
     Colony VARCHAR(50) NOT NULL,
     [Status] BIT NOT NULL,
-    Reference VARCHAR(100)
+    Reference VARCHAR(200)
 );
 GO
 
@@ -147,7 +147,7 @@ GO
 CREATE TABLE Recipe (
     IdRecipe UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Instructions VARCHAR(100) NOT NULL
+    Instructions VARCHAR(800) NOT NULL
 );
 GO
 
