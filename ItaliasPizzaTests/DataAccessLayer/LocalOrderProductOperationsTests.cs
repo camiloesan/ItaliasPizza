@@ -51,7 +51,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				db.Product.Remove(testPizza);
 				db.LocalOrderProduct.Remove(localOrderProduct);
 
-				db.AccessAccount.Remove(accessAccount);
+				db.SaveChanges();
 			}
 
 			foreach (var item in result)
