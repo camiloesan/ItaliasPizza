@@ -205,12 +205,14 @@ CREATE TABLE SupplyCategory (
     IdSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [SupplyCategory] VARCHAR(50) NOT NULL
 );
+GO
 
 CREATE TABLE SupplierSupplyCategory (
     IdSupplierSupplyCategory INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     IdSupplier UNIQUEIDENTIFIER NOT NULL,
     IdSupplyCategory INT NOT NULL
 );
+GO
 
 CREATE TABLE SupplyInventoryReport (
     IdSupplyInventoryReport UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
@@ -221,6 +223,7 @@ CREATE TABLE SupplyInventoryReport (
     ReportedAmount DECIMAL(12, 2) NOT NULL,
     DifferingAmountReason VARCHAR (100) NOT NULL
 );
+GO
 
 CREATE TABLE [Transaction] (
     IdTransaction UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
