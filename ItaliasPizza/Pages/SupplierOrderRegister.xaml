@@ -25,7 +25,7 @@
             <Label Content="Campo obligatorio (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="0"/>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
                 <Label Content="Fecha de pedido (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-                <Label Content="Fecha de estimada de llegada (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="98,0,0,0"/>
+                <Label Content="Fecha de estimada de llegada (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="78,0,0,0"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
                 <DatePicker x:Name="DtpOrder" FontSize="14" Margin="0,5" HorizontalAlignment="Left" Width="200"/>
