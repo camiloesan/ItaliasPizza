@@ -80,8 +80,9 @@ namespace ItaliasPizza.Pages
             }
         }
 
-        private void SaveSupplierCategories(Guid supplierId)
+        private int SaveSupplierCategories(Guid supplierId)
         {
+            int result = 0;
             foreach (var child in CategoryPanel.Children)
             {
                 if (child is ComboBox cb && cb.SelectedValue != null)
@@ -92,14 +93,10 @@ namespace ItaliasPizza.Pages
                         IdSupplyCategory = (int)cb.SelectedValue
                     };
 
-                    int result = SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
-
-                    if (result == 0)
-                    {
-                        MessageBox.Show("No se pudo registrar la categoría, inténtalo de nuevo más tarde");
-                    }
+                    result = SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
                 }
             }
+            return result;
         }
 
 
@@ -124,7 +121,7 @@ namespace ItaliasPizza.Pages
 
                 int result = SupplierOperations.SaveSupplier(supplier);
 
-                if (result == 0)
+                if (result == 0 && SaveSupplierCategories(supplier.IdSupplier) == 0)
                 {
                     MessageBox.Show("No se pudo registrar el proveedor, inténtalo de nuevo más tarde");
                     return;
@@ -132,7 +129,6 @@ namespace ItaliasPizza.Pages
                 else
                 {
                     MessageBox.Show("Proveedor registrado exitosamente");
-                    SaveSupplierCategories(supplier.IdSupplier);
                     ResetForm();
                 }
             }
