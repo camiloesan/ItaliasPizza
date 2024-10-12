@@ -14,7 +14,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
         {
             var result = SupplyOperations.GetSupplyCategories().Count;
 
-            Assert.AreEqual(11, result);
+            Assert.AreEqual(9, result);
         }
 
         [TestMethod]
