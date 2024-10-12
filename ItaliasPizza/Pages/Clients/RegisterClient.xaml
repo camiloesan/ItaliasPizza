@@ -18,18 +18,6 @@
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 
-		<!--Side bar-->
-		<Border Grid.Column="0" Width="100">
-			<Border.Background>
-				<ImageBrush ImageSource="../../Assets/Images/tablecloth-background.jpg" Stretch="UniformToFill" Opacity=".69"/>
-			</Border.Background>
-			<StackPanel Orientation="Vertical">
-				<Image Height="45" Width="45" MouseLeftButtonDown="ImgReturn" Cursor="Hand"
-					Source="../../Assets/Images/return_icon.png" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-				<Label Content="Regresar" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontWeight="Medium" FontSize="20" HorizontalAlignment="Center"/>
-			</StackPanel>
-		</Border>
-
 		<!-- Main Content -->
 		<Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 			<Grid.RowDefinitions>
@@ -86,11 +74,11 @@
 				</Grid>
 
 				<Label Content="Referencia" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="14"/>
-				<TextBox x:Name="TxtReference" Margin="5" HorizontalAlignment="Stretch" FontSize="14" Height="100"/>
+				<TextBox x:Name="TxtReference" Margin="5" HorizontalAlignment="Stretch" FontSize="14" Height="100" TextWrapping="Wrap"/>
 
 				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="15">
-					<Button Margin="5" Content="Guardar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-					<Button Margin="5" Content="Cancelar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
+					<Button Margin="5" Content="Guardar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="BtnSaveClient_Click"/>
+					<Button Margin="5" Content="Cancelar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="BtnCancelSaveClient_Click"/>
 				</StackPanel>
 			</StackPanel>
 		</Grid>
