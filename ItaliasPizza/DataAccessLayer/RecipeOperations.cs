@@ -30,7 +30,7 @@ namespace ItaliasPizza.DataAccessLayer
 
 						transaction.Commit();
 
-						return recipeSupplies.Count + 1;
+						result = recipeSupplies.Count + 1;
 					}
 					catch (Exception e)
 					{
