@@ -18,6 +18,7 @@ namespace Database
         public System.Guid IdDeliveryOrder { get; set; }
         public System.Guid IdProduct { get; set; }
         public int Quantity { get; set; }
+        public decimal SubTotal { get; set; }
     
         public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Product Product { get; set; }

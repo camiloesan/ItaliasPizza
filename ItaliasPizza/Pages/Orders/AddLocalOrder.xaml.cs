@@ -101,7 +101,7 @@ namespace ItaliasPizza.Pages.Orders
 					IdLocalOrder = localOrder.IdLocalOrder,
 					IdProduct = item.IdProduct,
 					Quantity = item.Quantity,
-					//SubTotal = item.SubTotal
+					SubTotal = item.SubTotal
 				});
 			}
 
