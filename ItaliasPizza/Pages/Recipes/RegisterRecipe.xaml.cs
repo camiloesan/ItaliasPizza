@@ -145,7 +145,7 @@ namespace ItaliasPizza.Pages.Recipes
 			}
 			else
 			{
-				MessageBox.Show("No se encontraron ingredientes activos.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show("No hay insumos registrados.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
 				DtgAvailableSupplies.ItemsSource = null;
 			}
 		}
