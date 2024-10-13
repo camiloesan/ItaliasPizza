@@ -70,5 +70,43 @@ namespace ItaliasPizzaTests.DataAccessLayer
             Assert.AreEqual(1, result);
         }
 
+        [TestMethod]
+        public void SaveSupplierOrderNegativeTest()
+        {
+            var invalidIdSupply = Guid.NewGuid();
+            var invalidIdSupplier = Guid.NewGuid();
+
+            var IdSupplierOrder = Guid.NewGuid();
+            var supplierOrder = new SupplierOrder
+            {
+                IdSupplierOrder = IdSupplierOrder,
+                IdSupplier = invalidIdSupplier,
+                IdSupply = invalidIdSupply,
+                OrderDate = DateTime.Today,
+                ExpectedDate = DateTime.Today.AddDays(10),
+                IdOrderStatus = 1
+            };
+
+            int result = 0;
+            Exception saveException = null;
+
+            try
+            {
+                result = SupplierOrderOperations.SaveSupplierOrder(supplierOrder);
+            }
+            catch (Exception ex)
+            {
+                saveException = ex;
+            }
+
+            Assert.AreEqual(0, result, "El pedido no debería haberse guardado.");
+            Assert.IsNotNull(saveException, "Se esperaba una excepción debido a claves foráneas inválidas.");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var savedOrder = db.SupplierOrder.Find(IdSupplierOrder);
+                Assert.IsNull(savedOrder, "El pedido no debería haberse guardado en la base de datos.");
+            }
+        }
     }
 }

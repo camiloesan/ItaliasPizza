@@ -246,5 +246,103 @@ namespace ItaliasPizzaTests.DataAccessLayer
             }
         }
 
+        [TestMethod]
+        public void GetSuppliesByCategoriesOfSupplierNegativeTest()
+        {
+            var nonExistentIdSupplier = Guid.NewGuid();
+
+            var result = SupplyOperations.GetSuppliesByCategoriesOfSupplier(nonExistentIdSupplier);
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        public void GetSupplyByIdNegativeTest()
+        {
+            var nonExistentIdSupply = Guid.NewGuid();
+
+            var result = SupplyOperations.GetSupplyById(nonExistentIdSupply);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void SaveSupplyNegativeTest()
+        {
+            var IdSupply = Guid.NewGuid();
+            var supply = new Supply
+            {
+                IdSupply = IdSupply,
+                Name = "Test",
+                Quantity = 1,
+                IdSupplyCategory = 999,
+                IdMeasurementUnit = 1,
+                ExpirationDate = DateTime.Now,
+                Status = true
+            };
+
+            try
+            {
+                var result = SupplyOperations.SaveSupply(supply);
+
+                Assert.AreEqual(0, result);
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                Assert.IsTrue(ex.InnerException.InnerException.Message.Contains("FOREIGN KEY constraint"));
+            }
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var savedSupply = db.Supply.Find(IdSupply);
+                Assert.IsNull(savedSupply);
+            }
+        }
+
+
+        [TestMethod]
+        public void UpdateSupplyStatusNegativeTest()
+        {
+            var nonExistentIdSupply = Guid.NewGuid();
+
+            var result = SupplyOperations.UpdateSupplyStatus(nonExistentIdSupply, false);
+
+            Assert.IsFalse(result);
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var updatedSupply = db.Supply.FirstOrDefault(s => s.IdSupply == nonExistentIdSupply);
+                Assert.IsNull(updatedSupply);
+            }
+        }
+
+        [TestMethod]
+        public void UpdateSupplyInfoNegativeTest()
+        {
+            var IdSupply = Guid.NewGuid();
+            var supply = new Supply
+            {
+                IdSupply = IdSupply,
+                Name = "Original Name",
+                Quantity = 10,
+                IdSupplyCategory = 1,
+                IdMeasurementUnit = 1,
+                ExpirationDate = DateTime.Today.AddDays(30),
+                Status = true
+            };
+
+
+            supply.Name = "Updated Name";
+            var result = SupplyOperations.UpdateSupplyInfo(supply);
+
+            Assert.IsFalse(result);
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var updatedSupply = db.Supply.FirstOrDefault(s => s.IdSupply == IdSupply);
+                Assert.IsNull(updatedSupply);
+            }
+        }
+
     }
 }

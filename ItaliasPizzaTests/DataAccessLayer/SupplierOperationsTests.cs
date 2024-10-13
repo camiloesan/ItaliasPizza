@@ -152,6 +152,158 @@ namespace ItaliasPizzaTests.DataAccessLayer
             }
         }
 
+        [TestMethod]
+        public void SaveSupplierNegativeTest()
+        {
+            var IdSupplier = Guid.NewGuid();
+            var supplier = new Supplier
+            {
+                IdSupplier = IdSupplier,
+                Name = null,
+                Phone = "2282739000"
+            };
+
+            int result = 0;
+            Exception saveException = null;
+
+            try
+            {
+                result = SupplierOperations.SaveSupplier(supplier);
+            }
+            catch (Exception ex)
+            {
+                saveException = ex;
+            }
+
+            Assert.AreEqual(0, result, "El proveedor no debería haberse guardado.");
+            Assert.IsNotNull(saveException, "Se esperaba una excepción debido al valor nulo para el nombre.");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var savedSupplier = db.Supplier.Find(IdSupplier);
+                Assert.IsNull(savedSupplier, "El proveedor no debería haberse guardado en la base de datos.");
+            }
+        }
+
+
+
+        [TestMethod]
+        public void SaveSupplierSuppliCategoryNegativeTest()
+        {
+            var IdSupplier = Guid.NewGuid();
+            var supplierSuppliCategory = new SupplierSupplyCategory
+            {
+                IdSupplier = IdSupplier,
+                IdSupplyCategory = 1
+            };
+
+            int result = 0;
+            Exception saveException = null;
+
+            try
+            {
+                result = SupplierOperations.SaveSupplierSuppliCategory(supplierSuppliCategory);
+            }
+            catch (Exception ex)
+            {
+                saveException = ex;
+            }
+
+            Assert.AreEqual(0, result, "La relación no debería haberse guardado.");
+            Assert.IsNotNull(saveException, "Se esperaba una excepción debido a la clave foránea inválida.");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var savedRelation = db.SupplierSupplyCategory
+                    .FirstOrDefault(sc => sc.IdSupplier == IdSupplier);
+                Assert.IsNull(savedRelation, "La relación no debería haberse guardado.");
+            }
+        }
+
+        [TestMethod]
+        public void GetAllSuppliersNegativeTest()
+        {
+            var IdSupplier = Guid.NewGuid();
+            var supplier = new Supplier
+            {
+                IdSupplier = IdSupplier,
+                Name = "TestSupplier",
+                Phone = "2282739000"
+            };
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Supplier.Add(supplier);
+                db.SaveChanges();
+            }
+
+            Exception duplicateException = null;
+            try
+            {
+                using (var db = new ItaliasPizzaDBEntities())
+                {
+                    db.Supplier.Add(supplier);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                duplicateException = ex;
+            }
+
+            Assert.IsNotNull(duplicateException, "Se esperaba una excepción por duplicar el proveedor.");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var savedSupplier = db.Supplier.Find(IdSupplier);
+                Assert.IsNotNull(savedSupplier, "El proveedor original debe existir.");
+
+                db.Supplier.Remove(savedSupplier);
+                db.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void GetAllSuppliersWithCategoriesNegativeTest()
+        {
+            var IdSupplier = Guid.NewGuid();
+            var supplier = new Supplier
+            {
+                IdSupplier = IdSupplier,
+                Name = "TestSupplierWithInvalidCategory",
+                Phone = "2282739001"
+            };
+
+            var invalidSupplierSupplyCategory = new SupplierSupplyCategory
+            {
+                IdSupplier = IdSupplier,
+                IdSupplyCategory = 999
+            };
+
+            Exception saveException = null;
+
+            try
+            {
+                using (var db = new ItaliasPizzaDBEntities())
+                {
+                    db.Supplier.Add(supplier);
+                    db.SupplierSupplyCategory.Add(invalidSupplierSupplyCategory);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                saveException = ex;
+            }
+
+            Assert.IsNotNull(saveException, "Se esperaba una excepción debido a la categoría inválida.");
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var supplierInDb = db.Supplier.Find(IdSupplier);
+                Assert.IsNull(supplierInDb, "El proveedor no debería haberse guardado en la base de datos.");
+            }
+        }
 
     }
 }
