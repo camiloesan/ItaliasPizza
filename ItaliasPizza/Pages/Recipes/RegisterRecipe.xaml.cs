@@ -24,7 +24,7 @@ namespace ItaliasPizza.Pages.Recipes
 	/// </summary>
 	public partial class RegisterRecipe : Page
 	{
-		private Product currentProduct; // Necesario para obtener el id del producto -> obtener de una pantalla productos
+		//private Product currentProduct; // Necesario para obtener el id del producto -> obtener de una pantalla productos
 		private List<RecipeSupplyDetails> recipeSuppliesDetails = new List<RecipeSupplyDetails>();
 		private Supply selectedSupply;
 		public RegisterRecipe() // agregar product como parametro del constructor para poder relacionar el producto con la receta
@@ -76,7 +76,7 @@ namespace ItaliasPizza.Pages.Recipes
 			
 			MessageBoxResult messageBoxResult = MessageBox.Show("¿Desea registrar la receta?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-			if (messageBoxResult == MessageBoxResult.No)
+			if (messageBoxResult == MessageBoxResult.No || messageBoxResult == MessageBoxResult.None)
 			{
 				return;
 			}
@@ -88,7 +88,7 @@ namespace ItaliasPizza.Pages.Recipes
 			Recipe newRecipe = new Recipe
 			{
 				IdRecipe = Guid.NewGuid(),
-				IdProduct = currentProduct.IdProduct, // product.IdProduct
+				//IdProduct = currentProduct.IdProduct, // product.IdProduct
 				//IdProduct = Guid.NewGuid(),
 				Instructions = TxtInstructions.Text
 			};

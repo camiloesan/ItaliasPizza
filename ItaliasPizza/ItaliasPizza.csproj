@@ -101,6 +101,7 @@
     <Compile Include="Pages\Recipes\RegisterRecipe.xaml.cs">
       <DependentUpon>RegisterRecipe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\LocalOrderProductDetails.cs" />
     <Compile Include="Utils\OrderDetails.cs" />
     <Compile Include="Utils\OrderProductDetails.cs" />
     <Compile Include="Utils\EmployeeDetails.cs" />
