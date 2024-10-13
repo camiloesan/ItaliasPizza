@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="IdAccessAccount" />
@@ -27,7 +27,7 @@
           <Property Name="PostalCode" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Colony" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
-          <Property Name="Reference" Type="varchar" MaxLength="100" />
+          <Property Name="Reference" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="CashReconciliation">
           <Key>
@@ -80,6 +80,7 @@
           <Property Name="IdDeliveryOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -119,6 +120,7 @@
           <Property Name="IdLocalOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="MeasurementUnit">
           <Key>
@@ -168,7 +170,7 @@
           </Key>
           <Property Name="IdRecipe" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Instructions" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Instructions" Type="varchar" MaxLength="800" />
         </EntityType>
         <EntityType Name="RecipeSupply">
           <Key>
@@ -792,8 +794,7 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ItaliasPizzaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -820,7 +821,7 @@
           <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Colony" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="Reference" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Reference" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Client" Relationship="Self.Address_IdClient_fk" FromRole="Address" ToRole="Client" />
         </EntityType>
         <EntityType Name="CashReconciliation">
@@ -884,6 +885,7 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DeliveryOrder" Relationship="Self.DeliveryOrderProduct_IdDeliveryOrder_fk" FromRole="DeliveryOrderProduct" ToRole="DeliveryOrder" />
           <NavigationProperty Name="Product" Relationship="Self.DeliveryOrderProduct_IdProduct_fk" FromRole="DeliveryOrderProduct" ToRole="Product" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -937,6 +939,7 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LocalOrder" Relationship="Self.LocalOrderProduct_IdLocalOrder_fk" FromRole="LocalOrderProduct" ToRole="LocalOrder" />
           <NavigationProperty Name="Product" Relationship="Self.LocalOrderProduct_IdProduct_fk" FromRole="LocalOrderProduct" ToRole="Product" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
         </EntityType>
         <EntityType Name="MeasurementUnit">
           <Key>
@@ -1001,7 +1004,7 @@
           </Key>
           <Property Name="IdRecipe" Type="Guid" Nullable="false" />
           <Property Name="IdProduct" Type="Guid" Nullable="false" />
-          <Property Name="Instructions" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Instructions" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Product" Relationship="Self.Recipe_IdProduct_fk" FromRole="Recipe" ToRole="Product" />
           <NavigationProperty Name="RecipeSupply" Relationship="Self.RecipeSupply_IdRecipe_fk" FromRole="Recipe" ToRole="RecipeSupply" />
         </EntityType>
@@ -1727,6 +1730,7 @@
           <EntitySetMapping Name="DeliveryOrderProduct">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.DeliveryOrderProduct">
               <MappingFragment StoreEntitySet="DeliveryOrderProduct">
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
                 <ScalarProperty Name="IdDeliveryOrderProduct" ColumnName="IdDeliveryOrderProduct" />
                 <ScalarProperty Name="IdDeliveryOrder" ColumnName="IdDeliveryOrder" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
@@ -1770,6 +1774,7 @@
           <EntitySetMapping Name="LocalOrderProduct">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.LocalOrderProduct">
               <MappingFragment StoreEntitySet="LocalOrderProduct">
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
                 <ScalarProperty Name="IdLocalOrderProduct" ColumnName="IdLocalOrderProduct" />
                 <ScalarProperty Name="IdLocalOrder" ColumnName="IdLocalOrder" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />

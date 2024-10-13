@@ -100,5 +100,21 @@ namespace ItaliasPizza.DataAccessLayer
                                 .ToList();
             }
         }
-    }
+		//UNIT TEST
+		public static List<Supply> GetSupplies()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Supply.ToList();
+			}
+        }
+
+        public static MeasurementUnit GetMeasurementUnitById(int id)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.MeasurementUnit.FirstOrDefault(mu => mu.IdMeasurementUnit == id);
+			}
+		}
+	}
 }

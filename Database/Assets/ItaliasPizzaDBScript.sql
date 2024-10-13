@@ -57,7 +57,7 @@ CREATE TABLE [Address] (
     PostalCode VARCHAR(20) NOT NULL,
     Colony VARCHAR(50) NOT NULL,
     [Status] BIT NOT NULL,
-    Reference VARCHAR(100)
+    Reference VARCHAR(200)
 );
 GO
 
@@ -92,7 +92,8 @@ CREATE TABLE DeliveryOrderProduct (
     IdDeliveryOrderProduct UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdDeliveryOrder UNIQUEIDENTIFIER NOT NULL,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL
+    Quantity INT NOT NULL,
+    SubTotal DECIMAL(12, 2) NOT NULL
 );
 GO
 
@@ -131,7 +132,8 @@ CREATE TABLE LocalOrderProduct (
     IdLocalOrderProduct UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdLocalOrder UNIQUEIDENTIFIER NOT NULL,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL
+    Quantity INT NOT NULL,
+    SubTotal DECIMAL(12, 2) NOT NULL
 );
 GO
 
@@ -147,7 +149,7 @@ GO
 CREATE TABLE Recipe (
     IdRecipe UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Instructions VARCHAR(100) NOT NULL
+    Instructions VARCHAR(800) NOT NULL
 );
 GO
 
