@@ -225,6 +225,12 @@ namespace ItaliasPizza.Pages
                 TxtEmail.BorderBrush = Brushes.Red;
                 TxtEmail.BorderThickness = new Thickness(2);
             }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                TxtPassword.BorderBrush = Brushes.Red;
+                TxtPassword.BorderThickness = new Thickness(2);
+            }
         }
     }
 }

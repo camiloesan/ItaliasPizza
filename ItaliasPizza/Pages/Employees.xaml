@@ -30,21 +30,21 @@
 
         <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" Height="500">
                 <Label Content="Empleados" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
-                    <Button Margin="5" Content="Filtro" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Filter"/>
-                    <TextBox x:Name="TxtSearcher" FontSize="14" Margin="5" HorizontalAlignment="Left" Width="600"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
+                    <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
+                    <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
+                    <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
                     <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
                 </StackPanel>
 
-                <DataGrid x:Name="DtgEmployees" Margin="20" AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid x:Name="DtgEmployees" Margin="20" AutoGenerateColumns="False" MaxHeight="400" CanUserResizeColumns="True" CanUserReorderColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="White"/>
@@ -77,7 +77,7 @@
                         <DataGridTemplateColumn Header="Editar" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Width="20" Height="20" Margin="5" Click="EditEmployee_Click" CommandParameter="{Binding}">
+                                    <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0" Click="EditEmployee_Click" Background="Transparent" CommandParameter="{Binding}">
                                         <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
                                     </Button>
                                 </DataTemplate>
@@ -85,11 +85,8 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,232,0,8">
-                    <Button Margin="5" Content="Registrar nuevo empleado" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="200" Click="Btn_RegisterNewEmployee"/>
-                </StackPanel>
             </StackPanel>
+            <Button Margin="100,5" Grid.Row="2" Content="Registrar nuevo empleado" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Left" Width="200" Click="Btn_RegisterNewEmployee"/>
         </Grid>
     </Grid>
 </Page>
