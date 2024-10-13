@@ -190,7 +190,7 @@
 		</Grid>
 
 		<!--Supply Amount Pop-up Form-->
-		<Border Grid.Column="1" Grid.Row="0" x:Name="ProductAmountForm" Grid.RowSpan="4" Grid.ColumnSpan="3" Width="700" Height="360" Background="#6A6A6A" BorderBrush="White" BorderThickness="2" CornerRadius="10" Visibility="Visible">
+		<Border Grid.Column="1" Grid.Row="0" x:Name="ProductAmountForm" Grid.RowSpan="4" Grid.ColumnSpan="3" Width="700" Height="360" Background="#6A6A6A" BorderBrush="White" BorderThickness="2" CornerRadius="10" Visibility="Hidden">
 			<Grid Width="700" Height="360">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
