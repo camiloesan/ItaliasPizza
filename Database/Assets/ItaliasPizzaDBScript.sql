@@ -92,7 +92,8 @@ CREATE TABLE DeliveryOrderProduct (
     IdDeliveryOrderProduct UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdDeliveryOrder UNIQUEIDENTIFIER NOT NULL,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL
+    Quantity INT NOT NULL,
+    SubTotal DECIMAL(12, 2) NOT NULL
 );
 GO
 
@@ -131,7 +132,8 @@ CREATE TABLE LocalOrderProduct (
     IdLocalOrderProduct UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdLocalOrder UNIQUEIDENTIFIER NOT NULL,
     IdProduct UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL
+    Quantity INT NOT NULL,
+    SubTotal DECIMAL(12, 2) NOT NULL
 );
 GO
 
