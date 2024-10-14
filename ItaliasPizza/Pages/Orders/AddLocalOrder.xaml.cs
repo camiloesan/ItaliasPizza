@@ -134,12 +134,19 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void AddProductToOrder(Product selectedProduct)
 		{
+			if (ProductOperations.GetPreparableProductQuantity(selectedProduct) == -1)
+			{
+				MessageBox.Show("Ha ocurrido un error al calcular la cantidad preparable de este producto.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+
 			if (!EnoughSupplies(selectedProduct))
 			{
 				MessageBox.Show("No hay suficientes insumos para más de este producto.");
 				return;
 			}
 
+			CmbTableNumber.IsEnabled = false;
 			BtnCancelOrder.IsEnabled = false;
 			BtnFinishOrder.IsEnabled = false;
 			ProductAmountForm.Visibility = Visibility.Visible;
@@ -210,6 +217,7 @@ namespace ItaliasPizza.Pages.Orders
 		private void ResetAmountForm()
 		{
 			ProductAmountForm.Visibility = Visibility.Hidden;
+			CmbTableNumber.IsEnabled = true;
 			BtnCancelOrder.IsEnabled = true;
 			BtnFinishOrder.IsEnabled = true;
 			TxtProductAmount.Text = string.Empty;
