@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -165,6 +166,7 @@ namespace ItaliasPizza.Pages.Orders
 		private void BtnSaveProductAmount_Click(object sender, RoutedEventArgs e)
 		{
 			var productAmount = TxtProductAmount.Text;
+			var preparableProductQuantity = ProductOperations.GetPreparableProductQuantity(selectedProduct);
 
 			if (string.IsNullOrEmpty(productAmount))
 			{
@@ -178,7 +180,13 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				MessageBox.Show("Por favor, ingrese una cantidad válida.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
-			} else 
+			} else if (!EnoughSupplies(selectedProduct))
+			{
+				MessageBox.Show("No hay suficientes insumos para más de este producto. \nCantidad preparable: " + preparableProductQuantity, "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+				return;
+			}
+
+			else 
 			{
 				LocalOrderProductDetails newLocalOrderProduct = new LocalOrderProductDetails
 				{
@@ -209,7 +217,17 @@ namespace ItaliasPizza.Pages.Orders
 
 		private bool EnoughSupplies(Product selectedProduct)
 		{
-			return ProductOperations.GetPreparableProductQuantity(selectedProduct) > 0;
+			bool areEnoughSupplies = true;
+
+			if (string.IsNullOrEmpty(TxtProductAmount.Text))
+			{
+				areEnoughSupplies = ProductOperations.GetPreparableProductQuantity(selectedProduct) > 0;
+			} else {
+				areEnoughSupplies = ProductOperations.GetPreparableProductQuantity(selectedProduct) > int.Parse(TxtProductAmount.Text);
+			}
+
+			return areEnoughSupplies;
+			//return ProductOperations.GetPreparableProductQuantity(selectedProduct) > int.Parse(TxtProductAmount.Text);
 		}
 
 		private void FillSelectedProductsList()
