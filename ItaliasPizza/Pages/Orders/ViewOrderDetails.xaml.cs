@@ -22,20 +22,27 @@ namespace ItaliasPizza.Pages.Orders
 
 			InitializeComponent();
 			FillDtgOrderProducts();
+			InitializeUserTypeButtons();
+		}
 
-			BtnPreparation.Visibility = Visibility.Hidden;
-			BtnPrepared.Visibility = Visibility.Hidden;
-			BtnTransit.Visibility = Visibility.Visible;
-			BtnDelivered.Visibility = Visibility.Visible;
-			BtnNotDelivered.Visibility = Visibility.Visible;
-
-			if (SessionDetails.UserType == "Repartidor")
+		private void InitializeUserTypeButtons()
+		{
+			switch (SessionDetails.UserType) 
 			{
-				BtnPreparation.Visibility = Visibility.Hidden;
-				BtnPrepared.Visibility = Visibility.Hidden;
-				BtnTransit.Visibility = Visibility.Visible;
-				BtnDelivered.Visibility = Visibility.Visible;
-				BtnNotDelivered.Visibility = Visibility.Visible;
+				case "Cocinero":
+					BtnPreparation.Visibility = Visibility.Visible;
+					BtnPrepared.Visibility = Visibility.Visible;
+					BtnTransit.Visibility = Visibility.Hidden;
+					BtnDelivered.Visibility = Visibility.Hidden;
+					BtnNotDelivered.Visibility = Visibility.Hidden;
+					break;
+				case "Repartidor":
+					BtnPreparation.Visibility = Visibility.Hidden;
+					BtnPrepared.Visibility = Visibility.Hidden;
+					BtnTransit.Visibility = Visibility.Visible;
+					BtnDelivered.Visibility = Visibility.Visible;
+					BtnNotDelivered.Visibility = Visibility.Visible;
+					break;
 			}
 		}
 
@@ -212,7 +219,7 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (string.IsNullOrEmpty(_notDeliveredReason))
 			{
-				MessageBox.Show("Por favor, ingrese el motivo por el cual no se pudo entregar el pedido", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show("Por favor, ingrese el motivo por el cual no se pudo entregar el pedido", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			} else if (_notDeliveredReason.Length > 100)
 			{
@@ -243,6 +250,7 @@ namespace ItaliasPizza.Pages.Orders
 				BtnNotDelivered.IsEnabled = true;
 				BtnCancelOrder.IsEnabled = true;
 				Application.Current.MainWindow.Content = new ViewOrders();
+				_notDeliveredReason = null;
 			}
 			else
 			{
@@ -252,6 +260,7 @@ namespace ItaliasPizza.Pages.Orders
 				BtnDelivered.IsEnabled = true;
 				BtnNotDelivered.IsEnabled = true;
 				BtnCancelOrder.IsEnabled = true;
+				_notDeliveredReason = null;
 			}
 		}
 

@@ -1,5 +1,6 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Orders;
 using ItaliasPizza.Utils;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,13 +62,13 @@ namespace ItaliasPizza.Pages
                     //Application.Current.MainWindow.Content = new MainMenu();
                     break;
                 case "Cocinero":
-                    //Application.Current.MainWindow.Content = new MainMenu();
-                    break;
+                    //Application.Current.MainWindow.Content = new ViewOrders();
+					break;
                 case "Repartidor":
-                    //Application.Current.MainWindow.Content = new MainMenu();
+                    Application.Current.MainWindow.Content = new ViewOrders();
                     break;
                 case "Mesero":
-                    //Application.Current.MainWindow.Content = new MainMenu();
+                    Application.Current.MainWindow.Content = new ViewOrders();
                     break;
                 default:
                     MessageBox.Show("Usuario no válido.");
@@ -78,7 +79,7 @@ namespace ItaliasPizza.Pages
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
             //LogIn();
-            Application.Current.MainWindow.Content = new Employees();
+            Application.Current.MainWindow.Content = new AddLocalOrder();
         }
     }
 }

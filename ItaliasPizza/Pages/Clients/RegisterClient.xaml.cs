@@ -32,9 +32,7 @@ namespace ItaliasPizza.Pages.Clients
 
 		}
 
-		// TODO: Cuadro de diálogo para confirmar si se desea realizar el registro o cancelar
-
-		private void Btn_Save(object sender, RoutedEventArgs e)
+		private void BtnSaveClient_Click(object sender, RoutedEventArgs e)
 		{
 			HighlightInvalidFields();
 			if (!AreFieldsFilled())
@@ -62,68 +60,86 @@ namespace ItaliasPizza.Pages.Clients
 				MessageBox.Show("Ingrese un código postal válido.");
 				return;
 			}
+
+			MessageBoxResult messageBoxResult = MessageBox.Show("¿Desea registrar el cliente?", "Confirmación", MessageBoxButton.YesNo);
+
+			if (messageBoxResult == MessageBoxResult.No)
+			{
+				return;
+			}
+
+			var clientId = Guid.NewGuid();
+			var name = TxtName.Text;
+			var lastName = TxtLastName.Text;
+			var phone = TxtPhone.Text;
+
+			var addressId = Guid.NewGuid();
+			var street = TxtStreet.Text;
+			var number = int.Parse(TxtNumber.Text);
+			var colony = TxtColony.Text;
+			var postalCode = TxtPostalCode.Text;
+			var reference = TxtReference.Text;
+
+			Console.WriteLine("Cliente:");
+			Console.WriteLine($"Nombre: {name}");
+			Console.WriteLine($"Apellido: {lastName}");
+			Console.WriteLine($"Teléfono: {phone}");
+
+			Console.WriteLine("Dirección:");
+			Console.WriteLine($"Calle: {street}");
+			Console.WriteLine($"Número: {number}");
+			Console.WriteLine($"Colonia: {colony}");
+			Console.WriteLine($"Código Postal: {postalCode}");
+			Console.WriteLine($"Referencia: {reference}");
+
+			Client newClient = new Client
+			{
+				IdClient = clientId,
+				FirstName = name,
+				LastName = lastName,
+				Phone = phone
+			};
+
+			Address newAddress = new Address
+			{
+				IdAddress = addressId,
+				Street = street,
+				Number = number,
+				Colony = colony,
+				PostalCode = postalCode,
+				Reference = reference,
+				Status = true,
+				IdClient = clientId
+			};
+
+			int result = ClientOperations.SaveClient(newClient, newAddress);
+			if (result == 0)
+			{
+				MessageBox.Show("No se pudo registrar el cliente.");
+				return;
+			}
 			else
 			{
-				var clientId = Guid.NewGuid();
-				var name = TxtName.Text;
-				var lastName = TxtLastName.Text;
-				var phone = TxtPhone.Text;
-
-				var addressId = Guid.NewGuid();
-				var street = TxtStreet.Text;
-				var number = int.Parse(TxtNumber.Text);
-				var colony = TxtColony.Text;
-				var postalCode = TxtPostalCode.Text; // TODO: Change to string/varchar in model
-				var reference = TxtReference.Text;
-
-				Console.WriteLine("Cliente:");
-				Console.WriteLine($"Nombre: {name}");
-				Console.WriteLine($"Apellido: {lastName}");
-				Console.WriteLine($"Teléfono: {phone}");
-
-				Console.WriteLine("Dirección:");
-				Console.WriteLine($"Calle: {street}");
-				Console.WriteLine($"Número: {number}");
-				Console.WriteLine($"Colonia: {colony}");
-				Console.WriteLine($"Código Postal: {postalCode}");
-				Console.WriteLine($"Referencia: {reference}");
-
-				Client newClient = new Client
-				{
-					IdClient = clientId,
-					FirstName = name,
-					LastName = lastName,
-					Phone = phone
-				};
-
-				Address newAddress = new Address
-				{
-					IdAddress = addressId,
-					Street = street,
-					Number = number,
-					Colony = colony,
-					PostalCode = postalCode,
-					Reference = reference,
-					Status = true,
-					IdClient = clientId
-				};
-
-				int result = ClientOperations.SaveClient(newClient, newAddress);
-				if (result == 0)
-				{
-					MessageBox.Show("No se pudo registrar el cliente.");
-					return;
-				}
-				else
-				{
-					MessageBox.Show("Cliente registrado exitosamente.");
-				}
+				MessageBox.Show("Cliente registrado exitosamente.");
 			}
+
+			EmptyFields();
+			// Return to delivery order view
+			// Application.Current.MainWindow.Content = new AddDeliveryOrder();
 		}
 
-		private void Btn_Cancel(object sender, RoutedEventArgs e)
+		private void BtnCancelSaveClient_Click(object sender, RoutedEventArgs e)
 		{
-			//TODO: Regresar a la página anterior
+			MessageBoxResult messageBoxResult = MessageBox.Show("¿Desea cancelar el registro del cliente?", "Confirmación", MessageBoxButton.YesNo);
+
+			if (messageBoxResult == MessageBoxResult.No)
+			{
+				return;
+			}
+
+			EmptyFields();
+			// Return to delivery order view
+			// Application.Current.MainWindow.Content = new AddDeliveryOrder();
 		}
 
 		private bool HighlightInvalidFields()
@@ -234,6 +250,17 @@ namespace ItaliasPizza.Pages.Clients
 		private void TxtNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			e.Handled = !IsInputNumber(e.Text);
+		}
+		private void EmptyFields()
+		{
+			TxtName.Text = string.Empty;
+			TxtLastName.Text = string.Empty;
+			TxtPhone.Text = string.Empty;
+			TxtStreet.Text = string.Empty;
+			TxtNumber.Text = string.Empty;
+			TxtColony.Text = string.Empty;
+			TxtPostalCode.Text = string.Empty;
+			TxtReference.Text = string.Empty;
 		}
 	}
 }

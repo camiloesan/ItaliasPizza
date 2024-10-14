@@ -29,44 +29,88 @@ namespace ItaliasPizza.Pages.Orders
 		public ViewOrders()
 		{
 			InitializeComponent();
-
-			UserTypeLabel.Content = SessionDetails.UserType;
-			if (SessionDetails.UserType == "Repartidor")
-			{
-				DeliveryFilterBar.Visibility = Visibility.Visible;
-				DeliveryCurrentFilter.Content = "Listo para entrega";
-				BtnAddLocalOrder.Visibility = Visibility.Hidden;
-
-				OrderStatus readyStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-				FillDtgDeliveryOrders(readyStatus);
-			}
-			else if (SessionDetails.UserType == "Cocinero")
-			{
-				CookFilterBar.Visibility = Visibility.Visible;
-				CookCurrentFilter.Content = "Pendientes";
-				BtnAddLocalOrder.Visibility = Visibility.Hidden;
-
-				OrderStatus pendingStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
-				FillDtgOrders(pendingStatus);
-			}
-			else if (SessionDetails.UserType == "Mesero")
-			{
-				WaiterFilterBar.Visibility = Visibility.Visible;
-				WaiterCurrentFilter.Content = "Listos para entrega";
-
-				OrderStatus readyStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-				FillDtgLocalOrders(readyStatus);
-			}
+			InitializeOrdersByUsedType();
 		}
 
 		private void ImgReturn_Click(object sender, MouseButtonEventArgs e)
 		{
+			
+		}
 
+		private void InitializeOrdersByUsedType()
+		{
+			UserTypeLabel.Content = SessionDetails.UserType;
+
+			OrderStatus readyStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
+			OrderStatus pendingStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
+			switch (SessionDetails.UserType)
+			{
+				case "Repartidor":
+					DeliveryFilterBar.Visibility = Visibility.Visible;
+					DeliveryCurrentFilter.Content = "Listo para entrega";
+					BtnAddLocalOrder.Visibility = Visibility.Hidden;
+
+					FillDtgDeliveryOrders(readyStatus);
+					break;
+
+				case "Cocinero":
+					CookFilterBar.Visibility = Visibility.Visible;
+					CookCurrentFilter.Content = "Pendientes";
+					BtnAddLocalOrder.Visibility = Visibility.Hidden;
+
+					FillDtgOrders(pendingStatus);
+					break;
+
+				case "Mesero":
+					WaiterFilterBar.Visibility = Visibility.Visible;
+					WaiterCurrentFilter.Content = "Listos para entrega";
+
+					FillDtgLocalOrders(readyStatus);
+					break;
+
+				default:
+					// Handle unknown user type
+					break;
+			}
 		}
 
 		private void BtnCancelOrder_Click(object sender, RoutedEventArgs e)
 		{
+			int updatedOrder = 0;
+			MessageBoxResult messageBoxResult = MessageBox.Show("¿Está seguro que desea cancelar la orden?", "Alerta", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			
+			if (messageBoxResult == MessageBoxResult.No)
+			{
+				return;
+			}
+
+			Button button = sender as Button;
+			var order = button.DataContext as OrderDetails;
+
+			OrderStatus canceledStatus = OrderStatusOperations.GetOrderStatusByName("Cancelado");
+
+			if (order.OrderType == "A domicilio")
+			{
+				DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(order.OrderId);
+				updatedOrder = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, canceledStatus);
+				InitializeOrdersByUsedType();
+				// UndoSupplyReservation(deliveryOrder);
+			}
+			else if (order.OrderType == "Local")
+			{
+				LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(order.OrderId);
+				updatedOrder = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, canceledStatus);
+				InitializeOrdersByUsedType();
+				// UndoSupplyReservation(localOrder);
+			}
+
+			if (updatedOrder > 0)
+			{
+				MessageBox.Show("El pedido se ha cancelado correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+			} else 
+			{
+				MessageBox.Show("No se pudo cancelar el pedido", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+			}
 		}
 
 		private void BtnViewOrder_Click(object sender, RoutedEventArgs e)
@@ -109,7 +153,6 @@ namespace ItaliasPizza.Pages.Orders
 
 		private List<OrderDetails> ConvertOrdersToGenericOrder(OrderStatus orderStatus){
 			var orders = new List<OrderDetails>();
-			//var orderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
 
 			var deliveryOrders = DeliveryOrderOperations.GetDeliveryOrdersByStatus(orderStatus);
 			var localOrders = LocalOrderOperations.GetLocalOrdersByStatus(orderStatus);
@@ -163,7 +206,6 @@ namespace ItaliasPizza.Pages.Orders
 		private List<OrderDetails> ConvertLocalOrdersToGenericOrderByStatus(OrderStatus orderStatus)
 		{
 			var orders = new List<OrderDetails>();
-			//var orderStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");
 
 			var localOrders = LocalOrderOperations.GetLocalOrdersByStatus(orderStatus);
 
@@ -222,7 +264,6 @@ namespace ItaliasPizza.Pages.Orders
 			return orders;
 		}
 
-		//Cook buttons
 		private void BtnFilterPending_Click(object sender, RoutedEventArgs e)
 		{
 			OrderStatus pendingStatus = OrderStatusOperations.GetOrderStatusByName("Pendiente");

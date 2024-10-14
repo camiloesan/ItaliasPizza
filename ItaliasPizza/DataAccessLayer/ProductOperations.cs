@@ -22,7 +22,14 @@ namespace ItaliasPizza.DataAccessLayer
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				Guid idProduct = product.IdProduct;
-				return db.Database.SqlQuery<int>("SELECT dbo.fn_CalculateMaxProducts(@idProduct)", new System.Data.SqlClient.SqlParameter("@idProduct", idProduct)).FirstOrDefault();
+
+                try {
+				    return db.Database.SqlQuery<int>("SELECT dbo.fn_CalculateMaxProducts(@idProduct)", new System.Data.SqlClient.SqlParameter("@idProduct", idProduct)).FirstOrDefault();
+                }
+				catch (Exception e)
+				{
+					return -1;
+				}
 			}
 		}
         

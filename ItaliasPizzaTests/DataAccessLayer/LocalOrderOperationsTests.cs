@@ -76,7 +76,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		}
 
 		[TestMethod]
-		public void GetLocalOrderById()
+		public void GetLocalOrderByIdTest()
 		{
 			var idEmployee = Guid.NewGuid();
 			var testEmployee = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1 };

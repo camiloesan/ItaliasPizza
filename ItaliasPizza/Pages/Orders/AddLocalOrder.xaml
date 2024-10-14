@@ -14,24 +14,11 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 
-		<!--Side bar--> 
-		<Border Grid.Column="0" Width="100">
-			<Border.Background>
-				<ImageBrush ImageSource="../../Assets/Images/tablecloth-background.jpg" Stretch="UniformToFill" Opacity=".69"/>
-			</Border.Background>
-			<StackPanel Orientation="Vertical">
-				<Image Height="45" Width="45" MouseLeftButtonDown="ImgReturn" Cursor="Hand"
-				Source="../../Assets/Images/return_icon.png" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-				<Label Content="Regresar" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontWeight="Medium" FontSize="20" HorizontalAlignment="Center"/>
-			</StackPanel>
-		</Border>
-
 		<!--Content grid-->
-		<Grid Grid.Column="1">
+		<Grid Grid.Column="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -51,7 +38,7 @@
 
 				<StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,25,0">
 					<Label Content="Seleccionar Mesa" FontFamily="../../Assets/Fonts/#Jost" FontSize="25" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,0"/>
-					<ComboBox Grid.Column="2" x:Name="cmbTableNumber" Width="200" Height="30" HorizontalAlignment="Center"  FontFamily="../../Assets/Fonts/#Jost" FontSize="20" Foreground="Black" BorderBrush="White" >
+					<ComboBox Grid.Column="2" x:Name="CmbTableNumber" Width="200" Height="30" HorizontalAlignment="Center"  FontFamily="../../Assets/Fonts/#Jost" FontSize="20" Foreground="Black" BorderBrush="White" >
 						<ComboBoxItem Content="1"/>
 						<ComboBoxItem Content="2"/>
 						<ComboBoxItem Content="3"/>
@@ -152,13 +139,13 @@
 
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Producto" Width="*" Binding="{Binding Name}"/>
-						<DataGridTextColumn Header="Sub total" Width="80" Binding="{Binding Price}"/>
-						<DataGridTextColumn Header="Cantidad" Width="70" Binding="{Binding Price}"/>
+						<DataGridTextColumn Header="Sub total" Width="80" Binding="{Binding SubTotal}"/>
+						<DataGridTextColumn Header="Cantidad" Width="70" Binding="{Binding Quantity}"/>
 
 						<DataGridTemplateColumn Header="Acción" Width="55">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<Button x:Name="RemoveProduct" Click="RemoveProduct_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
+									<Button x:Name="BtnRemoveProduct" Click="BtnRemoveProduct_Click" Width="Auto" Height="Auto" Background="Transparent" BorderBrush="Transparent" Cursor="Hand">
 										<Image Source="../../Assets/Images/remove_icon_black.png" Width="45" Height="45" Stretch="Uniform"/>
 									</Button>
 								</DataTemplate>
@@ -170,7 +157,7 @@
 				<!-- Order total -->
 				<StackPanel Grid.Column="3" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
 					<Label Content="Total: $" FontFamily="../../Assets/Fonts/#Jost" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
-					<Label x:Name="lblTotal" Content="0.00" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
+					<Label x:Name="LblTotal" Content="0.00" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
 				</StackPanel>
 			</Grid>
 
@@ -184,7 +171,7 @@
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 
-				<Border Grid.Column="1" Width="370" Height="75" MouseLeftButtonDown="BtnCancelOrder" Cursor="Hand"
+				<Border Grid.Column="1" x:Name="BtnCancelOrder" Width="370" Height="75" MouseLeftButtonDown="BtnCancelOrder_Click" Cursor="Hand"
 				Background="#E44343" BorderBrush="White" BorderThickness="1" CornerRadius="5">
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 						<Image Source="../../Assets/Images/cancel_icon.png" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -192,7 +179,7 @@
 					</StackPanel>
 				</Border>
 
-				<Border Grid.Column="3" Width="370" Height="75" MouseLeftButtonDown="BtnFinishOrder" Cursor="Hand"
+				<Border Grid.Column="3" x:Name="BtnFinishOrder" Width="370" Height="75" MouseLeftButtonDown="BtnFinishOrder_Click" Cursor="Hand"
 				Background="#0EB529" BorderBrush="White" BorderThickness="1" CornerRadius="5">
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 						<Image Source="../../Assets/Images/check_icon.png" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -201,5 +188,27 @@
 				</Border>
 			</Grid>
 		</Grid>
+
+		<!--Supply Amount Pop-up Form-->
+		<Border Grid.Column="1" Grid.Row="0" x:Name="ProductAmountForm" Grid.RowSpan="4" Grid.ColumnSpan="3" Width="700" Height="360" Background="#6A6A6A" BorderBrush="White" BorderThickness="2" CornerRadius="10" Visibility="Hidden">
+			<Grid Width="700" Height="360">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<Label Grid.Row="0" Content="Cantidad del producto" FontSize="20" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,10"/>
+				<StackPanel Grid.Row="1" Orientation="Vertical" Margin="80,0,80,0" VerticalAlignment="Center">
+					<Label Content="Cantidad (entero):" FontSize="16" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0"/>
+					<TextBox x:Name="TxtProductAmount" PreviewTextInput="TxtProductAmount_PreviewTextInput" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" MaxLength="10" Width="400" Margin="20,0,0,0"/>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="40,0,40,20" HorizontalAlignment="Right">
+					<Button x:Name="BtnSaveProductAmount" Click="BtnSaveProductAmount_Click" Content="Guardar" FontFamily="../../Assets/Fonts/#Jost" FontWeight="SemiBold" Width="100" Height="40" Margin="0,0,20,0"/>
+					<Button x:Name="BtnCancelProductAmount" Click="BtnCancelProductAmount_Click" Content="Cancelar" FontFamily="../../Assets/Fonts/#Jost" FontWeight="SemiBold" Width="100" Height="40"/>
+				</StackPanel>
+			</Grid>
+		</Border>
 	</Grid>
 </Page>
