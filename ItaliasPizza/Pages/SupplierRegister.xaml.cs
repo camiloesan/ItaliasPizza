@@ -121,7 +121,7 @@ namespace ItaliasPizza.Pages
 
                 int result = SupplierOperations.SaveSupplier(supplier);
 
-                if (result == 0 && SaveSupplierCategories(supplier.IdSupplier) == 0)
+                if (result == 0)
                 {
                     MessageBox.Show("No se pudo registrar el proveedor, inténtalo de nuevo más tarde");
                     return;
@@ -129,6 +129,7 @@ namespace ItaliasPizza.Pages
                 else
                 {
                     MessageBox.Show("Proveedor registrado exitosamente");
+                    SaveSupplierCategories(supplier.IdSupplier);
                     ResetForm();
                 }
             }
