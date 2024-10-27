@@ -25,16 +25,14 @@
             <Label Content="Campo obligatorio (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="0,0,0,0"/>
             <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" FontSize="14" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch"/>
-            <Label Content="Número de categorías del proveedor (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="5,0,0,0">
-                <TextBox x:Name="TxtCategoryCount" IsReadOnly="True" FontSize="14" Text="1" Margin="5" Width="50" HorizontalAlignment="Left" TextChanged="TxtCategoryCount_TextChanged"/>
-                <Button Content="▲" Width="30" FontSize="14" Click="Btn_IncreaseCategory" />
-                <Button Content="▼" Width="30" FontSize="14" Click="Btn_DecreaseCategory" />
-            </StackPanel>
-
-            <Label Content="Categorías(*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <WrapPanel x:Name="CategoryPanel" Margin="5,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal"/>
+            <Label Content="Categorías del proveedor (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <ComboBox x:Name="CbCategories" FontSize="14" Text="1" Margin="5" Width="200" HorizontalAlignment="Left">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding SupplyCategory1}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Label Content="Teléfono (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
             <TextBox x:Name="TxtPhone" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="200"/>
 

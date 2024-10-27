@@ -101,6 +101,9 @@
     <Compile Include="Pages\Recipes\RegisterRecipe.xaml.cs">
       <DependentUpon>RegisterRecipe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SupplierModification.xaml.cs">
+      <DependentUpon>SupplierModification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\LocalOrderProductDetails.cs" />
     <Compile Include="Utils\OrderDetails.cs" />
     <Compile Include="Utils\OrderProductDetails.cs" />
@@ -166,6 +169,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Recipes\RegisterRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SupplierModification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

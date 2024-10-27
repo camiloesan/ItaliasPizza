@@ -51,54 +51,56 @@ namespace ItaliasPizza.Pages
         {
             TxtName.Text = string.Empty;
             TxtPhone.Text = string.Empty;
-            TxtCategoryCount.Text = "1";
             ShowCategories();
         }
 
         private void ShowCategories()
         {
-            CategoryPanel?.Children.Clear();
-            if (int.TryParse(TxtCategoryCount.Text, out int categoryCount) && categoryCount > 0)
-            {
-
-                for (int i = 0; i < categoryCount; i++)
-                {
-                    ComboBox cb = new ComboBox
-                    {
-                        Name = $"CbCategory_{i}",
-                        DisplayMemberPath = "SupplyCategory1",
-                        SelectedValuePath = "IdSupplyCategory",
-                        IsEditable = false,
-                        Width = 200,
-                        Margin = new Thickness(5)
-                    };
-
-                    cb.ItemsSource = GetCategories();
-                    CategoryPanel?.Children.Add(cb);
-                    cb.SelectedIndex = 0;
-                }
-            }
+            CbCategories.ItemsSource = GetCategories();
         }
 
         private int SaveSupplierCategories(Guid supplierId)
         {
             int result = 0;
-            foreach (var child in CategoryPanel.Children)
-            {
-                if (child is ComboBox cb && cb.SelectedValue != null)
-                {
-                    SupplierSupplyCategory supplierSupplyCategory = new SupplierSupplyCategory
-                    {
-                        IdSupplier = supplierId,
-                        IdSupplyCategory = (int)cb.SelectedValue
-                    };
 
-                    result = SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
+            foreach (var item in CbCategories.Items)
+            {
+                ComboBoxItem comboBoxItem = (ComboBoxItem)CbCategories.ItemContainerGenerator.ContainerFromItem(item);
+
+                if (comboBoxItem != null)
+                {
+                    CheckBox checkBox = FindVisualChild<CheckBox>(comboBoxItem);
+
+                    if (checkBox != null && checkBox.IsChecked == true)
+                    {
+                        var supplyCategory = item as SupplyCategory;
+                        SupplierSupplyCategory supplierCategory = new SupplierSupplyCategory
+                        {
+                            IdSupplier = supplierId,
+                            IdSupplyCategory = supplyCategory.IdSupplyCategory
+                        };
+                        SupplierOperations.SaveSupplierSuppliCategory(supplierCategory);
+                    }
                 }
             }
+
             return result;
         }
 
+        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child != null && child is T)
+                    return (T)child;
+
+                var childOfChild = FindVisualChild<T>(child);
+                if (childOfChild != null)
+                    return childOfChild;
+            }
+            return null;
+        }
 
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
@@ -138,38 +140,6 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new SuppliersList();
-        }
-
-        private void TxtCategoryCount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ShowCategories();
-        }
-
-        private void Btn_IncreaseCategory(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(TxtCategoryCount.Text);
-
-            if (currentValue < 9)
-            {
-                TxtCategoryCount.Text = (currentValue + 1).ToString();
-            } else
-            {
-                MessageBox.Show("Solo su puede un máximo de 9 categorías");
-            }
-        }
-
-        private void Btn_DecreaseCategory(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(TxtCategoryCount.Text);
-
-            if (currentValue > 1)
-            {
-                TxtCategoryCount.Text = (currentValue - 1).ToString();
-            }
-            else
-            {
-                MessageBox.Show("Debe haber al menos 1 categoría");
-            }
         }
     }
 }
