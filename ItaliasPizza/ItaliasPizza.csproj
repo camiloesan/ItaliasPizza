@@ -98,6 +98,9 @@
     <Compile Include="Pages\Orders\AddLocalOrder.xaml.cs">
       <DependentUpon>AddLocalOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Products.xaml.cs">
+      <DependentUpon>Products.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Recipes\RegisterRecipe.xaml.cs">
       <DependentUpon>RegisterRecipe.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,7 @@
     <Compile Include="Utils\OrderDetails.cs" />
     <Compile Include="Utils\OrderProductDetails.cs" />
     <Compile Include="Utils\EmployeeDetails.cs" />
+    <Compile Include="Utils\ProductDetails.cs" />
     <Compile Include="Utils\RecipeSupplyDetails.cs" />
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplierDetails.cs" />
@@ -162,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProductRegister.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Products.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

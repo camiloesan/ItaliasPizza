@@ -127,5 +127,10 @@ namespace ItaliasPizza.Pages
         {
 
         }
+
+        private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Products();
+        }
     }
 }
