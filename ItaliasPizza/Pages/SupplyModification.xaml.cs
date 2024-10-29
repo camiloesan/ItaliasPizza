@@ -14,9 +14,9 @@ namespace ItaliasPizza.Pages
         private const int KILOGRAMS_ID = 1;
         private const int UNITS_ID = 2;
         private const int LITERS_ID = 3;
-        private readonly SupplyDetailsX supply;
+        private readonly SupplyDetails supply;
 
-        public SupplyModification(SupplyDetailsX supply)
+        public SupplyModification(SupplyDetails supply)
         {
             this.supply = supply;
             InitializeComponent();

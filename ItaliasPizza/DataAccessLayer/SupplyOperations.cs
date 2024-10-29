@@ -119,12 +119,12 @@ namespace ItaliasPizza.DataAccessLayer
 			}
 		}
 
-        public static List<SupplyDetailsX> GetSupplyDetailsXes()
+        public static List<SupplyDetails> GetSupplyDetailsXes()
         {
             using (var db = new ItaliasPizzaDBEntities())
             {
                 var result = db.Supply
-                .Select(s => new SupplyDetailsX
+                .Select(s => new SupplyDetails
                 {
                     IdSupply = s.IdSupply,
                     Name = s.Name,

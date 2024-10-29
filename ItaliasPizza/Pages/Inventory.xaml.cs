@@ -9,7 +9,7 @@ namespace ItaliasPizza.Pages
 {
     public partial class Inventory : Page
     {
-        private readonly List<SupplyDetailsX> productDetailsList = SupplyOperations.GetSupplyDetailsXes();
+        private readonly List<SupplyDetails> productDetailsList = SupplyOperations.GetSupplyDetailsXes();
 
         public Inventory()
         {
@@ -47,7 +47,7 @@ namespace ItaliasPizza.Pages
             string filter = CbFilter.SelectedItem.ToString();
             string search = TxtSearcher.Text.ToLower();
 
-            List<SupplyDetailsX> filteredList = new List<SupplyDetailsX>();
+            List<SupplyDetails> filteredList = new List<SupplyDetails>();
 
             switch (filter)
             {
@@ -112,7 +112,7 @@ namespace ItaliasPizza.Pages
         {
             Button button = sender as Button;
 
-            if (button.DataContext is SupplyDetailsX selectedSupply)
+            if (button.DataContext is SupplyDetails selectedSupply)
             {
                 Application.Current.MainWindow.Content = new SupplyModification(selectedSupply);
             }

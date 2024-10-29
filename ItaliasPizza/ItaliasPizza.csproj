@@ -119,7 +119,6 @@
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplierDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />
-    <Compile Include="Utils\SupplyDetailsX.cs" />
     <Page Include="Pages\Clients\RegisterClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
