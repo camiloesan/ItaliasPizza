@@ -1,6 +1,7 @@
 ﻿using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Utils;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -55,7 +56,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Supplies(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Inventory();
         }
 
         private void Btn_Orders(object sender, RoutedEventArgs e)
