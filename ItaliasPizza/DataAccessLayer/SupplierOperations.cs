@@ -65,7 +65,110 @@ namespace ItaliasPizza.DataAccessLayer
             }
         }
 
+        public static Supplier GetSupplierById(Guid guid)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Supplier.FirstOrDefault(s => s.IdSupplier == guid);
+            }
+        }
 
+        public static List<SupplierCategory> GetSupplierDetailsWithCategoriesBySpplierId(Guid supplierId)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var allCategoryIds = db.SupplyCategory.Select(c => new SupplierCategory
+                {
+                    Id = c.IdSupplyCategory,
+                    Name = c.SupplyCategory1,
+                    IsSelected = false
+                }).ToList();
 
+                var supplierCategoryIds = db.SupplierSupplyCategory
+                    .Where(s => s.IdSupplier == supplierId)
+                    .Select(s => s.IdSupplyCategory)
+                    .ToList();
+
+                foreach (var category in allCategoryIds)
+                {
+                    if (supplierCategoryIds.Contains(category.Id))
+                    {
+                        category.IsSelected = true;
+                    }
+                }
+
+                return allCategoryIds;
+            }
+        }
+
+        public static bool UpdateSupplyInfo(Supplier supplier)
+        {
+            bool result = false;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingSupplier = db.Supplier.FirstOrDefault(s => s.IdSupplier == supplier.IdSupplier);
+
+                if (existingSupplier != null)
+                {
+                    existingSupplier.Name = supplier.Name;
+                    existingSupplier.Phone = supplier.Phone;
+                    if (db.SaveChanges() != 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static List<int> GetCategoryIdsBySupplierId(Guid supplierId)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.SupplierSupplyCategory
+                    .Where(s => s.IdSupplier == supplierId)
+                    .Select (s => s.IdSupplyCategory)
+                    .ToList();
+            }
+        }
+
+        public static int DeleteSupplierSuppliCategory(SupplierSupplyCategory supplierSupplyCategory)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingSupplierCategory = db.SupplierSupplyCategory
+                    .FirstOrDefault(s => s.IdSupplier == supplierSupplyCategory.IdSupplier
+                    && s.IdSupplyCategory == supplierSupplyCategory.IdSupplyCategory);
+                if (existingSupplierCategory != null)
+                {
+                    db.SupplierSupplyCategory.Remove(existingSupplierCategory);
+                }
+
+                return db.SaveChanges();
+            }
+        }
+
+        public static bool UpdateSupplierStatus(Guid id, bool status)
+        {
+            bool result = false;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingSupplier = db.Supplier.FirstOrDefault(s => s.IdSupplier == id);
+
+                if (existingSupplier != null)
+                {
+                    //existingSupplier.Status = status;
+                    if (db.SaveChanges() != 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

@@ -87,11 +87,9 @@ namespace ItaliasPizza.Pages
         {
             Button button = sender as Button;
 
-            if (button != null && button.CommandParameter != null)
+            if (button.DataContext is SupplierDetails supplierDetails)
             {
-                //var supplierId = button.CommandParameter;
-                //SupplierDetails.IdSupplier = supplierId;
-                //Application.Current.MainWindow.Content = new SupplierModification();
+                Application.Current.MainWindow.Content = new SupplierModification(supplierDetails.IdSupplier);
             }
         }
 
