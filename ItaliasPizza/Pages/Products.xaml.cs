@@ -9,7 +9,7 @@ namespace ItaliasPizza.Pages
 {
     public partial class Products : Page
     {
-        private List<ProductDetails> productDetailsList = ProductOperations.GetProductDetails();
+        private readonly List<ProductDetails> productDetailsList = ProductOperations.GetProductDetails();
 
         public Products()
         {
