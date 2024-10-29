@@ -2,6 +2,7 @@
 using ItaliasPizza.DataAccessLayer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -47,6 +48,11 @@ namespace ItaliasPizza.Pages
             return regex.IsMatch(TxtPhone.Text);
         }
 
+        private bool IsCategoriesValid()
+        {
+            return CbCategories.Text.Contains("seleccionadas");
+        }
+
         private void ResetForm()
         {
             TxtName.Text = string.Empty;
@@ -87,6 +93,30 @@ namespace ItaliasPizza.Pages
             return result;
         }
 
+        private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            UpdateComboBoxText();
+        }
+
+        private void UpdateComboBoxText()
+        {
+            int selectedCount = 0;
+
+            foreach (var item in CbCategories.Items)
+            {
+                ComboBoxItem comboBoxItem = (ComboBoxItem)CbCategories.ItemContainerGenerator.ContainerFromItem(item);
+                CheckBox checkBox = FindVisualChild<CheckBox>(comboBoxItem);
+                if (checkBox != null && checkBox.IsChecked == true)
+                {
+                    selectedCount++;
+                }
+            }
+
+            CbCategories.Text = selectedCount > 0
+                ? $"{selectedCount} categorías seleccionadas"
+                : "Selecciona categorías";
+        }
+
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
@@ -112,7 +142,9 @@ namespace ItaliasPizza.Pages
             {
                 MessageBox.Show("El número solo debe contener 10 números");
             }
-            else
+            else if (!IsCategoriesValid()){
+                MessageBox.Show("Selecciona al menos una categoría");
+            } else
             {
                 Supplier supplier = new Supplier
                 {
