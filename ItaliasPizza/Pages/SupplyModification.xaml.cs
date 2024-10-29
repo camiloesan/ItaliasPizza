@@ -41,6 +41,14 @@ namespace ItaliasPizza.Pages
             CbCategory.SelectedIndex = supply.IdSupplyCategory - 1;
             TxtAmount.Text = supply.Quantity.Split(' ')[0] ;
             DtpExpiration.Text = supply.ExpirationDate;
+            if (supply.Status.Equals("Disponible"))
+            {
+                BtnStatus.Content = "Desactivar";
+            }
+            else
+            {
+                BtnStatus.Content = "Activar";
+            }
         }
 
         private bool AreFieldsFilled()
@@ -88,7 +96,6 @@ namespace ItaliasPizza.Pages
                 if (result)
                 {
                     MessageBox.Show("Insumo modificado exitosamente");
-                    FillFields();
                 }
                 else
                 {
@@ -97,24 +104,53 @@ namespace ItaliasPizza.Pages
             }
         }
 
-        private void Btn_Eliminate(object sender, RoutedEventArgs e)
+        private void ChangeStatus()
         {
-            MessageBoxResult result = MessageBox.Show("¿Está seguro que desea eliminar este insumo?",
+            if (supply.Status.Equals("Disponible"))
+            {
+                MessageBoxResult result = MessageBox.Show("¿Está seguro que desea desactivar este insumo?",
                                                       "Advertencia",
                                                       MessageBoxButton.YesNo,
                                                       MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes)
-            {
-                if (SupplyOperations.UpdateSupplyStatus(supply.IdSupply, false))
+                if (result == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Insumo eliminado exitosamente");
-                    Application.Current.MainWindow.Content = new Login();
-                } else
-                {
-                    MessageBox.Show("No se pudo eliminar el insumo, inténtalo de nuevo más tarde");
-                    Application.Current.MainWindow.Content = new Login();
+                    if (SupplyOperations.UpdateSupplyStatus(supply.IdSupply, false))
+                    {
+                        MessageBox.Show("Insumo desactivado exitosamente");
+                        Application.Current.MainWindow.Content = new Inventory();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo desactivar el insumo, inténtalo de nuevo más tarde");
+                        Application.Current.MainWindow.Content = new Inventory();
+                    }
                 }
             }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("¿Está seguro que desea activar este insumo?",
+                                                      "Advertencia",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (SupplyOperations.UpdateSupplyStatus(supply.IdSupply, true))
+                    {
+                        MessageBox.Show("Insumo activado exitosamente");
+                        Application.Current.MainWindow.Content = new Inventory();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo activar el insumo, inténtalo de nuevo más tarde");
+                        Application.Current.MainWindow.Content = new Inventory();
+                    }
+                }
+            }
+        }
+
+        private void Btn_Eliminate(object sender, RoutedEventArgs e)
+        {
+            ChangeStatus();
         }
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)

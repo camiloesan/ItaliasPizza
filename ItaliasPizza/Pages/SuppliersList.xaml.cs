@@ -24,6 +24,7 @@ namespace ItaliasPizza.Pages
         private const string SUPPLIER_NAME_ATTRIBUTE = "Nombre";
         private const string SUPPLIER_CATEGORIES_ATTRIBUTE = "Categorías";
         private const string SUPPLIER_PHONE_ATTRIBUTE = "Teléfono";
+        private const string SUPPLIER_STATUS_ATTRIBUTE = "Estado";
         private List<SupplierDetails> supplierDetailsList = SupplierOperations.GetAllSuppliersWithCategories();
         public SuppliersList()
         {
@@ -38,6 +39,7 @@ namespace ItaliasPizza.Pages
             filters.Add(SUPPLIER_NAME_ATTRIBUTE);
             filters.Add(SUPPLIER_CATEGORIES_ATTRIBUTE);
             filters.Add(SUPPLIER_PHONE_ATTRIBUTE);
+            filters.Add(SUPPLIER_STATUS_ATTRIBUTE);
 
             CbFilter.ItemsSource = filters;
             CbFilter.SelectedIndex = 0;
@@ -119,6 +121,11 @@ namespace ItaliasPizza.Pages
         }
 
         private void Btn_Reports(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Products(object sender, RoutedEventArgs e)
         {
 
         }

@@ -1,5 +1,6 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -24,15 +25,12 @@ namespace ItaliasPizza.Pages
     /// </summary>
     public partial class SupplierRegister : Page
     {
+        private List<SupplierCategory> supplierCategories;
         public SupplierRegister()
         {
             InitializeComponent();
+            supplierCategories = SupplierOperations.GetAllSupplierCategories();
             ShowCategories();
-        }
-
-        private List<SupplyCategory> GetCategories()
-        {
-            return SupplyOperations.GetSupplyCategories();
         }
 
         private bool AreFieldsFilled()
@@ -48,88 +46,48 @@ namespace ItaliasPizza.Pages
             return regex.IsMatch(TxtPhone.Text);
         }
 
-        private bool IsCategoriesValid()
-        {
-            return CbCategories.Text.Contains("seleccionadas");
-        }
-
         private void ResetForm()
         {
             TxtName.Text = string.Empty;
             TxtPhone.Text = string.Empty;
+            supplierCategories = SupplierOperations.GetAllSupplierCategories();
             ShowCategories();
         }
 
         private void ShowCategories()
         {
-            CbCategories.ItemsSource = GetCategories();
+            LbCategories.ItemsSource = supplierCategories;
         }
 
-        private int SaveSupplierCategories(Guid supplierId)
+        private int GetCheckedCategoriesCount()
         {
-            int result = 0;
+            int checkedCount = 0;
 
-            foreach (var item in CbCategories.Items)
+            foreach (var supplierCategory in supplierCategories)
             {
-                ComboBoxItem comboBoxItem = (ComboBoxItem)CbCategories.ItemContainerGenerator.ContainerFromItem(item);
-
-                if (comboBoxItem != null)
+                if (supplierCategory != null && supplierCategory.IsSelected == true)
                 {
-                    CheckBox checkBox = FindVisualChild<CheckBox>(comboBoxItem);
+                    checkedCount++;
+                }
+            }
 
-                    if (checkBox != null && checkBox.IsChecked == true)
+            return checkedCount;
+        }
+
+        private void SaveSupplierCategories(Guid supplierId)
+        {
+            foreach (var supplierCategory in supplierCategories)
+            {
+                if (supplierCategory != null && supplierCategory.IsSelected == true)
+                {
+                    SupplierSupplyCategory supplierSupplyCategory = new SupplierSupplyCategory
                     {
-                        var supplyCategory = item as SupplyCategory;
-                        SupplierSupplyCategory supplierCategory = new SupplierSupplyCategory
-                        {
-                            IdSupplier = supplierId,
-                            IdSupplyCategory = supplyCategory.IdSupplyCategory
-                        };
-                        SupplierOperations.SaveSupplierSuppliCategory(supplierCategory);
-                    }
+                        IdSupplier = supplierId,
+                        IdSupplyCategory = supplierCategory.Id
+                    };
+                    SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
                 }
             }
-
-            return result;
-        }
-
-        private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateComboBoxText();
-        }
-
-        private void UpdateComboBoxText()
-        {
-            int selectedCount = 0;
-
-            foreach (var item in CbCategories.Items)
-            {
-                ComboBoxItem comboBoxItem = (ComboBoxItem)CbCategories.ItemContainerGenerator.ContainerFromItem(item);
-                CheckBox checkBox = FindVisualChild<CheckBox>(comboBoxItem);
-                if (checkBox != null && checkBox.IsChecked == true)
-                {
-                    selectedCount++;
-                }
-            }
-
-            CbCategories.Text = selectedCount > 0
-                ? $"{selectedCount} categorías seleccionadas"
-                : "Selecciona categorías";
-        }
-
-        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (child != null && child is T)
-                    return (T)child;
-
-                var childOfChild = FindVisualChild<T>(child);
-                if (childOfChild != null)
-                    return childOfChild;
-            }
-            return null;
         }
 
         private void Btn_Save(object sender, RoutedEventArgs e)
@@ -142,7 +100,7 @@ namespace ItaliasPizza.Pages
             {
                 MessageBox.Show("El número solo debe contener 10 números");
             }
-            else if (!IsCategoriesValid()){
+            else if (GetCheckedCategoriesCount() == 0){
                 MessageBox.Show("Selecciona al menos una categoría");
             } else
             {
@@ -151,6 +109,7 @@ namespace ItaliasPizza.Pages
                     IdSupplier = Guid.NewGuid(),
                     Name = TxtName.Text,
                     Phone = TxtPhone.Text,
+                    Status = true
                 };
 
                 int result = SupplierOperations.SaveSupplier(supplier);

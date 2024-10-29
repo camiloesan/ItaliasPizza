@@ -189,6 +189,7 @@
           <Property Name="IdSupplier" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierOrder">
           <Key>
@@ -1029,6 +1030,7 @@
           <Property Name="IdSupplier" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.SupplierOrder_IdSupplier_fk" FromRole="Supplier" ToRole="SupplierOrder" />
           <NavigationProperty Name="SupplierSupplyCategory" Relationship="Self.SupplierSupplyCategory_IdSupplier_fk" FromRole="Supplier" ToRole="SupplierSupplyCategory" />
         </EntityType>
@@ -1856,6 +1858,7 @@
                 <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

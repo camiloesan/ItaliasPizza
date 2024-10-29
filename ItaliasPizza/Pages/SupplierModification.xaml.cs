@@ -39,6 +39,14 @@ namespace ItaliasPizza.Pages
         {
             TxtName.Text = supplier.Name;
             TxtPhone.Text = supplier.Phone;
+
+            if (supplier.Status)
+            {
+                BtnStatus.Content = "Desactivar";
+            } else
+            {
+                BtnStatus.Content = "Activar";
+            }
         }
 
         private bool AreFieldsFilled()
@@ -119,6 +127,50 @@ namespace ItaliasPizza.Pages
                    && !supplierCategoryIds.Except(selectedCategoryIds).Any();
         }
 
+        private void ChangeSupplierStatus()
+        {
+            if(supplier.Status)
+            {
+                MessageBoxResult result = MessageBox.Show("¿Está seguro que desea desactivar este proveedor?",
+                                                      "Advertencia",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    bool resultStatus = SupplierOperations.UpdateSupplierStatus(supplier.IdSupplier, false);
+                    if (resultStatus)
+                    {
+                        MessageBox.Show("Proveedor desactivado exitosamente");
+                        Application.Current.MainWindow.Content = new SuppliersList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo desactivar el proveedor, inténtalo de nuevo más tarde");
+                        Application.Current.MainWindow.Content = new SuppliersList();
+                    }
+                }
+            } else
+            {
+                MessageBoxResult result = MessageBox.Show("¿Está seguro que desea activar este proveedor?",
+                                                      "Advertencia",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    bool resultStatus = SupplierOperations.UpdateSupplierStatus(supplier.IdSupplier, true);
+                    if (resultStatus)
+                    {
+                        MessageBox.Show("Proveedor activado exitosamente");
+                        Application.Current.MainWindow.Content = new SuppliersList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo activar el proveedor, inténtalo de nuevo más tarde");
+                        Application.Current.MainWindow.Content = new SuppliersList();
+                    }
+                }
+            }
+        }
 
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
@@ -166,23 +218,7 @@ namespace ItaliasPizza.Pages
         }
         private void Btn_Deactivate(object sender, RoutedEventArgs e)
         {
-            //MessageBoxResult result = MessageBox.Show("¿Está seguro que desea eliminar este proveedor?",
-            //                                          "Advertencia",
-            //                                          MessageBoxButton.YesNo,
-            //                                          MessageBoxImage.Warning);
-            //if (result == MessageBoxResult.Yes)
-            //{
-            //    bool resultStatus = SupplierOperations.UpdateSupplierStatus(supplier.IdSupplier, false)
-            //    if (resultStatus)
-            //    {
-            //        MessageBox.Show("Insumo eliminado exitosamente");
-            //        Application.Current.MainWindow.Content = new SuppliersList();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("No se pudo eliminar el insumo, inténtalo de nuevo más tarde");
-            //    }
-            //}
+            ChangeSupplierStatus();
         }
     }
 }

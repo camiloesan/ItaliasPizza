@@ -23,6 +23,7 @@
             <Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
             <Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
             <Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
+            <Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
             <Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
             <Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
         </StackPanel>
@@ -70,6 +71,7 @@
                         <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Categorías" Width="*" Binding="{Binding Categories}"/>
                         <DataGridTextColumn Header="Teléfono" Width="*" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Status}"/>
 
                         <DataGridTemplateColumn Header="Editar" Width="50">
                             <DataGridTemplateColumn.CellTemplate>

@@ -41,7 +41,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="330,0">
             <Button Margin="5" Content="Guardar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-            <Button Margin="5" Content="Desactivar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Deactivate"/>
+            <Button x:Name="BtnStatus" Margin="5" Content="Desactivar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Deactivate"/>
             <Button Margin="5" Content="Cancelar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
         </StackPanel>
     </Grid>

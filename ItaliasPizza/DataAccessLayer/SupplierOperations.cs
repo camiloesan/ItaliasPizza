@@ -48,7 +48,7 @@ namespace ItaliasPizza.DataAccessLayer
                                           select new
                                           {
                                               Supplier = supplier,
-                                              CategoryName = category.SupplyCategory1
+                                              CategoryName = category.SupplyCategory1,
                                           })
                                           .ToList();
 
@@ -59,7 +59,8 @@ namespace ItaliasPizza.DataAccessLayer
                                  IdSupplier = g.Key.IdSupplier,
                                  Name = g.Key.Name,
                                  Phone = g.Key.Phone,
-                                 Categories = string.Join(", ", g.Select(c => c.CategoryName))
+                                 Categories = string.Join(", ", g.Select(c => c.CategoryName)),
+                                 Status = g.Key.Status ? "Disponible" : "No disponible"
                              })
                              .ToList();
             }
@@ -98,6 +99,19 @@ namespace ItaliasPizza.DataAccessLayer
                 }
 
                 return allCategoryIds;
+            }
+        }
+
+        public static List<SupplierCategory> GetAllSupplierCategories()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.SupplyCategory.Select(c => new SupplierCategory
+                {
+                    Id = c.IdSupplyCategory,
+                    Name = c.SupplyCategory1,
+                    IsSelected = false
+                }).ToList();
             }
         }
 
@@ -160,7 +174,7 @@ namespace ItaliasPizza.DataAccessLayer
 
                 if (existingSupplier != null)
                 {
-                    //existingSupplier.Status = status;
+                    existingSupplier.Status = status;
                     if (db.SaveChanges() != 0)
                     {
                         result = true;
