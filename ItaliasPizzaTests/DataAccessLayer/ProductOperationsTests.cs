@@ -290,5 +290,26 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			Assert.AreEqual(expected, result);
 		}
-	}
+
+        [TestMethod]
+		public void GetProductDetailsTest()
+		{
+            var idMargarita = Guid.NewGuid();
+            var margarita = new Product { IdProduct = idMargarita, Name = "Pizza Margarita", IdType = 1, Price = 100, Size = "Chica", Status = true };
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                ProductOperations.SaveProduct(margarita);
+            }
+
+            Assert.IsNotNull(ProductOperations.GetProductDetails());
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Product.Attach(margarita);
+                db.Product.Remove(margarita);
+                db.SaveChanges();
+            }
+
+        }
+    }
 }
