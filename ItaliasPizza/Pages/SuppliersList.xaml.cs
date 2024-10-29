@@ -107,7 +107,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Supplies(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Inventory();
         }
 
         private void Btn_Orders(object sender, RoutedEventArgs e)

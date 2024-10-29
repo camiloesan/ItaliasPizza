@@ -115,7 +115,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Supplies(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Inventory();
         }
 
         private void Btn_Orders(object sender, RoutedEventArgs e)
@@ -126,6 +126,11 @@ namespace ItaliasPizza.Pages
         private void Btn_Reports(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Products();
         }
     }
 }

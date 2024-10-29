@@ -113,7 +113,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Inventory();
         }
 
         private void CbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
