@@ -39,13 +39,6 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(TxtPhone.Text);
         }
 
-        private bool IsPhoneValid()
-        {
-            string pattern = @"^\d{10}$";
-            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-            return regex.IsMatch(TxtPhone.Text);
-        }
-
         private void ResetForm()
         {
             TxtName.Text = string.Empty;
@@ -57,6 +50,18 @@ namespace ItaliasPizza.Pages
         private void ShowCategories()
         {
             LbCategories.ItemsSource = supplierCategories;
+        }
+
+        private bool IsInputNumber(string input)
+        {
+            string pattern = @"^\d+$";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(input);
+        }
+
+        private void TxtPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsInputNumber(e.Text);
         }
 
         private int GetCheckedCategoriesCount()
@@ -95,10 +100,6 @@ namespace ItaliasPizza.Pages
             if (!AreFieldsFilled())
             {
                 MessageBox.Show("Todos los campos deben contener información");
-            }
-            else if (!IsPhoneValid())
-            {
-                MessageBox.Show("El número solo debe contener 10 números");
             }
             else if (GetCheckedCategoriesCount() == 0){
                 MessageBox.Show("Selecciona al menos una categoría");
