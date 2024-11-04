@@ -34,7 +34,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Label Content="Teléfono (*)" Foreground="White" FontSize="14" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtPhone" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="200"/>
+            <TextBox x:Name="TxtPhone" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="200" MaxLength="10" PreviewTextInput="TxtPhone_PreviewTextInput"/>
 
 
 
