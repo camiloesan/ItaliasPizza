@@ -35,12 +35,14 @@ namespace ItaliasPizza.Pages
 
         private void FillCbFilter()
         {
-            List<string> filters = new List<string>();
-            filters.Add(SUPPLIER_NAME_ATTRIBUTE);
-            filters.Add(SUPPLIER_CATEGORIES_ATTRIBUTE);
-            filters.Add(SUPPLIER_PHONE_ATTRIBUTE);
-            filters.Add(SUPPLIER_STATUS_ATTRIBUTE);
-
+            List<string> filters = new List<string>
+            {
+                SUPPLIER_NAME_ATTRIBUTE,
+                SUPPLIER_CATEGORIES_ATTRIBUTE,
+                SUPPLIER_PHONE_ATTRIBUTE,
+                SUPPLIER_STATUS_ATTRIBUTE
+            };
+            
             CbFilter.ItemsSource = filters;
             CbFilter.SelectedIndex = 0;
         }
@@ -126,6 +128,10 @@ namespace ItaliasPizza.Pages
         }
 
         private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
         {
 
         }

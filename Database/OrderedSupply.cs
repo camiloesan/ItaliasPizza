@@ -14,10 +14,11 @@ namespace Database
     
     public partial class OrderedSupply
     {
-        public System.Guid IdOrderedSupply { get; set; }
+        public int IdOrderedSupply { get; set; }
         public System.Guid IdSupply { get; set; }
         public System.Guid IdSupplierOrder { get; set; }
-        public int Quantity { get; set; }
+        public System.Guid OrderIdentifier { get; set; }
+        public decimal Quantity { get; set; }
         public int IdMeasurementUnit { get; set; }
     
         public virtual MeasurementUnit MeasurementUnit { get; set; }

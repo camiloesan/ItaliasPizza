@@ -133,10 +133,11 @@
           <Key>
             <PropertyRef Name="IdOrderedSupply" />
           </Key>
-          <Property Name="IdOrderedSupply" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdOrderedSupply" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdSupply" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdSupplierOrder" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OrderIdentifier" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderStatus">
@@ -958,10 +959,11 @@
           <Key>
             <PropertyRef Name="IdOrderedSupply" />
           </Key>
-          <Property Name="IdOrderedSupply" Type="Guid" Nullable="false" />
+          <Property Name="IdOrderedSupply" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdSupply" Type="Guid" Nullable="false" />
           <Property Name="IdSupplierOrder" Type="Guid" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="OrderIdentifier" Type="Guid" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MeasurementUnit" Relationship="Self.OrderedSupply_IdMeasurementUnit_fk" FromRole="OrderedSupply" ToRole="MeasurementUnit" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.OrderedSupply_IdSupplierOrder_fk" FromRole="OrderedSupply" ToRole="SupplierOrder" />
@@ -1799,6 +1801,7 @@
                 <ScalarProperty Name="IdOrderedSupply" ColumnName="IdOrderedSupply" />
                 <ScalarProperty Name="IdSupply" ColumnName="IdSupply" />
                 <ScalarProperty Name="IdSupplierOrder" ColumnName="IdSupplierOrder" />
+                <ScalarProperty Name="OrderIdentifier" ColumnName="OrderIdentifier" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IdMeasurementUnit" ColumnName="IdMeasurementUnit" />
               </MappingFragment>
