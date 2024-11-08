@@ -17,5 +17,17 @@ namespace ItaliasPizza.DataAccessLayer
                 return db.SaveChanges();
             }
         }
+
+        public static int SaveOrderedSupply(List<OrderedSupply> orderedSupplies)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                foreach (var orderedSupply in orderedSupplies)
+                {
+                    db.OrderedSupply.Add(orderedSupply);
+                }
+                return db.SaveChanges();
+            }
+        }
     }
 }
