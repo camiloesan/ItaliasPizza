@@ -1,12 +1,12 @@
-﻿<Page x:Class="ItaliasPizza.Pages.SuppliersList"
+﻿<Page x:Class="ItaliasPizza.Pages.SupplierOrders"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ItaliasPizza.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1280"
-      Title="SuppliersList">
+      d:DesignHeight="700" d:DesignWidth="1280"
+      Title="SupplierOrders">
 
     <Page.Background>
         <ImageBrush ImageSource="../Assets/Images/background.jpg"/>
@@ -36,14 +36,14 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" Height="500">
-            <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
-                <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
-                <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
-                <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
-                <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
-            </StackPanel>
+                <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
+                    <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
+                    <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
+                    <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
+                    <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
+                </StackPanel>
 
                 <DataGrid x:Name="DtgSuppliers" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <DataGrid.ColumnHeaderStyle>

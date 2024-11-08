@@ -138,10 +138,11 @@ CREATE TABLE LocalOrderProduct (
 GO
 
 CREATE TABLE OrderedSupply (
-    IdOrderedSupply UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    IdOrderedSupply INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
     IdSupply UNIQUEIDENTIFIER NOT NULL,
     IdSupplierOrder UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL,
+    OrderIdentifier UNIQUEIDENTIFIER NOT NULL,
+    Quantity DECIMAL(12, 2) NOT NULL,
     IdMeasurementUnit INT NOT NULL
 );
 GO
