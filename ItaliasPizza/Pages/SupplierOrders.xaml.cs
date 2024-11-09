@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ItaliasPizza.DataAccessLayer;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace ItaliasPizza.Pages
         public SupplierOrders()
         {
             InitializeComponent();
+            DtgSupplierOrders.ItemsSource = SupplierOrderOperations.GetSupplierOrderDetails();
         }
 
         private void Btn_Employees(object sender, RoutedEventArgs e)

@@ -123,6 +123,7 @@
     <Compile Include="Utils\SessionDetails.cs" />
     <Compile Include="Utils\SupplierCategory.cs" />
     <Compile Include="Utils\SupplierDetails.cs" />
+    <Compile Include="Utils\SupplierOrderDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />
     <Page Include="Pages\Clients\RegisterClient.xaml">
       <SubType>Designer</SubType>

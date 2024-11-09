@@ -45,7 +45,7 @@
                     <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
                 </StackPanel>
 
-                <DataGrid x:Name="DtgSuppliers" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid x:Name="DtgSupplierOrders" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="White"/>
@@ -69,9 +69,11 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Categorías" Width="*" Binding="{Binding Categories}"/>
-                        <DataGridTextColumn Header="Teléfono" Width="*" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Proveedor" Width="*" Binding="{Binding SupplierName}"/>
+                        <DataGridTextColumn Header="Insumos" Width="*" Binding="{Binding Supplies}"/>
+                        <DataGridTextColumn Header="Fecha de orden" Width="*" Binding="{Binding OrderDate}"/>
+                        <DataGridTextColumn Header="Fecha estimada" Width="*" Binding="{Binding ExpectedDate}"/>
+                        <DataGridTextColumn Header="Fecha de llegada" Width="*" Binding="{Binding ArrivalDate}"/>
                         <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Status}"/>
 
                         <DataGridTemplateColumn Header="Editar" Width="50">
