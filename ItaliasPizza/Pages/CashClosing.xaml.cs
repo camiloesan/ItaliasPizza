@@ -62,7 +62,7 @@ namespace ItaliasPizza.Pages
                 return;
             } else if(!IsInputDecimal(TxtTotalAmount.Text) || !IsInputDecimal(TxtNextDayCash.Text))
             {
-                MessageBox.Show("Ingrese una cantidad valida en lso campos obligatorios (Número y decimales)", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Ingrese una cantidad valida en los campos obligatorios (Número y decimales)", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             else if (cashClosingIsAlredyRegistered)

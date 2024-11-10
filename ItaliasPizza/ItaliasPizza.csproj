@@ -79,8 +79,12 @@
     <Compile Include="DataAccessLayer\SupplierOperations.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperations.cs" />
     <Compile Include="DataAccessLayer\ProductTypeOperations.cs" />
+    <Compile Include="DataAccessLayer\TransactionOperations.cs" />
     <Compile Include="Pages\CashClosing.xaml.cs">
       <DependentUpon>CashClosing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CashSpentRegister.xaml.cs">
+      <DependentUpon>CashSpentRegister.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Employees.xaml.cs">
       <DependentUpon>Employees.xaml</DependentUpon>
@@ -134,6 +138,10 @@
     <Compile Include="Utils\SupplierOrderDetails.cs" />
     <Compile Include="Utils\SupplyDetails.cs" />
     <Page Include="Pages\CashClosing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CashSpentRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
