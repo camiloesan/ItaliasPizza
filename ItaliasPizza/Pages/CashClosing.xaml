@@ -54,7 +54,7 @@
 
 
             <Label Content="Observaciones" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="Txtobservations" Margin="5" HorizontalAlignment="Stretch" FontSize="14" Height="100" TextWrapping="Wrap"/>
+            <TextBox x:Name="TxtObservations" Margin="5" HorizontalAlignment="Stretch" FontSize="14" Height="100" MaxLength="512" TextWrapping="Wrap"/>
 
 
 

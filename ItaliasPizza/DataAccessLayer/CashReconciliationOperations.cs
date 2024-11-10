@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
 
 namespace ItaliasPizza.DataAccessLayer
 {
@@ -18,7 +19,7 @@ namespace ItaliasPizza.DataAccessLayer
                 var today = DateTime.Today;
 
                 var previousDayCash = db.CashReconciliation
-                    .OrderByDescending(cr => cr.ClosingDate)
+                    .OrderByDescending(cr => cr.OpeningDate)
                     .Select(cr => cr.FinishingAmount)
                     .FirstOrDefault();
 
@@ -36,6 +37,31 @@ namespace ItaliasPizza.DataAccessLayer
                     TotalSalesCash = totalSalesCash,
                     TotalSpentCash = totalSpentCash
                 };
+            }
+        }
+
+        public static bool IsCashReconciliationRegisteredToday()
+        {
+            var today = DateTime.Today;
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.CashReconciliation
+                    .Any(cr => DbFunctions.TruncateTime(cr.OpeningDate) == today);
+            }
+        }
+
+        public static int SaveCashReconciliation(CashReconciliation cashReconciliation)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                int result = 0;
+
+                db.CashReconciliation.Add(cashReconciliation);
+
+                result += db.SaveChanges();
+
+                return result;
             }
         }
 
