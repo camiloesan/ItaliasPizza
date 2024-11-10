@@ -35,7 +35,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" Height="500">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="1000" Height="500">
                 <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
@@ -73,7 +73,7 @@
                         <DataGridTextColumn Header="Insumos" Width="*" Binding="{Binding Supplies}"/>
                         <DataGridTextColumn Header="Fecha de orden" Width="*" Binding="{Binding OrderDate}"/>
                         <DataGridTextColumn Header="Fecha estimada" Width="*" Binding="{Binding ExpectedDate}"/>
-                        <DataGridTextColumn Header="Fecha de llegada" Width="*" Binding="{Binding ArrivalDate}"/>
+                        <DataGridTextColumn Header="Fecha de entrega" Width="*" Binding="{Binding ArrivalDate}"/>
                         <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Status}"/>
 
                         <DataGridTemplateColumn Header="Editar" Width="50">
@@ -88,7 +88,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-            <Button Grid.Row="2" Margin="100,5" Content="Registrar nuevo proveedor" FontSize="14" HorizontalAlignment="Left" Width="200" Click="Btn_RegisterNewSupplier"/>
+            <Button Grid.Row="2" Margin="100,5" Content="Registrar nuevo pedido a proveedor" FontSize="14" HorizontalAlignment="Left" Width="250" Click="Btn_RegisterNewSupplierOrder"/>
         </Grid>
     </Grid>
 </Page>
