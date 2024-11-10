@@ -44,6 +44,7 @@ namespace ItaliasPizza.DataAccessLayer
                         select new
                         {
                             OrderIdentifier = g.Key,
+                            IdSupplier = g.Select(x => x.s.IdSupplier).FirstOrDefault(),
                             SupplierName = g.Select(x => x.s.Name).FirstOrDefault(),
                             SuppliesList = g.Select(x => x.sup.Name).Distinct(),
                             OrderDate = g.Select(x => x.so.OrderDate).FirstOrDefault(),
@@ -56,6 +57,7 @@ namespace ItaliasPizza.DataAccessLayer
                   .Select(x => new SupplierOrderDetails
                   {
                       OrderIdentifier = x.OrderIdentifier,
+                      IdSupplier = x.IdSupplier,
                       SupplierName = x.SupplierName,
                       Supplies = string.Join(", ", x.SuppliesList),
                       OrderDate = x.OrderDate.ToString("dd-MM-yyyy"),
@@ -66,6 +68,87 @@ namespace ItaliasPizza.DataAccessLayer
                       Status = x.Status
                   })
                   .ToList();
+            }
+        }
+
+        public static List<OrderedSupplyDetails> GetOrderedSupplyDetailsByOrderIdentifier(Guid orderIdentifier)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return (from os in db.OrderedSupply
+                        join s in db.Supply on os.IdSupply equals s.IdSupply
+                        join mu in db.MeasurementUnit on os.IdMeasurementUnit equals mu.IdMeasurementUnit
+                        where os.OrderIdentifier == orderIdentifier
+                        select new OrderedSupplyDetails
+                        {
+                            IdSupply = os.IdSupply,
+                            SupplyName = s.Name,
+                            SupplyAmount = os.Quantity,
+                            MeasurementUnit = mu.MeasurementUnit1,
+                            IdMeasurementUnit = os.IdMeasurementUnit
+                        })
+                        .ToList();
+            }
+        }
+
+        public static int DeleteSupplierOrdersAndOrderedSupplies(Guid orderIdentifier)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var orderedSupplies = db.OrderedSupply
+                    .Where(os => os.OrderIdentifier == orderIdentifier)
+                    .ToList();
+
+                var supplierOrderIds = orderedSupplies
+                    .Select(os => os.IdSupplierOrder)
+                    .Distinct()
+                    .ToList();
+
+                db.OrderedSupply.RemoveRange(orderedSupplies);
+
+                var supplierOrders = db.SupplierOrder
+                    .Where(so => supplierOrderIds.Contains(so.IdSupplierOrder))
+                    .ToList();
+
+                db.SupplierOrder.RemoveRange(supplierOrders);
+
+                return db.SaveChanges();
+            }
+        }
+
+
+        public static int UpdateSupplierOrdersStatus(Guid orderIdentifier, int status)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var existingOrders = db.SupplierOrder
+                    .Join(db.OrderedSupply,
+                          so => so.IdSupplierOrder,
+                          os => os.IdSupplierOrder,
+                          (so, os) => new { SupplierOrder = so, OrderedSupply = os })
+                    .Where(joined => joined.OrderedSupply.OrderIdentifier == orderIdentifier)
+                    .Select(joined => joined.SupplierOrder)
+                    .ToList();
+
+                foreach (var order in existingOrders)
+                {
+                    if (order != null)
+                    {
+                        order.IdOrderStatus = status;
+                    }
+                }
+
+                return db.SaveChanges();
+            }
+        }
+
+        public static List<Guid> GetSupplierOrdersIdByOrderIdentifier(Guid orderIdentifier)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.OrderedSupply.Where(os => os.OrderIdentifier == orderIdentifier)
+                    .Select(id => id.IdSupplierOrder)
+                    .ToList();
             }
         }
     }

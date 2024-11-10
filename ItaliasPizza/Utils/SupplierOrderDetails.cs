@@ -9,6 +9,7 @@ namespace ItaliasPizza.Utils
     public class SupplierOrderDetails
     {
         public Guid OrderIdentifier { get; set; }
+        public Guid IdSupplier { get; set; }
         public string SupplierName { get; set; }
         public string Supplies { get; set; }
         public string OrderDate { get; set; }

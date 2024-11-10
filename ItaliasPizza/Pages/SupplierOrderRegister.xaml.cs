@@ -26,9 +26,6 @@ namespace ItaliasPizza.Pages
     /// </summary>
     public partial class SupplierOrderRegister : Page
     {
-        private const int KILOGRAMS_ID = 1;
-        private const int UNITS_ID = 2;
-        private const int LITERS_ID = 3;
         private List<OrderedSupplyDetails> suppliesDetails = new List<OrderedSupplyDetails>();
         private Supply selectedSupply;
 
@@ -49,13 +46,6 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(DtpEstimatedArrival.Text)
                 && !string.IsNullOrEmpty(CbSupplier.Text);
         }
-
-        //private bool IsQuantityValid()
-        //{
-        //    string pattern = @"^\d+(\.\d+)?$";
-        //    Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-        //    return regex.IsMatch(TxtAmount.Text);
-        //}
 
         private bool IsDateValid()
         {
@@ -236,7 +226,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new SupplierOrders();
         }
 
         private void CbSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -246,7 +236,7 @@ namespace ItaliasPizza.Pages
             FillDtgAvailableSupplies(supplier.IdSupplier);
         }
 
-        private void BtnAddRecipeSupply_Click(object sender, RoutedEventArgs e)
+        private void BtnAddSupply_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             selectedSupply = button.DataContext as Supply;
@@ -265,7 +255,7 @@ namespace ItaliasPizza.Pages
             }
         }
 
-        private void BtnRemoveRecipeSupply_Click(object sender, RoutedEventArgs e)
+        private void BtnRemoveSupply_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             var selectedSupplyDetails = button.DataContext as OrderedSupplyDetails;

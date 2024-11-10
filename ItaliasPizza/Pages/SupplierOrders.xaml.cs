@@ -143,12 +143,17 @@ namespace ItaliasPizza.Pages
         }
         private void Btn_Edit(object sender, RoutedEventArgs e)
         {
+            Button button = sender as Button;
 
+            if (button.DataContext is SupplierOrderDetails supplierOrderDetails)
+            {
+                Application.Current.MainWindow.Content = new SupplierOrderModification(supplierOrderDetails);
+            }
         }
 
         private void Btn_RegisterNewSupplierOrder(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new SupplierOrderRegister();
         }
     }
 }

@@ -110,6 +110,9 @@
     <Compile Include="Pages\SupplierModification.xaml.cs">
       <DependentUpon>SupplierModification.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SupplierOrderModification.xaml.cs">
+      <DependentUpon>SupplierOrderModification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SupplierOrders.xaml.cs">
       <DependentUpon>SupplierOrders.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SupplierModification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SupplierOrderModification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
