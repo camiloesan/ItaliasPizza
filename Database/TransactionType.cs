@@ -12,16 +12,18 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class TransactionType
     {
-        public System.Guid IdTransaction { get; set; }
-        public int IdTransactionType { get; set; }
-        public System.DateTime Date { get; set; }
-        public decimal Amount { get; set; }
-        public string Description { get; set; }
-        public System.Guid RegisteredBy { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TransactionType()
+        {
+            this.Transaction = new HashSet<Transaction>();
+        }
     
-        public virtual Employee Employee { get; set; }
-        public virtual TransactionType TransactionType { get; set; }
+        public int IdTransactionType { get; set; }
+        public string TransactionType1 { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transaction { get; set; }
     }
 }

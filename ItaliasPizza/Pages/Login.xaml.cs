@@ -79,7 +79,7 @@ namespace ItaliasPizza.Pages
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
             //LogIn();
-            Application.Current.MainWindow.Content = new SupplierOrders();
+            Application.Current.MainWindow.Content = new CashClosing();
         }
     }
 }
