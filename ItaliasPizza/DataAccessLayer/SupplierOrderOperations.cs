@@ -142,14 +142,14 @@ namespace ItaliasPizza.DataAccessLayer
             }
         }
 
-        public static List<Guid> GetSupplierOrdersIdByOrderIdentifier(Guid orderIdentifier)
-        {
-            using (var db = new ItaliasPizzaDBEntities())
-            {
-                return db.OrderedSupply.Where(os => os.OrderIdentifier == orderIdentifier)
-                    .Select(id => id.IdSupplierOrder)
-                    .ToList();
-            }
-        }
+        //public static list<guid> getsupplierordersidbyorderidentifier(guid orderidentifier)
+        //{
+        //    using (var db = new italiaspizzadbentities())
+        //    {
+        //        return db.orderedsupply.where(os => os.orderidentifier == orderidentifier)
+        //            .select(id => id.idsupplierorder)
+        //            .tolist();
+        //    }
+        //}
     }
 }
