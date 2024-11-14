@@ -80,6 +80,7 @@
     <Compile Include="DataAccessLayer\SupplyOperationsTests.cs" />
     <Compile Include="DataAccessLayer\SupplierOperationsTests.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\CashReconciliationOperationsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistroEmpleadoTests.cs" />
   </ItemGroup>
