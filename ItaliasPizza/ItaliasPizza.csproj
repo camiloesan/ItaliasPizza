@@ -86,6 +86,9 @@
     <Compile Include="Pages\CashSpentRegister.xaml.cs">
       <DependentUpon>CashSpentRegister.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Clients\ViewClients.xaml.cs">
+      <DependentUpon>ViewClients.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Employees.xaml.cs">
       <DependentUpon>Employees.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Clients\RegisterClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Clients\ViewClients.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
