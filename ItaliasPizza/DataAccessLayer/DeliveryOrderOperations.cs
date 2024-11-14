@@ -18,6 +18,38 @@ namespace ItaliasPizza.DataAccessLayer
 			}
 		}
 
+		public static int SaveDeliveryOrderWithProducts(DeliveryOrder deliveryOrder, List<DeliveryOrderProduct> deliveryOrderProducts)
+		{
+			int result = 0;
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				using (var transaction = db.Database.BeginTransaction())
+				{
+					try
+					{
+						db.DeliveryOrder.Add(deliveryOrder);
+
+						foreach (var deliveryOrderProduct in deliveryOrderProducts)
+						{
+							db.DeliveryOrderProduct.Add(deliveryOrderProduct);
+						}
+
+						db.SaveChanges();
+
+						transaction.Commit();
+
+						result = deliveryOrderProducts.Count + 1;
+					}
+					catch (Exception e)
+					{
+						transaction.Rollback();
+						result = -1;
+					}
+				}
+			}
+			return result;
+		}
+
 		public static List<DeliveryOrder> GetDeliveryOrdersByStatus(OrderStatus orderStatus)
 		{
 			using (var db = new ItaliasPizzaDBEntities())
