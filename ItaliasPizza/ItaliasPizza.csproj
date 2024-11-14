@@ -92,6 +92,9 @@
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Orders\AddDeliveryOrder.xaml.cs">
+      <DependentUpon>AddDeliveryOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Orders\ViewOrderDetails.xaml.cs">
       <DependentUpon>ViewOrderDetails.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,7 @@
       <DependentUpon>SupplierOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\CashClosingDetails.cs" />
+    <Compile Include="Utils\DeliveryOrderProductDetails.cs" />
     <Compile Include="Utils\LocalOrderProductDetails.cs" />
     <Compile Include="Utils\OrderDetails.cs" />
     <Compile Include="Utils\OrderedSupplyDetails.cs" />
@@ -178,6 +182,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\EmployeeModification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Orders\AddDeliveryOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -350,6 +358,9 @@
     <Resource Include="Assets\Images\delivered_icon.png" />
     <Resource Include="Assets\Images\not-delivered_icon.png" />
     <Resource Include="Assets\Images\pizza_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\check_icon_black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
