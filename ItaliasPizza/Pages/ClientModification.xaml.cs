@@ -54,5 +54,16 @@ namespace ItaliasPizza.Pages
                 ClientOperations.UpdateClient(Client);
             }
         }
+
+        private bool IsInputNumber(string input)
+        {
+            string pattern = @"^\d+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(input, pattern);
+        }
+
+        private void TxtNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsInputNumber(e.Text);
+        }
     }
 }
