@@ -58,5 +58,17 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.Client.FirstOrDefault(c => c.Phone == phoneNumber);
 			}
 		}
-	}
+
+        public static int UpdateClient(Client client)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                Client clientToUpdate = db.Client.FirstOrDefault(c => c.IdClient == client.IdClient);
+                clientToUpdate.FirstName = client.FirstName;
+                clientToUpdate.LastName = client.LastName;
+                clientToUpdate.Phone = client.Phone;
+                return db.SaveChanges();
+            }
+        }
+    }
 }

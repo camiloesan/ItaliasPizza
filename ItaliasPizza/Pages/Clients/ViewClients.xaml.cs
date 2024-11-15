@@ -83,7 +83,7 @@ namespace ItaliasPizza.Pages.Clients
 			Button button = (Button)sender;
 			Client client = (Client)button.DataContext;
 
-			//Application.Current.MainWindow.Content = new ModifyClient(client);
+			Application.Current.MainWindow.Content = new ClientModification(client);
 		}
 	}
 }
