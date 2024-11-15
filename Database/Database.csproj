@@ -147,6 +147,9 @@
     <Compile Include="Transaction.cs">
       <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransactionType.cs">
+      <DependentUpon>ItaliasPizzaModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -35,7 +35,6 @@
 
 				<Label Grid.Column="0" Content="Nuevo pedido local" FontFamily="../../Assets/Fonts/#Jost" FontSize="45" FontWeight="SemiBold" Foreground="White" Margin="25,00,0,0"/>
 
-
 				<StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,25,0">
 					<Label Content="Seleccionar Mesa" FontFamily="../../Assets/Fonts/#Jost" FontSize="25" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,0"/>
 					<ComboBox Grid.Column="2" x:Name="CmbTableNumber" Width="200" Height="30" HorizontalAlignment="Center"  FontFamily="../../Assets/Fonts/#Jost" FontSize="20" Foreground="Black" BorderBrush="White" >
@@ -60,12 +59,15 @@
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
 				<!-- Products list -->
-				<DataGrid Grid.Column="1" Grid.Row="0" x:Name="DtgActiveProducts" AutoGenerateColumns="False" 
+				<Label Grid.Column="1" Grid.Row="0" Content="Productos disponibles" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="Regular" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+				<DataGrid Grid.Column="1" Grid.Row="1" x:Name="DtgActiveProducts" AutoGenerateColumns="False" 
 				CanUserReorderColumns="False" CanUserResizeColumns="False" IsReadOnly="True">
 					<DataGrid.ColumnHeaderStyle>
 						<Style TargetType="DataGridColumnHeader">
@@ -110,7 +112,8 @@
 				</DataGrid>
 
 				<!-- Selected products list -->
-				<DataGrid Grid.Column="3" Grid.Row="0" x:Name="DtgSelectedProducts" AutoGenerateColumns="False" 
+				<Label Grid.Column="3" Grid.Row="0" Content="Productos seleccionados" FontFamily="../../Assets/Fonts/#Jost" FontSize="20" FontWeight="Regular" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+				<DataGrid Grid.Column="3" Grid.Row="1" x:Name="DtgSelectedProducts" AutoGenerateColumns="False" 
 				CanUserReorderColumns="False" CanUserResizeColumns="False" IsReadOnly="True">
 					<DataGrid.ColumnHeaderStyle>
 						<Style TargetType="DataGridColumnHeader">
@@ -155,7 +158,7 @@
 				</DataGrid>
 
 				<!-- Order total -->
-				<StackPanel Grid.Column="3" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+				<StackPanel Grid.Column="3" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
 					<Label Content="Total: $" FontFamily="../../Assets/Fonts/#Jost" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
 					<Label x:Name="LblTotal" Content="0.00" FontSize="30" FontWeight="SemiBold" Foreground="White"/>
 				</StackPanel>

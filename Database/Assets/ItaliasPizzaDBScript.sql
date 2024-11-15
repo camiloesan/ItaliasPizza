@@ -138,10 +138,11 @@ CREATE TABLE LocalOrderProduct (
 GO
 
 CREATE TABLE OrderedSupply (
-    IdOrderedSupply UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    IdOrderedSupply INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
     IdSupply UNIQUEIDENTIFIER NOT NULL,
     IdSupplierOrder UNIQUEIDENTIFIER NOT NULL,
-    Quantity INT NOT NULL,
+    OrderIdentifier UNIQUEIDENTIFIER NOT NULL,
+    Quantity DECIMAL(12, 2) NOT NULL,
     IdMeasurementUnit INT NOT NULL
 );
 GO
@@ -230,11 +231,17 @@ GO
 
 CREATE TABLE [Transaction] (
     IdTransaction UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    [Type] INT NOT NULL,
+    IdTransactionType INT NOT NULL,
     [Date] DATETIME NOT NULL,
     Amount DECIMAL(12, 2) NOT NULL,
-    [Description] INT NOT NULL,
+    [Description] VARCHAR(512) NOT NULL,
     RegisteredBy UNIQUEIDENTIFIER NOT NULL
+);
+GO
+
+CREATE TABLE TransactionType (
+    IdTransactionType INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    TransactionType VARCHAR(20) NOT NULL
 );
 GO
 
@@ -331,6 +338,10 @@ ALTER TABLE [Transaction]
     ADD CONSTRAINT Transaction_RegisteredBy_fk FOREIGN KEY (RegisteredBy) REFERENCES Employee (IdEmployee);
 GO
 
+ALTER TABLE [Transaction]
+    ADD CONSTRAINT Transaction_IdTransactionType_fk FOREIGN KEY (IdTransactionType) REFERENCES TransactionType (IdTransactionType);
+GO
+
 ALTER TABLE OrderedSupply
 	ADD CONSTRAINT OrderedSupply_IdMeasurementUnit_fk FOREIGN KEY (IdMeasurementUnit) REFERENCES MeasurementUnit (IdMeasurementUnit);
 GO
@@ -414,4 +425,10 @@ VALUES
     ('Pizza'),
     ('Bebida'),
     ('Postre');
+GO
+
+INSERT INTO TransactionType (TransactionType)
+VALUES
+    ('Venta'),
+    ('Salida');
 GO

@@ -1,12 +1,12 @@
-﻿<Page x:Class="ItaliasPizza.Pages.SuppliersList"
+﻿<Page x:Class="ItaliasPizza.Pages.SupplierOrders"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ItaliasPizza.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1280"
-      Title="SuppliersList">
+      d:DesignHeight="700" d:DesignWidth="1280"
+      Title="SupplierOrders">
 
     <Page.Background>
         <ImageBrush ImageSource="../Assets/Images/background.jpg"/>
@@ -35,17 +35,17 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="800" Height="500">
-            <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
-                <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
-                <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
-                <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
-                <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
-            </StackPanel>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="1000" Height="500">
+                <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
 
-                <DataGrid x:Name="DtgSuppliers" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
+                    <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
+                    <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
+                    <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
+                    <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
+                </StackPanel>
+
+                <DataGrid x:Name="DtgSupplierOrders" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="White"/>
@@ -69,9 +69,11 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Categorías" Width="*" Binding="{Binding Categories}"/>
-                        <DataGridTextColumn Header="Teléfono" Width="*" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Proveedor" Width="*" Binding="{Binding SupplierName}"/>
+                        <DataGridTextColumn Header="Insumos" Width="*" Binding="{Binding Supplies}"/>
+                        <DataGridTextColumn Header="Fecha de orden" Width="*" Binding="{Binding OrderDate}"/>
+                        <DataGridTextColumn Header="Fecha estimada" Width="*" Binding="{Binding ExpectedDate}"/>
+                        <DataGridTextColumn Header="Fecha de entrega" Width="*" Binding="{Binding ArrivalDate}"/>
                         <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Status}"/>
 
                         <DataGridTemplateColumn Header="Editar" Width="50">
@@ -86,7 +88,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-            <Button Grid.Row="2" Margin="100,5" Content="Registrar nuevo proveedor" FontSize="14" HorizontalAlignment="Left" Width="200" Click="Btn_RegisterNewSupplier"/>
+            <Button Grid.Row="2" Margin="100,5" Content="Registrar nuevo pedido a proveedor" FontSize="14" HorizontalAlignment="Left" Width="250" Click="Btn_RegisterNewSupplierOrder"/>
         </Grid>
     </Grid>
 </Page>

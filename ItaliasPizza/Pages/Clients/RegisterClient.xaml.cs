@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Orders;
 
 namespace ItaliasPizza.Pages.Clients
 {
@@ -22,14 +23,10 @@ namespace ItaliasPizza.Pages.Clients
 	/// </summary>
 	public partial class RegisterClient : Page
 	{
-		public RegisterClient()
+		public RegisterClient(string recievedPhoneNumber)
 		{
 			InitializeComponent();
-		}
-
-		private void ImgReturn(object sender, MouseButtonEventArgs e)
-		{
-
+			TxtPhone.Text = recievedPhoneNumber;
 		}
 
 		private void BtnSaveClient_Click(object sender, RoutedEventArgs e)
@@ -80,18 +77,6 @@ namespace ItaliasPizza.Pages.Clients
 			var postalCode = TxtPostalCode.Text;
 			var reference = TxtReference.Text;
 
-			Console.WriteLine("Cliente:");
-			Console.WriteLine($"Nombre: {name}");
-			Console.WriteLine($"Apellido: {lastName}");
-			Console.WriteLine($"Teléfono: {phone}");
-
-			Console.WriteLine("Dirección:");
-			Console.WriteLine($"Calle: {street}");
-			Console.WriteLine($"Número: {number}");
-			Console.WriteLine($"Colonia: {colony}");
-			Console.WriteLine($"Código Postal: {postalCode}");
-			Console.WriteLine($"Referencia: {reference}");
-
 			Client newClient = new Client
 			{
 				IdClient = clientId,
@@ -124,8 +109,7 @@ namespace ItaliasPizza.Pages.Clients
 			}
 
 			EmptyFields();
-			// Return to delivery order view
-			// Application.Current.MainWindow.Content = new AddDeliveryOrder();
+			Application.Current.MainWindow.Content = new AddDeliveryOrder();
 		}
 
 		private void BtnCancelSaveClient_Click(object sender, RoutedEventArgs e)
@@ -138,8 +122,7 @@ namespace ItaliasPizza.Pages.Clients
 			}
 
 			EmptyFields();
-			// Return to delivery order view
-			// Application.Current.MainWindow.Content = new AddDeliveryOrder();
+			Application.Current.MainWindow.Content = new AddDeliveryOrder();
 		}
 
 		private bool HighlightInvalidFields()
