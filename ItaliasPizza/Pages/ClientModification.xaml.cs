@@ -49,9 +49,24 @@ namespace ItaliasPizza.Pages
 
         private void BtnSaveClient_Click(object sender, RoutedEventArgs e)
         {
+            if (ClientOperations.IsPhoneRegistered(TxtPhone.Text))
+            {
+                MessageBox.Show("El número de teléfono ya está registrado, intente otro número", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             if (Confirmation())
             {
-                ClientOperations.UpdateClient(Client);
+                var result = ClientOperations.UpdateClient(Client);
+                if (result == 1)
+                {
+                    MessageBox.Show("Cliente actualizado correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Application.Current.MainWindow.Content = new ViewClients();
+                }
+                else
+                {
+                    MessageBox.Show("Error al actualizar el cliente", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
