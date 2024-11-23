@@ -1,5 +1,6 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,8 +66,7 @@ namespace ItaliasPizza.Pages
                     Date = DateTime.Now,
                     Amount = int.Parse(TxtAmount.Text),
                     Description = TxtDescription.Text,
-                    //TODO: RegisteredBy SessionDetails.IdUser
-                    RegisteredBy = Guid.Parse("FF82E2C3-B957-47EC-B428-E3431E66F4E2")
+                    RegisteredBy = SessionDetails.IdEmployee
                 };
 
                 result += TransactionOperations.SaveTransaction(transaction);

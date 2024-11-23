@@ -101,8 +101,7 @@ namespace ItaliasPizza.Pages
                         SpendingsAmount = cashClosingDetails.TotalSpentCash,
                         CashDifference = decimal.Parse(TxtNextDayCash.Text),
                         Observations = observations,
-                        //TODO: RegisteredBy SessionDetails.IdUser
-                        RegisteredBy = Guid.Parse("FF82E2C3-B957-47EC-B428-E3431E66F4E2")
+                        RegisteredBy = SessionDetails.IdEmployee
                     };
 
                     result += CashReconciliationOperations.SaveCashReconciliation(cashReconciliation);
