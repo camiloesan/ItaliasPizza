@@ -94,10 +94,6 @@
       <Project>{99F778D9-402B-4DA6-8BB1-45A6C3580999}</Project>
       <Name>Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ItaliasPizza\ItaliasPizza.csproj">
-      <Project>{4eb91d12-20d5-422d-bff3-0801f94bbae1}</Project>
-      <Name>ItaliasPizza</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

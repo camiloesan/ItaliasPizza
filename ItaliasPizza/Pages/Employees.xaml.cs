@@ -103,14 +103,9 @@ namespace ItaliasPizza.Pages
             Application.Current.MainWindow.Content = new EmployeeRegister();
         }
 
-        private void Btn_Suppliers(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.Content = new SuppliersList();
-        }
-
         private void Btn_Employees(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Employees();
         }
 
         private void Btn_Supplies(object sender, RoutedEventArgs e)
@@ -123,6 +118,11 @@ namespace ItaliasPizza.Pages
 
         }
 
+        private void Btn_Suppliers(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SuppliersList();
+        }
+
         private void Btn_Reports(object sender, RoutedEventArgs e)
         {
 
@@ -131,6 +131,15 @@ namespace ItaliasPizza.Pages
         private void Btn_Products(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new Products();
+        }
+        private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SupplierOrders();
+        }
+
+        private void Btn_Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Login();
         }
     }
 }
