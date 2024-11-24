@@ -114,7 +114,7 @@ namespace ItaliasPizza.Pages
                     else
                     {
                         MessageBox.Show("Corte de caja guardado exitosamente", "Alerta", MessageBoxButton.OK, MessageBoxImage.Information);
-                        //TODO: change page to CashReconciliation button
+                        Application.Current.MainWindow.Content = new MainMenu();
                     }
                 }
             }
@@ -122,7 +122,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-            //TODO: change page to CashReconciliation button
+            Application.Current.MainWindow.Content = new MainMenu();
         }
     }
 }

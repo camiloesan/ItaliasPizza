@@ -87,7 +87,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-            //TODO: change page to Register spent button
+            Application.Current.MainWindow.Content = new MainMenu();
         }
     }
 }
