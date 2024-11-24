@@ -128,7 +128,9 @@ namespace ItaliasPizza.DataAccessLayer
                 {
                     IdSupply = s.IdSupply,
                     Name = s.Name,
-                    Quantity = s.Quantity.ToString() + " " + s.MeasurementUnit.MeasurementUnit1,
+                    MeasurementUnit = s.MeasurementUnit.MeasurementUnit1,
+					RawQuantity = s.Quantity.ToString(),
+					Quantity = s.Quantity.ToString() + " " + s.MeasurementUnit.MeasurementUnit1,
                     Category = s.SupplyCategory.SupplyCategory1,
                     IdSupplyCategory = s.IdSupplyCategory,
                     ExpirationDate = s.ExpirationDate.ToString(),
