@@ -81,6 +81,7 @@ CREATE TABLE DeliveryOrder (
     IdDeliveryOrder UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     IdClient UNIQUEIDENTIFIER NOT NULL,
     IdOrderStatus INT NOT NULL,
+    IdClientAddress UNIQUEIDENTIFIER NOT NULL,
     [Date] DATETIME NOT NULL,
     Total DECIMAL(12, 2) NOT NULL,
     DeliveryDriver UNIQUEIDENTIFIER NOT NULL,
@@ -113,7 +114,9 @@ GO
 
 CREATE TABLE InventoryReport (
     IdInventoryReport UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    ReportDate DATETIME NOT NULL,
     Reporter UNIQUEIDENTIFIER NOT NULL,
+    [Status] BIT NOT NULL,
     Observations VARCHAR(100)
 );
 GO
@@ -225,7 +228,7 @@ CREATE TABLE SupplyInventoryReport (
     IdMeasurementUnit INT NOT NULL,
     ExpectedAmount DECIMAL(12, 2)NOT NULL,
     ReportedAmount DECIMAL(12, 2) NOT NULL,
-    DifferingAmountReason VARCHAR (100) NOT NULL
+    DifferingAmountReason VARCHAR (100)
 );
 GO
 
@@ -260,6 +263,10 @@ GO
 
 ALTER TABLE DeliveryOrder 
     ADD CONSTRAINT DeliveryOrder_DeliveryDriver_fk FOREIGN KEY (DeliveryDriver) REFERENCES Employee (IdEmployee);
+GO
+
+ALTER TABLE DeliveryOrder
+    ADD CONSTRAINT DeliveryOrder_CliendAdress_fk FOREIGN KEY (IdClientAddress) REFERENCES [Address] (IdAddress);
 GO
 
 ALTER TABLE DeliveryOrderProduct 

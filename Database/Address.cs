@@ -14,6 +14,12 @@ namespace Database
     
     public partial class Address
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Address()
+        {
+            this.DeliveryOrder = new HashSet<DeliveryOrder>();
+        }
+    
         public System.Guid IdAddress { get; set; }
         public System.Guid IdClient { get; set; }
         public string Street { get; set; }
@@ -24,5 +30,7 @@ namespace Database
         public string Reference { get; set; }
     
         public virtual Client Client { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrder> DeliveryOrder { get; set; }
     }
 }

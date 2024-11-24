@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5c3180f209ae4178814fab818852738c" Name="Diagram1">
+      <Diagram DiagramId="5c3180f209ae4178814fab818852738c" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="ItaliasPizzaDBModel.AccessAccount" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliasPizzaDBModel.Address" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliasPizzaDBModel.CashReconciliation" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
@@ -64,6 +64,7 @@
         <AssociationConnector Association="ItaliasPizzaDBModel.Supply_IdSupplyCategory_fk" ManuallyRouted="false" />
         <AssociationConnector Association="ItaliasPizzaDBModel.SupplyInventoryReport_IdSupply_fk" ManuallyRouted="false" />
         <AssociationConnector Association="ItaliasPizzaDBModel.Transaction_IdTransactionType_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="ItaliasPizzaDBModel.DeliveryOrder_CliendAdress_fk" ></AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
