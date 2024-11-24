@@ -78,12 +78,21 @@
                         <DataGridTemplateColumn Header="Opciones" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0" Click="EditProduct_Click" Background="Transparent" CommandParameter="{Binding}">
-                                        <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <!-- Edit Button -->
+                                        <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0,0,0,2" Click="EditProduct_Click" Background="Transparent" CommandParameter="{Binding}">
+                                            <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
+                                        </Button>
+
+                                        <!-- Delete Button -->
+                                        <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0,2,0,0" Click="ModifyRecipe_Click" Background="Transparent" CommandParameter="{Binding}">
+                                            <Image Source="../Assets/Images/recipe_icon.png" Stretch="Uniform"/>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

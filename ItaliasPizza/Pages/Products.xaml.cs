@@ -1,4 +1,5 @@
 ﻿using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Recipes;
 using ItaliasPizza.Utils;
 using System.Collections.Generic;
 using System.Configuration;
@@ -131,6 +132,16 @@ namespace ItaliasPizza.Pages
             if (button.DataContext is ProductDetails selectedProduct)
             {
                 Application.Current.MainWindow.Content = new ProductModification(selectedProduct.IdProduct);
+            }
+        }
+
+        private void ModifyRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button.DataContext is ProductDetails selectedProduct)
+            {
+                Application.Current.MainWindow.Content = new ModifyRecipe(selectedProduct.IdProduct);
             }
         }
     }

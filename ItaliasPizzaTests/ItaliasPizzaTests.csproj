@@ -77,6 +77,7 @@
     <Compile Include="DataAccessLayer\LocalOrderProductOperationsTests.cs" />
     <Compile Include="DataAccessLayer\DeliveryOrderProductOperationsTests.cs" />
     <Compile Include="DataAccessLayer\ProductTypeOperationsTests.cs" />
+    <Compile Include="DataAccessLayer\RecipeOperationsTests.cs" />
     <Compile Include="DataAccessLayer\SupplyOperationsTests.cs" />
     <Compile Include="DataAccessLayer\SupplierOperationsTests.cs" />
     <Compile Include="DataAccessLayer\SupplierOrderOperationsTests.cs" />

@@ -46,7 +46,7 @@
                 <ComboBoxItem>No disponible</ComboBoxItem>
             </ComboBox>
 
-            <CheckBox Margin="0,10">
+            <CheckBox x:Name="CbNeedsRecipe" Margin="0,10">
                 <CheckBox.Content>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Necesita receta" FontSize="14" Foreground="White"/>

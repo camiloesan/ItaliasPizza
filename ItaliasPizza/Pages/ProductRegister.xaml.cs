@@ -1,5 +1,6 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Recipes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,9 +9,12 @@ namespace ItaliasPizza.Pages
 {
     public partial class ProductRegister : Page
     {
+        private System.Guid currentProductGuid = System.Guid.Empty;
+
         public ProductRegister()
         {
             InitializeComponent();
+            currentProductGuid = System.Guid.NewGuid();
             CbProductType.ItemsSource = ProductTypeOperations.GetProductTypes();
         }
 
@@ -42,6 +46,7 @@ namespace ItaliasPizza.Pages
 
             var product = new Product
             {
+                IdProduct = currentProductGuid,
                 Name = TxtName.Text.Trim(),
                 Size = CbSize.Text.Trim(),
                 Price = decimal.Parse(TxtPrice.Text.Trim()),
@@ -74,6 +79,15 @@ namespace ItaliasPizza.Pages
             {
                 MessageBox.Show("Ya existe un producto con ese nombre, intente uno nuevo");
                 return;
+            }
+
+
+
+            // PARA LUIS
+            if (CbNeedsRecipe.IsChecked == true)
+            {
+                SaveProduct();
+                //Application.Current.MainWindow.Content = new RegisterRecipe();
             }
 
             SaveProduct();

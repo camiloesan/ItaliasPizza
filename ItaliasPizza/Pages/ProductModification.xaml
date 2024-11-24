@@ -46,14 +46,6 @@
                 <ComboBoxItem>No disponible</ComboBoxItem>
             </ComboBox>
 
-            <CheckBox Margin="0,10">
-                <CheckBox.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Cambiar receta" FontSize="14" Foreground="White"/>
-                    </StackPanel>
-                </CheckBox.Content>
-            </CheckBox>
-
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15,25">
                 <Button Margin="5" Content="Continuar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="100" Click="Btn_Save"/>
                 <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
