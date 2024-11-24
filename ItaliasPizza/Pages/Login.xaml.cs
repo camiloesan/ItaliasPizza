@@ -56,13 +56,13 @@ namespace ItaliasPizza.Pages
         {
             switch (userType) {
                 case "Gerente":
-                    Application.Current.MainWindow.Content = new EmployeeModification(SessionDetails.IdEmployee);
+                    Application.Current.MainWindow.Content = new Employees();
                     break;
                 case "Cajero":
-                    //Application.Current.MainWindow.Content = new MainMenu();
+                    Application.Current.MainWindow.Content = new MainMenu();
                     break;
                 case "Cocinero":
-                    //Application.Current.MainWindow.Content = new ViewOrders();
+                    Application.Current.MainWindow.Content = new ViewOrders();
 					break;
                 case "Repartidor":
                     Application.Current.MainWindow.Content = new ViewOrders();
@@ -78,8 +78,8 @@ namespace ItaliasPizza.Pages
 
         private void BtnLoginEvent(object sender, RoutedEventArgs e)
         {
-            //LogIn();
-            Application.Current.MainWindow.Content = new CashSpentRegister();
+            LogIn();
+            //Application.Current.MainWindow.Content = new CashSpentRegister();
         }
     }
 }

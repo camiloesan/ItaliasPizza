@@ -98,8 +98,8 @@
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Orders\AddDeliveryOrder.xaml.cs">
-      <DependentUpon>AddDeliveryOrder.xaml</DependentUpon>
+    <Compile Include="Pages\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Orders\ViewOrderDetails.xaml.cs">
       <DependentUpon>ViewOrderDetails.xaml</DependentUpon>
@@ -179,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
