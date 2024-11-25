@@ -310,8 +310,6 @@ namespace ItaliasPizza.Pages.Orders
 				return;
 			}
 
-			
-
 			int registerDeliveryOrderResult = RegisterDeliveryOrder();
 
 			if (registerDeliveryOrderResult == -1 || registerDeliveryOrderResult == 0)
@@ -340,7 +338,7 @@ namespace ItaliasPizza.Pages.Orders
 		{
 			BrdFoundClientPopUp.Visibility = Visibility.Hidden;
 			foundClient = null;
-			selectedAddress = null;
+			//selectedAddress = null;
 			EnableMainForm();
 		}
 
