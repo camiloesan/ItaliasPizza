@@ -439,3 +439,8 @@ VALUES
     ('Venta'),
     ('Salida');
 GO
+
+INSERT INTO Employee (IdEmployee, FirstName, LastName, Phone, [Status], IdCharge)
+VALUES
+    ('00000000-0000-0000-0000-000000000000', 'empty', 'empty', 0000000000, 1, 2);
+GO
