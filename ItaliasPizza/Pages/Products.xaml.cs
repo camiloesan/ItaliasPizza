@@ -1,4 +1,5 @@
 ﻿using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Recipes;
 using ItaliasPizza.Utils;
 using System.Collections.Generic;
 using System.Configuration;
@@ -44,11 +45,6 @@ namespace ItaliasPizza.Pages
             CbFilter.SelectedIndex = 0;
         }
 
-        private void Btn_Products(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Btn_Employees(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new Employees();
@@ -72,6 +68,20 @@ namespace ItaliasPizza.Pages
         private void Btn_Reports(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Products();
+        }
+        private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SupplierOrders();
+        }
+
+        private void Btn_Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Login();
         }
 
         private void Btn_Search(object sender, RoutedEventArgs e)
@@ -131,6 +141,16 @@ namespace ItaliasPizza.Pages
             if (button.DataContext is ProductDetails selectedProduct)
             {
                 Application.Current.MainWindow.Content = new ProductModification(selectedProduct.IdProduct);
+            }
+        }
+
+        private void ModifyRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button.DataContext is ProductDetails selectedProduct)
+            {
+                Application.Current.MainWindow.Content = new ModifyRecipe(selectedProduct.IdProduct);
             }
         }
     }

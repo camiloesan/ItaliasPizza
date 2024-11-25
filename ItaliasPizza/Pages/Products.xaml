@@ -19,15 +19,27 @@
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background="#772E25">
-            <Label Content="Menú" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,20"/>
-            <Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
-            <Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
-            <Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
-            <Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
-            <Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
-            <Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
-        </StackPanel>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background="#772E25">
+                <Label Content="Menú" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+                <Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
+                <Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
+                <Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
+                <Button Content="Pedios a proveedor" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_SupplierOrders"/>
+                <Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
+                <Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
+                <Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Background="#772E25" VerticalAlignment="Stretch">
+                <Button Content="Salir" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Exit"/>
+            </StackPanel>
+        </Grid>
 
         <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -78,12 +90,21 @@
                         <DataGridTemplateColumn Header="Opciones" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0" Click="EditProduct_Click" Background="Transparent" CommandParameter="{Binding}">
-                                        <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <!-- Edit Button -->
+                                        <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0,0,0,2" Click="EditProduct_Click" Background="Transparent" CommandParameter="{Binding}">
+                                            <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
+                                        </Button>
+
+                                        <!-- Delete Button -->
+                                        <Button Width="32" Height="32" BorderBrush="Transparent" Margin="0,2,0,0" Click="ModifyRecipe_Click" Background="Transparent" CommandParameter="{Binding}">
+                                            <Image Source="../Assets/Images/recipe_icon.png" Stretch="Uniform"/>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

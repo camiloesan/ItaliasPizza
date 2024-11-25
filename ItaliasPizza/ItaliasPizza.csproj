@@ -192,6 +192,8 @@
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     <Compile Include="Pages\InventoryReport\FinishInventoryReport.xaml.cs">
       <DependentUpon>FinishInventoryReport.xaml</DependentUpon>
     </Compile>
@@ -220,6 +222,9 @@
     </Compile>
     <Compile Include="Pages\Products.xaml.cs">
       <DependentUpon>Products.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Recipes\ModifyRecipe.xaml.cs">
+      <DependentUpon>ModifyRecipe.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Recipes\RegisterRecipe.xaml.cs">
       <DependentUpon>RegisterRecipe.xaml</DependentUpon>
@@ -289,6 +294,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -338,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Products.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Recipes\ModifyRecipe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -485,6 +498,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\check_icon_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\recipe_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
