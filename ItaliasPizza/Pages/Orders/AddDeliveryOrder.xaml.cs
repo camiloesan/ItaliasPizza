@@ -283,7 +283,7 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (result == MessageBoxResult.Yes)
 			{
-				// Application.Current.MainWindow.Content = new OrdersMenu(); REGRESAR AL MENU PRINCIPAL DEL CAJERO
+				Application.Current.MainWindow.Content = new MainMenu();
 			}
 
 			return;
@@ -321,7 +321,7 @@ namespace ItaliasPizza.Pages.Orders
 			}
 			
 			MessageBox.Show("Orden registrada exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-
+			Application.Current.MainWindow.Content = new MainMenu();
 		}
 
 		private void BtnSelectAddress_Click(object sender, RoutedEventArgs e)

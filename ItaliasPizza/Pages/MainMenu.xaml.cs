@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItaliasPizza.Pages.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,5 +40,10 @@ namespace ItaliasPizza.Pages
         {
             Application.Current.MainWindow.Content = new Login();
         }
-    }
+
+		private void Btn_DeliveryOrder(object sender, RoutedEventArgs e)
+		{
+            Application.Current.MainWindow.Content = new AddDeliveryOrder();
+		}
+	}
 }
