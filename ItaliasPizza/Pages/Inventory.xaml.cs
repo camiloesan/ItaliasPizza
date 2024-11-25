@@ -1,4 +1,5 @@
 ﻿using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.InventoryReport;
 using ItaliasPizza.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,8 +71,8 @@ namespace ItaliasPizza.Pages
 
         private void Btn_InventoryReport(object sender, RoutedEventArgs e)
         {
-
-        }
+            Application.Current.MainWindow.Content = new StartInventoryReport();
+		}
 
         private void Btn_SupplyRegister(object sender, RoutedEventArgs e)
         {

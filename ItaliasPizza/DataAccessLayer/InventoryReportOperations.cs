@@ -43,9 +43,54 @@ namespace ItaliasPizza.DataAccessLayer
 			return result;
 		}
 
+		public static InventoryReport GetInventoryReport()
+		{
+			InventoryReport inventoryReport = null;
+
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				inventoryReport = db.InventoryReport
+					.Include("SupplyInventoryReport")
+					.Include("SupplyInventoryReport.Supply")
+					.Include("SupplyInventoryReport.MeasurementUnit")
+					.FirstOrDefault(ir => ir.Status == false);
+			}
+
+			return inventoryReport;
+		}
+
 		public static int UpdateInventoryReport(InventoryReport inventoryReport)
 		{
-			return 0;
+			int result = 0;
+
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				var existingReport = db.InventoryReport
+					.Include("SupplyInventoryReport")
+					.FirstOrDefault(ir => ir.IdInventoryReport == inventoryReport.IdInventoryReport);
+
+				if (existingReport != null)
+				{
+					existingReport.Status = inventoryReport.Status;
+					existingReport.Observations = inventoryReport.Observations;
+
+					foreach (var supplyReport in inventoryReport.SupplyInventoryReport)
+					{
+						var existingSupplyReport = existingReport.SupplyInventoryReport
+							.FirstOrDefault(sir => sir.IdSupplyInventoryReport == supplyReport.IdSupplyInventoryReport);
+
+						if (existingSupplyReport != null)
+						{
+							existingSupplyReport.ReportedAmount = supplyReport.ReportedAmount;
+							existingSupplyReport.DifferingAmountReason = supplyReport.DifferingAmountReason;
+						}
+					}
+
+					result = db.SaveChanges();
+				}
+			}
+
+			return result;
 		}
 
 		public static bool IsInventoryReportOpen()
