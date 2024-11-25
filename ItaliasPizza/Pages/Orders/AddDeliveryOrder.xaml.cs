@@ -117,7 +117,7 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void AddProductToOrder(Product selectedProduct)
 		{
-			if (ProductOperations.GetPreparableProductQuantity(selectedProduct) == -0)
+			if (ProductOperations.GetPreparableProductQuantity(selectedProduct) == -1)
 			{
 				MessageBox.Show("Ha ocurrido un error al calcular la cantidad preparable de este producto.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
@@ -143,7 +143,7 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				IdDeliveryOrder = Guid.NewGuid(),
 				IdClient = selectedClient.IdClient,
-				//IdAddress = selectedAddress.IdAddress, // TODO: Add address to delivery order model & database relation
+				IdClientAddress = selectedAddress.IdAddress,
 				IdOrderStatus = pendingStatus.IdOrderStatus,
 				Total = deliveryOrderProductsDetails.Sum(x => x.SubTotal),
 				Date = DateTime.Now,
