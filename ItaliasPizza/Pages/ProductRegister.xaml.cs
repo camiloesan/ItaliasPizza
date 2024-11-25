@@ -1,6 +1,7 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Pages.Recipes;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,12 +10,11 @@ namespace ItaliasPizza.Pages
 {
     public partial class ProductRegister : Page
     {
-        private System.Guid currentProductGuid = System.Guid.Empty;
+        private Product newProduct;
 
         public ProductRegister()
         {
             InitializeComponent();
-            currentProductGuid = System.Guid.NewGuid();
             CbProductType.ItemsSource = ProductTypeOperations.GetProductTypes();
         }
 
@@ -44,9 +44,9 @@ namespace ItaliasPizza.Pages
                 status = false;
             }
 
-            var product = new Product
+            newProduct = new Product
             {
-                IdProduct = currentProductGuid,
+                IdProduct = Guid.NewGuid(),
                 Name = TxtName.Text.Trim(),
                 Size = CbSize.Text.Trim(),
                 Price = decimal.Parse(TxtPrice.Text.Trim()),
@@ -54,7 +54,7 @@ namespace ItaliasPizza.Pages
                 Status = status,
             };
 
-            int result = ProductOperations.SaveProduct(product);
+            int result = ProductOperations.SaveProduct(newProduct);
 
             if (result > 0)
             {
@@ -81,16 +81,13 @@ namespace ItaliasPizza.Pages
                 return;
             }
 
-
-
-            // PARA LUIS
             if (CbNeedsRecipe.IsChecked == true)
             {
                 SaveProduct();
-                //Application.Current.MainWindow.Content = new RegisterRecipe();
+                Application.Current.MainWindow.Content = new RegisterRecipe(newProduct);
+            } else {
+                SaveProduct();
             }
-
-            SaveProduct();
         }
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
