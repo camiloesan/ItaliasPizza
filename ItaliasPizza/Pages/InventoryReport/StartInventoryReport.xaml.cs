@@ -149,7 +149,7 @@ namespace ItaliasPizza.Pages.InventoryReport
 
 		private void Btn_Supplies(object sender, RoutedEventArgs e)
 		{
-			//Application.Current.MainWindow.Content = new Supplies();
+			Application.Current.MainWindow.Content = new Inventory();
 		}
 
 		private void Btn_Orders(object sender, RoutedEventArgs e)
@@ -171,5 +171,10 @@ namespace ItaliasPizza.Pages.InventoryReport
 		{
 			Application.Current.MainWindow.Content = new FinishInventoryReport();
 		}
-	}
+
+		private void Btn_Exit(object sender, RoutedEventArgs e)
+		{
+			Application.Current.MainWindow.Content = new Login();
+		}
+    }
 }
