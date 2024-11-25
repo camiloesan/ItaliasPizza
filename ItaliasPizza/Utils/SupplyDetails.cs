@@ -10,7 +10,8 @@ namespace ItaliasPizza.Utils
     {
         public Guid IdSupply { get; set; }
         public string Name { get; set; }
-        public string Quantity { get; set; }
+        public string RawQuantity { get; set; }
+		public string Quantity { get; set; }
         public string MeasurementUnit { get; set; }
         public string ExpirationDate { get; set; }
         public int IdSupplyCategory { get; set; }

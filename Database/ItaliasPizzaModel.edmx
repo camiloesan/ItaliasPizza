@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ItaliasPizzaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="IdAccessAccount" />
@@ -67,6 +67,7 @@
           <Property Name="IdDeliveryOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdClient" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdOrderStatus" Type="int" Nullable="false" />
+          <Property Name="IdClientAddress" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="DeliveryDriver" Type="uniqueidentifier" Nullable="false" />
@@ -98,7 +99,9 @@
             <PropertyRef Name="IdInventoryReport" />
           </Key>
           <Property Name="IdInventoryReport" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReportDate" Type="datetime" Nullable="false" />
           <Property Name="Reporter" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Observations" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="LocalOrder">
@@ -241,7 +244,7 @@
           <Property Name="IdMeasurementUnit" Type="int" Nullable="false" />
           <Property Name="ExpectedAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="ReportedAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="DifferingAmountReason" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DifferingAmountReason" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -294,6 +297,18 @@
             </Principal>
             <Dependent Role="CashReconciliation">
               <PropertyRef Name="RegisteredBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryOrder_CliendAdress_fk">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="IdAddress" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="IdClientAddress" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -699,6 +714,10 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="CashReconciliation" EntitySet="CashReconciliation" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryOrder_CliendAdress_fk" Association="Self.DeliveryOrder_CliendAdress_fk">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
+          </AssociationSet>
           <AssociationSet Name="DeliveryOrder_DeliveryDriver_fk" Association="Self.DeliveryOrder_DeliveryDriver_fk">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
@@ -820,8 +839,7 @@
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ItaliasPizzaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -850,6 +868,7 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Reference" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Client" Relationship="Self.Address_IdClient_fk" FromRole="Address" ToRole="Client" />
+          <NavigationProperty Name="DeliveryOrder" Relationship="ItaliasPizzaDBModel.DeliveryOrder_CliendAdress_fk" FromRole="Address" ToRole="DeliveryOrder" />
         </EntityType>
         <EntityType Name="CashReconciliation">
           <Key>
@@ -901,6 +920,8 @@
           <NavigationProperty Name="Employee" Relationship="Self.DeliveryOrder_DeliveryDriver_fk" FromRole="DeliveryOrder" ToRole="Employee" />
           <NavigationProperty Name="OrderStatus" Relationship="Self.DeliveryOrder_IdOrderStatus_fk" FromRole="DeliveryOrder" ToRole="OrderStatus" />
           <NavigationProperty Name="DeliveryOrderProduct" Relationship="Self.DeliveryOrderProduct_IdDeliveryOrder_fk" FromRole="DeliveryOrder" ToRole="DeliveryOrderProduct" />
+          <Property Name="IdClientAddress" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="ItaliasPizzaDBModel.DeliveryOrder_CliendAdress_fk" FromRole="DeliveryOrder" ToRole="Address" />
         </EntityType>
         <EntityType Name="DeliveryOrderProduct">
           <Key>
@@ -941,6 +962,8 @@
           <Property Name="Observations" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employee" Relationship="Self.InventoryReport_Reporter_fk" FromRole="InventoryReport" ToRole="Employee" />
           <NavigationProperty Name="SupplyInventoryReport" Relationship="Self.SupplyInventoryReport_IdInventoryReport_fk" FromRole="InventoryReport" ToRole="SupplyInventoryReport" />
+          <Property Name="ReportDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="LocalOrder">
           <Key>
@@ -1121,7 +1144,7 @@
           <Property Name="IdMeasurementUnit" Type="Int32" Nullable="false" />
           <Property Name="ExpectedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="ReportedAmount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="DifferingAmountReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DifferingAmountReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="InventoryReport" Relationship="Self.SupplyInventoryReport_IdInventoryReport_fk" FromRole="SupplyInventoryReport" ToRole="InventoryReport" />
           <NavigationProperty Name="MeasurementUnit" Relationship="Self.SupplyInventoryReport_IdMeasurementUnit_fk" FromRole="SupplyInventoryReport" ToRole="MeasurementUnit" />
           <NavigationProperty Name="Supply" Relationship="Self.SupplyInventoryReport_IdSupply_fk" FromRole="SupplyInventoryReport" ToRole="Supply" />
@@ -1702,7 +1725,23 @@
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryOrder_CliendAdress_fk" Association="ItaliasPizzaDBModel.DeliveryOrder_CliendAdress_fk">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="DeliveryOrder_CliendAdress_fk">
+          <End Type="ItaliasPizzaDBModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="ItaliasPizzaDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="IdAddress" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="IdClientAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1772,6 +1811,7 @@
           <EntitySetMapping Name="DeliveryOrder">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.DeliveryOrder">
               <MappingFragment StoreEntitySet="DeliveryOrder">
+                <ScalarProperty Name="IdClientAddress" ColumnName="IdClientAddress" />
                 <ScalarProperty Name="IdDeliveryOrder" ColumnName="IdDeliveryOrder" />
                 <ScalarProperty Name="IdClient" ColumnName="IdClient" />
                 <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
@@ -1808,6 +1848,8 @@
           <EntitySetMapping Name="InventoryReport">
             <EntityTypeMapping TypeName="ItaliasPizzaDBModel.InventoryReport">
               <MappingFragment StoreEntitySet="InventoryReport">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
                 <ScalarProperty Name="IdInventoryReport" ColumnName="IdInventoryReport" />
                 <ScalarProperty Name="Reporter" ColumnName="Reporter" />
                 <ScalarProperty Name="Observations" ColumnName="Observations" />

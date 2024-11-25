@@ -27,11 +27,13 @@ namespace Database
         public decimal Total { get; set; }
         public System.Guid DeliveryDriver { get; set; }
         public string NotDeliveredReason { get; set; }
+        public System.Guid IdClientAddress { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual OrderStatus OrderStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderProduct> DeliveryOrderProduct { get; set; }
+        public virtual Address Address { get; set; }
     }
 }

@@ -117,7 +117,7 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void AddProductToOrder(Product selectedProduct)
 		{
-			if (ProductOperations.GetPreparableProductQuantity(selectedProduct) == -0)
+			if (ProductOperations.GetPreparableProductQuantity(selectedProduct) == -1)
 			{
 				MessageBox.Show("Ha ocurrido un error al calcular la cantidad preparable de este producto.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
@@ -143,7 +143,7 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				IdDeliveryOrder = Guid.NewGuid(),
 				IdClient = selectedClient.IdClient,
-				//IdAddress = selectedAddress.IdAddress, // TODO: Add address to delivery order model & database relation
+				IdClientAddress = selectedAddress.IdAddress,
 				IdOrderStatus = pendingStatus.IdOrderStatus,
 				Total = deliveryOrderProductsDetails.Sum(x => x.SubTotal),
 				Date = DateTime.Now,
@@ -283,7 +283,7 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (result == MessageBoxResult.Yes)
 			{
-				// Application.Current.MainWindow.Content = new OrdersMenu(); REGRESAR AL MENU PRINCIPAL DEL CAJERO
+				Application.Current.MainWindow.Content = new MainMenu();
 			}
 
 			return;
@@ -310,8 +310,6 @@ namespace ItaliasPizza.Pages.Orders
 				return;
 			}
 
-			
-
 			int registerDeliveryOrderResult = RegisterDeliveryOrder();
 
 			if (registerDeliveryOrderResult == -1 || registerDeliveryOrderResult == 0)
@@ -321,7 +319,7 @@ namespace ItaliasPizza.Pages.Orders
 			}
 			
 			MessageBox.Show("Orden registrada exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-
+			Application.Current.MainWindow.Content = new MainMenu();
 		}
 
 		private void BtnSelectAddress_Click(object sender, RoutedEventArgs e)
@@ -340,7 +338,7 @@ namespace ItaliasPizza.Pages.Orders
 		{
 			BrdFoundClientPopUp.Visibility = Visibility.Hidden;
 			foundClient = null;
-			selectedAddress = null;
+			//selectedAddress = null;
 			EnableMainForm();
 		}
 

@@ -34,7 +34,7 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void ImgReturn_Click(object sender, MouseButtonEventArgs e)
 		{
-			
+			Application.Current.MainWindow.Content = new Login();
 		}
 
 		private void InitializeOrdersByUsedType()

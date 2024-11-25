@@ -1,0 +1,114 @@
+﻿<Page x:Class="ItaliasPizza.Pages.InventoryReport.FinishInventoryReport"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ItaliasPizza.Pages.InventoryReport"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="FinishInventoryReport">
+
+	<Page.Background>
+		<ImageBrush ImageSource="../../Assets/Images/background.jpg"/>
+	</Page.Background>
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="256"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Sidebar -->
+		<StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background="#772E25">
+			<Label Content="Menú" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+			<Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
+			<Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
+			<Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
+			<Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
+			<Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
+			<Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
+		</StackPanel>
+
+		<Grid x:Name="ReportInfo" Grid.Column="1" HorizontalAlignment="Stretch" Visibility="Visible">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="190"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Label Grid.Row="0" Content="Concluir Reporte de Inventario" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,10"/>
+
+				<DataGrid Grid.Row="1" x:Name="DtgInventoryReportSupplies" Margin="20" AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch">
+					<DataGrid.ColumnHeaderStyle>
+						<Style TargetType="DataGridColumnHeader">
+							<Setter Property="Background" Value="White"/>
+							<Setter Property="Foreground" Value="Black"/>
+							<Setter Property="BorderBrush" Value="Black"/>
+							<Setter Property="BorderThickness" Value="1"/>
+							<Setter Property="FontSize" Value="16"/>
+							<Setter Property="FontWeight" Value="DemiBold"/>
+							<Setter Property="HorizontalContentAlignment" Value="Center"/>
+						</Style>
+					</DataGrid.ColumnHeaderStyle>
+
+					<DataGrid.CellStyle>
+						<Style TargetType="DataGridCell">
+							<Setter Property="Background" Value="Transparent"/>
+							<Setter Property="BorderBrush" Value="White"/>
+							<Setter Property="BorderThickness" Value="1"/>
+							<Setter Property="FontSize" Value="14"/>
+							<Setter Property="Foreground" Value="Black"/>
+						</Style>
+					</DataGrid.CellStyle>
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Supply.Name}"/>
+						<DataGridTextColumn Header="Unidad de medida" Width="*" Binding="{Binding MeasurementUnit.MeasurementUnit1}"/>
+						<DataGridTextColumn Header="Cantidad Registrada" Width="*" Binding="{Binding ExpectedAmount}"/>
+
+						<DataGridTemplateColumn Header="Cantidar Encontrada" Width="*">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<!-- Text Input -->
+									<TextBox x:Name="TxtReportedAmount" Text="{Binding ReportedAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="TxtReportedAmount_PreviewTextInput"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+
+						<DataGridTemplateColumn Header="Razón diferencia" Width="*">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<!-- Text Input -->
+									<TextBox x:Name="TxtDifferingReason" Text="{Binding DifferingAmountReason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+
+			<StackPanel Grid.Row="1" Orientation="Vertical" Margin="20,10,20,0">
+				<Label  Content="Observaciones" Foreground="White" FontWeight="SemiBold" FontSize="16"/>
+				<TextBox x:Name="TxtObservations" Margin="20,0,20,0" Height="130" FontSize="14" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="100"/>
+			</StackPanel>
+
+			<StackPanel Grid.Row="2" Margin="0,0,35,0" Orientation="Horizontal" HorizontalAlignment="Right" >
+				<Button Content="Guardar" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="16" Height="35" HorizontalAlignment="Left" Width="150" Click="BtnSaveReport_Click"/>
+			</StackPanel>
+		</Grid>
+
+		<StackPanel x:Name="NoReportMessage" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
+			<Label Content="No hay un reporte de inventario en curso" Foreground="White" FontSize="38" FontWeight="Bold" Margin="20,20,20,40"/>
+			<Button Content="Iniciar nuevo reporte de inventario" Width="450" Height="50" FontSize="28" FontWeight="SemiBold" Click="BtnStartReport_Click"/> 
+		</StackPanel>
+
+	</Grid>
+</Page>

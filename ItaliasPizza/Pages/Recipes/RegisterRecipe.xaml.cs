@@ -24,12 +24,12 @@ namespace ItaliasPizza.Pages.Recipes
 	/// </summary>
 	public partial class RegisterRecipe : Page
 	{
-		//private Product currentProduct; // Necesario para obtener el id del producto -> obtener de una pantalla productos
+		private Product currentProduct; 
 		private List<RecipeSupplyDetails> recipeSuppliesDetails = new List<RecipeSupplyDetails>();
 		private Supply selectedSupply;
-		public RegisterRecipe() // agregar product como parametro del constructor para poder relacionar el producto con la receta
+		public RegisterRecipe(Product recievedProduct)
 		{
-			//currentProduct = recievedProduct;
+			currentProduct = recievedProduct;
 			InitializeComponent();
 			FillDtgAvailableSupplies();
 		}
@@ -88,8 +88,7 @@ namespace ItaliasPizza.Pages.Recipes
 			Recipe newRecipe = new Recipe
 			{
 				IdRecipe = Guid.NewGuid(),
-				//IdProduct = currentProduct.IdProduct, // product.IdProduct
-				//IdProduct = Guid.NewGuid(),
+				IdProduct = currentProduct.IdProduct,
 				Instructions = TxtInstructions.Text
 			};
 
@@ -110,8 +109,7 @@ namespace ItaliasPizza.Pages.Recipes
 			{
 				MessageBox.Show("Receta registrada exitosamente.", "Registro exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 				EmptyFields();
-				// Return to products view
-				// Application.Current.MainWindow.Content = new ViewProducts();
+				Application.Current.MainWindow.Content = new Products();
 			}
 			else
 			{
@@ -130,8 +128,7 @@ namespace ItaliasPizza.Pages.Recipes
 
 			EmptyFields();
 			ResetAmountForm();
-			// Return to products view
-			// Application.Current.MainWindow.Content = new ViewProducts();
+			Application.Current.MainWindow.Content = new Products();
 		}
 
 		private void FillDtgAvailableSupplies()

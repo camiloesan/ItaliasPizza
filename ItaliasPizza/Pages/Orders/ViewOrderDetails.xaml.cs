@@ -36,7 +36,7 @@ namespace ItaliasPizza.Pages.Orders
 					BtnPrepared.Visibility = Visibility.Visible;
 					BtnTransit.Visibility = Visibility.Hidden;
 					BtnDelivered.Visibility = Visibility.Hidden;
-					BtnNotDelivered.Visibility = Visibility.Visible;
+					BtnNotDelivered.Visibility = Visibility.Hidden;
 					break;
 				case "Repartidor":
 					BtnPreparation.Visibility = Visibility.Hidden;
@@ -56,14 +56,14 @@ namespace ItaliasPizza.Pages.Orders
 		private void SaveTransaction()
 		{
             var sale = new Transaction
-            {
-                IdTransaction = Guid.NewGuid(),
-                IdTransactionType = TRANSACTION_TYPE_SALE,
-                Date = DateTime.Now,
-                Amount = int.Parse(_orderDetails.TotalPrice),
-                Description = "Sale: " + _orderDetails.TotalPrice,
-                RegisteredBy = SessionDetails.IdEmployee
-            };
+			{
+				IdTransaction = Guid.NewGuid(),
+				IdTransactionType = TRANSACTION_TYPE_SALE,
+				Date = DateTime.Now,
+				Amount = Decimal.Parse(_orderDetails.TotalPrice),
+				Description = "Sale: " + _orderDetails.TotalPrice,
+				RegisteredBy = SessionDetails.IdEmployee
+			};
             TransactionOperations.SaveTransaction(sale);
         }
 

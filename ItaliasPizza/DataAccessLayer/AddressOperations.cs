@@ -31,5 +31,13 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.Address.Where(a => a.IdClient == client.IdClient).ToList();
 			}		
 		}
+
+		public static Address GetAddressById(Guid id)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Address.FirstOrDefault(a => a.IdAddress == id);
+			}
+		}
 	}
 }
