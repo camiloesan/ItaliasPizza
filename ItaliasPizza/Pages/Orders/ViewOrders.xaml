@@ -26,7 +26,7 @@
 			<StackPanel Orientation="Vertical">
 				<Image Height="45" Width="45" MouseLeftButtonDown="ImgReturn_Click" Cursor="Hand"
 			Source="../../Assets/Images/return_icon.png" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-				<Label Content="Regresar" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontWeight="Medium" FontSize="20" HorizontalAlignment="Center"/>
+				<Label Content="Salir" Foreground="White" FontFamily="../../Assets/Fonts/#Jost" FontWeight="Medium" FontSize="20" HorizontalAlignment="Center"/>
 			</StackPanel>
 		</Border>
 
