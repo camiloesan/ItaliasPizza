@@ -192,8 +192,9 @@
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainMenu.xaml.cs">
-      <DependentUpon>MainMenu.xaml</DependentUpon>
+	<Compile Include="Pages\MainMenu.xaml.cs">
+		<DependentUpon>MainMenu.xaml</DependentUpon>
+	</Compile>
     <Compile Include="Pages\InventoryReport\FinishInventoryReport.xaml.cs">
       <DependentUpon>FinishInventoryReport.xaml</DependentUpon>
     </Compile>
