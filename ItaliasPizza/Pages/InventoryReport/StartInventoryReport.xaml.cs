@@ -172,6 +172,12 @@ namespace ItaliasPizza.Pages.InventoryReport
 			Application.Current.MainWindow.Content = new FinishInventoryReport();
 		}
 
+		private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
+		{
+			Application.Current.MainWindow.Content = new SupplierOrders();
+		}
+
+
 		private void Btn_Exit(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new Login();
