@@ -15,12 +15,13 @@ namespace Database
     public partial class Transaction
     {
         public System.Guid IdTransaction { get; set; }
-        public int Type { get; set; }
+        public int IdTransactionType { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Amount { get; set; }
-        public int Description { get; set; }
+        public string Description { get; set; }
         public System.Guid RegisteredBy { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual TransactionType TransactionType { get; set; }
     }
 }

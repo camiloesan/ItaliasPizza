@@ -1,7 +1,9 @@
 ﻿using Database;
 using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,15 +25,12 @@ namespace ItaliasPizza.Pages
     /// </summary>
     public partial class SupplierRegister : Page
     {
+        private List<SupplierCategory> supplierCategories;
         public SupplierRegister()
         {
             InitializeComponent();
+            supplierCategories = SupplierOperations.GetAllSupplierCategories();
             ShowCategories();
-        }
-
-        private List<SupplyCategory> GetCategories()
-        {
-            return SupplyOperations.GetSupplyCategories();
         }
 
         private bool AreFieldsFilled()
@@ -40,65 +39,61 @@ namespace ItaliasPizza.Pages
                 && !string.IsNullOrEmpty(TxtPhone.Text);
         }
 
-        private bool IsPhoneValid()
-        {
-            string pattern = @"^\d{10}$";
-            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-            return regex.IsMatch(TxtPhone.Text);
-        }
-
         private void ResetForm()
         {
             TxtName.Text = string.Empty;
             TxtPhone.Text = string.Empty;
-            TxtCategoryCount.Text = "1";
+            supplierCategories = SupplierOperations.GetAllSupplierCategories();
             ShowCategories();
         }
 
         private void ShowCategories()
         {
-            CategoryPanel?.Children.Clear();
-            if (int.TryParse(TxtCategoryCount.Text, out int categoryCount) && categoryCount > 0)
-            {
-
-                for (int i = 0; i < categoryCount; i++)
-                {
-                    ComboBox cb = new ComboBox
-                    {
-                        Name = $"CbCategory_{i}",
-                        DisplayMemberPath = "SupplyCategory1",
-                        SelectedValuePath = "IdSupplyCategory",
-                        IsEditable = false,
-                        Width = 200,
-                        Margin = new Thickness(5)
-                    };
-
-                    cb.ItemsSource = GetCategories();
-                    CategoryPanel?.Children.Add(cb);
-                    cb.SelectedIndex = 0;
-                }
-            }
+            LbCategories.ItemsSource = supplierCategories;
         }
 
-        private int SaveSupplierCategories(Guid supplierId)
+        private bool IsInputNumber(string input)
         {
-            int result = 0;
-            foreach (var child in CategoryPanel.Children)
+            string pattern = @"^\d+$";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(input);
+        }
+
+        private void TxtPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsInputNumber(e.Text);
+        }
+
+        private int GetCheckedCategoriesCount()
+        {
+            int checkedCount = 0;
+
+            foreach (var supplierCategory in supplierCategories)
             {
-                if (child is ComboBox cb && cb.SelectedValue != null)
+                if (supplierCategory != null && supplierCategory.IsSelected == true)
+                {
+                    checkedCount++;
+                }
+            }
+
+            return checkedCount;
+        }
+
+        private void SaveSupplierCategories(Guid supplierId)
+        {
+            foreach (var supplierCategory in supplierCategories)
+            {
+                if (supplierCategory != null && supplierCategory.IsSelected == true)
                 {
                     SupplierSupplyCategory supplierSupplyCategory = new SupplierSupplyCategory
                     {
                         IdSupplier = supplierId,
-                        IdSupplyCategory = (int)cb.SelectedValue
+                        IdSupplyCategory = supplierCategory.Id
                     };
-
-                    result = SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
+                    SupplierOperations.SaveSupplierSuppliCategory(supplierSupplyCategory);
                 }
             }
-            return result;
         }
-
 
         private void Btn_Save(object sender, RoutedEventArgs e)
         {
@@ -106,17 +101,16 @@ namespace ItaliasPizza.Pages
             {
                 MessageBox.Show("Todos los campos deben contener información");
             }
-            else if (!IsPhoneValid())
-            {
-                MessageBox.Show("El número solo debe contener 10 números");
-            }
-            else
+            else if (GetCheckedCategoriesCount() == 0){
+                MessageBox.Show("Selecciona al menos una categoría");
+            } else
             {
                 Supplier supplier = new Supplier
                 {
                     IdSupplier = Guid.NewGuid(),
                     Name = TxtName.Text,
                     Phone = TxtPhone.Text,
+                    Status = true
                 };
 
                 int result = SupplierOperations.SaveSupplier(supplier);
@@ -138,38 +132,6 @@ namespace ItaliasPizza.Pages
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new SuppliersList();
-        }
-
-        private void TxtCategoryCount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ShowCategories();
-        }
-
-        private void Btn_IncreaseCategory(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(TxtCategoryCount.Text);
-
-            if (currentValue < 9)
-            {
-                TxtCategoryCount.Text = (currentValue + 1).ToString();
-            } else
-            {
-                MessageBox.Show("Solo su puede un máximo de 9 categorías");
-            }
-        }
-
-        private void Btn_DecreaseCategory(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(TxtCategoryCount.Text);
-
-            if (currentValue > 1)
-            {
-                TxtCategoryCount.Text = (currentValue - 1).ToString();
-            }
-            else
-            {
-                MessageBox.Show("Debe haber al menos 1 categoría");
-            }
         }
     }
 }

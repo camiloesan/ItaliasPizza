@@ -344,5 +344,30 @@ namespace ItaliasPizzaTests.DataAccessLayer
             }
         }
 
+        [TestMethod]
+        public void GetSupplyDetailsTest()
+        {
+            var IdSupply = Guid.NewGuid();
+            var supply = new Supply
+            {
+                IdSupply = IdSupply,
+                Name = "Test",
+                Quantity = 1,
+                IdSupplyCategory = 1,
+                IdMeasurementUnit = 1,
+                ExpirationDate = DateTime.Now,
+                Status = true
+            };
+
+            SupplyOperations.SaveSupply(supply);
+            Assert.IsNotNull(SupplyOperations.GetSupplyDetailsXes());
+
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Supply.Attach(supply);
+                db.Supply.Remove(supply);
+                db.SaveChanges();
+            }
+        }
     }
 }

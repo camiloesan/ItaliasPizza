@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ItaliasPizza.DataAccessLayer;
 using System.Collections.ObjectModel;
 using Database;
+using System;
 
 namespace ItaliasPizza.Pages.Orders
 {
@@ -16,6 +17,7 @@ namespace ItaliasPizza.Pages.Orders
 	{
 		private OrderDetails _orderDetails;
 		private string _notDeliveredReason;
+		private const int TRANSACTION_TYPE_SALE = 1;
 		public ViewOrderDetails(OrderDetails orderDetails)
 		{
 			_orderDetails = orderDetails;
@@ -50,6 +52,20 @@ namespace ItaliasPizza.Pages.Orders
 		{
 			Application.Current.MainWindow.Content = new ViewOrders();
 		}
+
+		private void SaveTransaction()
+		{
+            var sale = new Transaction
+			{
+				IdTransaction = Guid.NewGuid(),
+				IdTransactionType = TRANSACTION_TYPE_SALE,
+				Date = DateTime.Now,
+				Amount = Decimal.Parse(_orderDetails.TotalPrice),
+				Description = "Sale: " + _orderDetails.TotalPrice,
+				RegisteredBy = SessionDetails.IdEmployee
+			};
+            TransactionOperations.SaveTransaction(sale);
+        }
 
 		private void BtnPreparation_Click(object sender, MouseButtonEventArgs e)
 		{
@@ -146,13 +162,22 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (result == MessageBoxResult.Yes)
 			{
-				OrderStatus orderStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
-
-				DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(_orderDetails.OrderId);
-				updatedProduct = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, orderStatus);
+                OrderStatus orderStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
+                switch (SessionDetails.UserType)
+                {
+                    case "Cocinero":
+                        LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(_orderDetails.OrderId);
+                        updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);
+                        break;
+                    case "Repartidor":
+                        DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(_orderDetails.OrderId);
+                        updatedProduct = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, orderStatus);
+                        break;
+                }	
 
 				if (updatedProduct > 0)
 				{
+					SaveTransaction();
 					MessageBox.Show("El estado del pedido ha sido actualizado correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
 					Application.Current.MainWindow.Content = new ViewOrders();
 				}

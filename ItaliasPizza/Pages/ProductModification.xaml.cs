@@ -63,7 +63,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Cancel(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Products();
         }
 
         private bool ConfirmationModification()

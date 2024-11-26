@@ -27,6 +27,22 @@ namespace ItaliasPizza.DataAccessLayer
 			}
 		}
 
+		public static List<Client> GetFiftyClients()
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Client.OrderBy(c => c.LastName).Take(50).ToList();
+			}
+		}
+
+		public static List<Client> GetClients()
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Client.ToList();
+			}
+		}
+
 		public static Client GetClientByDeliveryOrder(DeliveryOrder deliveryOrder)
 		{
 			using (var db = new ItaliasPizzaDBEntities())
@@ -34,5 +50,25 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.Client.FirstOrDefault(c => c.IdClient == deliveryOrder.IdClient);
 			}
 		}
-	}
+
+		public static Client GetClientByPhoneNumber(string phoneNumber)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Client.FirstOrDefault(c => c.Phone == phoneNumber);
+			}
+		}
+
+        public static int UpdateClient(Client client)
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                Client clientToUpdate = db.Client.FirstOrDefault(c => c.IdClient == client.IdClient);
+                clientToUpdate.FirstName = client.FirstName;
+                clientToUpdate.LastName = client.LastName;
+                clientToUpdate.Phone = client.Phone;
+                return db.SaveChanges();
+            }
+        }
+    }
 }

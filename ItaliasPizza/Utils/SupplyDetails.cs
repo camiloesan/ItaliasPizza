@@ -6,24 +6,16 @@ using System.Threading.Tasks;
 
 namespace ItaliasPizza.Utils
 {
-    public sealed class SupplyDetails
+    public class SupplyDetails
     {
-        private SupplyDetails()
-        {
-
-        }
-
-        public static Guid IdSupply { get; set; }
-        public static string Name { get; set; }
-        public static string Amount { get; set; }
-        public static string ExpirationDate { get; set; }
-        
-        public static void CleanSupplyDetails()
-        {
-            IdSupply = Guid.Empty;
-            Name = "";
-            Amount = "";
-            ExpirationDate = "";
-        }
+        public Guid IdSupply { get; set; }
+        public string Name { get; set; }
+        public string RawQuantity { get; set; }
+		public string Quantity { get; set; }
+        public string MeasurementUnit { get; set; }
+        public string ExpirationDate { get; set; }
+        public int IdSupplyCategory { get; set; }
+        public string Category { get; set; }
+        public string Status { get; set; }
     }
 }

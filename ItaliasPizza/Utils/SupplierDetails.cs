@@ -12,5 +12,6 @@ namespace ItaliasPizza.Utils
         public string Name { get; set; }
         public string Categories { get; set; }
         public string Phone { get; set; }
+        public string Status { get; set; }
     }
 }

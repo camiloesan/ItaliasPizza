@@ -1,0 +1,105 @@
+﻿<Page x:Class="ItaliasPizza.Pages.SupplierOrders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ItaliasPizza.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1280"
+      Title="SupplierOrders">
+
+    <Page.Background>
+        <ImageBrush ImageSource="../Assets/Images/background.jpg"/>
+    </Page.Background>
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="256"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background="#772E25">
+                <Label Content="Menú" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+                <Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
+                <Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
+                <Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
+                <Button Content="Pedios a proveedor" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_SupplierOrders"/>
+                <Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
+                <Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
+                <Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Background="#772E25" VerticalAlignment="Stretch">
+                <Button Content="Salir" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Exit"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="1000" Height="500">
+                <Label Content="Proveedores" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
+                    <Label Margin="5" Content="Filtro:" FontSize="14" Foreground="White"/>
+                    <ComboBox x:Name="CbFilter" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100"/>
+                    <TextBox x:Name="TxtSearcher" Margin="5" FontSize="14" HorizontalAlignment="Left" Width="500"/>
+                    <Button Margin="5" Content="Buscar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Search"/>
+                </StackPanel>
+
+                <DataGrid x:Name="DtgSupplierOrders" Margin="0,15" MaxHeight="400" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="FontWeight" Value="DemiBold"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Proveedor" Width="*" Binding="{Binding SupplierName}"/>
+                        <DataGridTextColumn Header="Insumos" Width="*" Binding="{Binding Supplies}"/>
+                        <DataGridTextColumn Header="Fecha de orden" Width="*" Binding="{Binding OrderDate}"/>
+                        <DataGridTextColumn Header="Fecha estimada" Width="*" Binding="{Binding ExpectedDate}"/>
+                        <DataGridTextColumn Header="Fecha de entrega" Width="*" Binding="{Binding ArrivalDate}"/>
+                        <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Status}"/>
+
+                        <DataGridTemplateColumn Header="Editar" Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Width="20" Height="20" Margin="5" Click="Btn_Edit" Background="Transparent" BorderBrush="Transparent" CommandParameter="{Binding IdSupplier}">
+                                        <Image Source="../Assets/Images/edit_icon.png" Stretch="Uniform"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            <Button Grid.Row="2" Margin="100,5" Content="Registrar nuevo pedido a proveedor" FontSize="14" HorizontalAlignment="Left" Width="250" Click="Btn_RegisterNewSupplierOrder"/>
+        </Grid>
+    </Grid>
+</Page>

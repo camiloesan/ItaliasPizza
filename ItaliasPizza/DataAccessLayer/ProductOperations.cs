@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Database;
+using ItaliasPizza.Utils;
 
 namespace ItaliasPizza.DataAccessLayer
 {
@@ -64,6 +65,24 @@ namespace ItaliasPizza.DataAccessLayer
             using (var db = new ItaliasPizzaDBEntities())
             {
                 return db.Product.Find(idProduct);
+            }
+        }
+
+        public static List<ProductDetails> GetProductDetails()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                return db.Product
+                    .Select(p => new ProductDetails
+                    {
+                        IdProduct = p.IdProduct,
+                        Name = p.Name,
+                        Price = p.Price,
+                        Size = p.Size,
+                        Type = p.ProductType.Type,
+                        Status = p.Status ? "Disponible" : "No disponible"
+                    })
+                    .ToList();
             }
         }
     }

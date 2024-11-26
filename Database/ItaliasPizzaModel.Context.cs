@@ -50,5 +50,6 @@ namespace Database
         public virtual DbSet<SupplyCategory> SupplyCategory { get; set; }
         public virtual DbSet<SupplyInventoryReport> SupplyInventoryReport { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<TransactionType> TransactionType { get; set; }
     }
 }

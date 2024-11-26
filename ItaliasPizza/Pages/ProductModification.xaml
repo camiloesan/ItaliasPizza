@@ -22,33 +22,33 @@
         <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" MaxWidth="500">
             <Label Content="Modificar producto" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,8"/>
 
-            <Label Content="Campo obligatorio (*)" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-            <Label Content="Nombre (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtName" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
-            <Label Content="Tamaño (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox x:Name="CbSize" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
+            <Label Content="Campo obligatorio (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+            <Label Content="Nombre (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtName" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="32"/>
+            <Label Content="Tamaño (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <ComboBox x:Name="CbSize" FontSize="14" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
                 <ComboBoxItem IsEnabled="False" Content="Selecciona el tamaño" />
                 <ComboBoxItem>Chico</ComboBoxItem>
                 <ComboBoxItem>Mediano</ComboBoxItem>
                 <ComboBoxItem>Grande</ComboBoxItem>
             </ComboBox>
 
-            <Label Content="Tipo (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox x:Name="CbProductType" DisplayMemberPath="Name" SelectedValuePath="Id" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
+            <Label Content="Tipo (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <ComboBox x:Name="CbProductType" FontSize="14" DisplayMemberPath="Type" SelectedValuePath="Id" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5"></ComboBox>
 
-            <Label Content="Precio (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <TextBox x:Name="TxtPrice" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
+            <Label Content="Precio (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <TextBox x:Name="TxtPrice" Margin="5" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxLength="10"/>
 
-            <Label Content="Disponibilildad (*)" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-            <ComboBox x:Name="CbAvailability" IsEditable="False" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
+            <Label Content="Disponibilildad (*)" FontSize="14" Foreground="White" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            <ComboBox x:Name="CbAvailability" IsEditable="False" FontSize="14" SelectedIndex="0" Width="200" HorizontalAlignment="Left" Margin="5">
                 <ComboBoxItem IsEnabled="False" Content="Selecciona la disponibilidad" />
                 <ComboBoxItem>Disponible</ComboBoxItem>
                 <ComboBoxItem>No disponible</ComboBoxItem>
             </ComboBox>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15">
-                <Button Margin="5" Content="Guardar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-                <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="15,25">
+                <Button Margin="5" Content="Continuar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="100" Click="Btn_Save"/>
+                <Button Margin="5" Content="Cancelar" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
             </StackPanel>
         </StackPanel>
     </Grid>

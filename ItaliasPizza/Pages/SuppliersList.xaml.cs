@@ -24,6 +24,7 @@ namespace ItaliasPizza.Pages
         private const string SUPPLIER_NAME_ATTRIBUTE = "Nombre";
         private const string SUPPLIER_CATEGORIES_ATTRIBUTE = "Categorías";
         private const string SUPPLIER_PHONE_ATTRIBUTE = "Teléfono";
+        private const string SUPPLIER_STATUS_ATTRIBUTE = "Estado";
         private List<SupplierDetails> supplierDetailsList = SupplierOperations.GetAllSuppliersWithCategories();
         public SuppliersList()
         {
@@ -34,11 +35,14 @@ namespace ItaliasPizza.Pages
 
         private void FillCbFilter()
         {
-            List<string> filters = new List<string>();
-            filters.Add(SUPPLIER_NAME_ATTRIBUTE);
-            filters.Add(SUPPLIER_CATEGORIES_ATTRIBUTE);
-            filters.Add(SUPPLIER_PHONE_ATTRIBUTE);
-
+            List<string> filters = new List<string>
+            {
+                SUPPLIER_NAME_ATTRIBUTE,
+                SUPPLIER_CATEGORIES_ATTRIBUTE,
+                SUPPLIER_PHONE_ATTRIBUTE,
+                SUPPLIER_STATUS_ATTRIBUTE
+            };
+            
             CbFilter.ItemsSource = filters;
             CbFilter.SelectedIndex = 0;
         }
@@ -87,11 +91,9 @@ namespace ItaliasPizza.Pages
         {
             Button button = sender as Button;
 
-            if (button != null && button.CommandParameter != null)
+            if (button.DataContext is SupplierDetails supplierDetails)
             {
-                //var supplierId = button.CommandParameter;
-                //SupplierDetails.IdSupplier = supplierId;
-                //Application.Current.MainWindow.Content = new SupplierModification();
+                Application.Current.MainWindow.Content = new SupplierModification(supplierDetails.IdSupplier);
             }
         }
 
@@ -107,7 +109,7 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Supplies(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new Inventory();
         }
 
         private void Btn_Orders(object sender, RoutedEventArgs e)
@@ -117,12 +119,26 @@ namespace ItaliasPizza.Pages
 
         private void Btn_Suppliers(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new SuppliersList();
         }
 
         private void Btn_Reports(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Products();
+        }
+        private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SupplierOrders();
+        }
+
+        private void Btn_Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Login();
         }
     }
 }

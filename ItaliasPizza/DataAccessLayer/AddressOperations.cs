@@ -11,10 +11,32 @@ namespace ItaliasPizza.DataAccessLayer
 	{
 		public static int SaveAddress(Address address)
 		{
+			try {
+				using (var db = new ItaliasPizzaDBEntities())
+				{
+					db.Address.Add(address);
+					return db.SaveChanges();
+				}
+			} catch (Exception e)
+			{
+				// Log the exception
+				return -1;
+			}
+		}
+
+		public static List<Address> GetClientAddresses(Client client) {
+
 			using (var db = new ItaliasPizzaDBEntities())
 			{
-				db.Address.Add(address);
-				return db.SaveChanges();
+				return db.Address.Where(a => a.IdClient == client.IdClient).ToList();
+			}		
+		}
+
+		public static Address GetAddressById(Guid id)
+		{
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+				return db.Address.FirstOrDefault(a => a.IdAddress == id);
 			}
 		}
 	}

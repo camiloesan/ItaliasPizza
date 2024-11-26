@@ -47,7 +47,7 @@
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,232,0,8">
                 <Button Margin="5" Content="Guardar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Save"/>
-                <Button Margin="5" Content="Eliminar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Eliminate"/>
+                <Button x:Name="BtnStatus" Margin="5" Content="Eliminar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Eliminate"/>
                 <Button Margin="5" Content="Cancelar" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="80" Click="Btn_Cancel"/>
             </StackPanel>
         </StackPanel>

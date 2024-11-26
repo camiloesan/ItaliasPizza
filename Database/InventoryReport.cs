@@ -23,6 +23,8 @@ namespace Database
         public System.Guid IdInventoryReport { get; set; }
         public System.Guid Reporter { get; set; }
         public string Observations { get; set; }
+        public System.DateTime ReportDate { get; set; }
+        public bool Status { get; set; }
     
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

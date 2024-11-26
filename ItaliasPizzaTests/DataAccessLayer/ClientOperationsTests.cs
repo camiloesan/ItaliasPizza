@@ -140,5 +140,38 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			Assert.AreEqual(client.IdClient, result.IdClient);
 		}
-	}
+
+        [TestMethod]
+        public void UpdateClientTest()
+        {
+            var idClient = Guid.NewGuid();
+            var client = new Client
+            {
+                IdClient = idClient,
+                Phone = "1234567890",
+                FirstName = "John",
+                LastName = "Doe",
+            };
+
+			// save client with linq
+			using (var db = new ItaliasPizzaDBEntities())
+			{
+                db.Client.Add(client);
+                db.SaveChanges();
+            }
+
+            client.FirstName = "Jane";
+            var result = ClientOperations.UpdateClient(client);
+
+            //teardown
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                db.Client.Attach(client);
+                db.Client.Remove(client);
+                db.SaveChanges();
+            }
+
+            Assert.AreEqual(1, result);
+        }
+    }
 }

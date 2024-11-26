@@ -1,6 +1,8 @@
 ﻿using Database;
+using ItaliasPizza.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
@@ -116,5 +118,29 @@ namespace ItaliasPizza.DataAccessLayer
 				return db.MeasurementUnit.FirstOrDefault(mu => mu.IdMeasurementUnit == id);
 			}
 		}
-	}
+
+        public static List<SupplyDetails> GetSupplyDetailsXes()
+        {
+            using (var db = new ItaliasPizzaDBEntities())
+            {
+                var result = db.Supply
+                .Select(s => new SupplyDetails
+                {
+                    IdSupply = s.IdSupply,
+                    Name = s.Name,
+                    MeasurementUnit = s.MeasurementUnit.MeasurementUnit1,
+					RawQuantity = s.Quantity.ToString(),
+					Quantity = s.Quantity.ToString() + " " + s.MeasurementUnit.MeasurementUnit1,
+                    Category = s.SupplyCategory.SupplyCategory1,
+                    IdSupplyCategory = s.IdSupplyCategory,
+                    ExpirationDate = s.ExpirationDate.ToString(),
+                    Status = s.Status ? "Disponible" : "No disponible"
+                })
+                .ToList();
+
+            return result;
+            }
+
+        }
+    }
 }
