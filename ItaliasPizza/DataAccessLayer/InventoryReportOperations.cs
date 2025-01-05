@@ -53,7 +53,7 @@ namespace ItaliasPizza.DataAccessLayer
 					.Include("SupplyInventoryReport")
 					.Include("SupplyInventoryReport.Supply")
 					.Include("SupplyInventoryReport.MeasurementUnit")
-					.FirstOrDefault(ir => ir.Status == false);
+					.FirstOrDefault(ir => ir.Status == false); // false = open, true = closed
 			}
 
 			return inventoryReport;

@@ -85,8 +85,8 @@ namespace ItaliasPizza.Pages.InventoryReport
 			Database.InventoryReport inventoryReport = new Database.InventoryReport()
 			{
 				IdInventoryReport = Guid.NewGuid(),
-				Reporter = Guid.Parse("9AD3E07D-5AC4-4F5E-B6C5-EB3CE087DF4D"),
-				//Reporter = SessionDetails.IdEmployee,
+				//Reporter = Guid.Parse("9AD3E07D-5AC4-4F5E-B6C5-EB3CE087DF4D"),
+				Reporter = SessionDetails.IdEmployee,
 				ReportDate = DateTime.Now,
 				Status = false // false = open, true = closed
 			};
