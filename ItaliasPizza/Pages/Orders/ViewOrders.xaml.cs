@@ -174,6 +174,9 @@ namespace ItaliasPizza.Pages.Orders
 				order.Status = thisOrderStatus.Status;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
+
+				order.AddressId = deliveryOrder.IdClientAddress;
+
 				orders.Add(order);
 			}
 
@@ -256,6 +259,8 @@ namespace ItaliasPizza.Pages.Orders
 
 				var thisOrderStatus = OrderStatusOperations.GetOrderStatusByName(orderStatus.Status);
 				order.Status = thisOrderStatus.Status;
+
+				order.AddressId = deliveryOrder.IdClientAddress;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
 				orders.Add(order);
