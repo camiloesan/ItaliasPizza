@@ -29,11 +29,11 @@
                 <Label Content="Menú" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,20"/>
                 <Button Content="Empleados" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Employees"/>
                 <Button Content="Inventario" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Supplies"/>
-                <Button Content="Pedidos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Orders"/>
+                <!--Button Content="Repportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/!-->
                 <Button Content="Pedios a proveedor" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_SupplierOrders"/>
                 <Button Content="Productos" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Products"/>
                 <Button Content="Proveedores" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Suppliers"/>
-                <Button Content="Reportes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Reports"/>
+                <Button Content="Clientes" BorderBrush="White" Foreground="White" Background="Transparent" FontSize="16" Margin="10" Width="180" HorizontalAlignment="Center" Click="Btn_Clients"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Background="#772E25" VerticalAlignment="Stretch">
