@@ -20,14 +20,16 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			var idClient = Guid.NewGuid();
 			var testClient = new Client { IdClient = idClient, FirstName = "Jane", LastName = "Doe", Phone = "1234567890" };
+			var testAddress = new Address { IdAddress = Guid.NewGuid(), IdClient = idClient, Street = "123 Main St", Number = 123, PostalCode = "1234", Colony = "Main", Reference = "Some reference" };
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				db.Client.Add(testClient);
+				db.Address.Add(testAddress);
 				db.SaveChanges();
 			}
 
 			var orderStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar"); 
-			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = orderStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = orderStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee, IdClientAddress = testAddress.IdAddress };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var idPizza = Guid.NewGuid();
@@ -39,11 +41,13 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			List<DeliveryOrderProduct> result = DeliveryOrderProductOperations.GetDeliveryOrderProductsByOrderId(deliveryOrder.IdDeliveryOrder);
 
+
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				db.Employee.Attach(testEmployee);
 				db.AccessAccount.Attach(accessAccount);
 				db.Client.Attach(testClient);
+				db.Address.Attach(testAddress);
 				db.DeliveryOrder.Attach(deliveryOrder);
 				db.Product.Attach(testPizza);
 				db.DeliveryOrderProduct.Attach(deliveryOrderProduct);
@@ -51,12 +55,15 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				db.Employee.Remove(testEmployee);
 				db.AccessAccount.Remove(accessAccount);
 				db.Client.Remove(testClient);
+				db.Address.Remove(testAddress);
 				db.DeliveryOrder.Remove(deliveryOrder);
 				db.Product.Remove(testPizza);
 				db.DeliveryOrderProduct.Remove(deliveryOrderProduct);
 
 				db.SaveChanges();
 			}
+
+			Assert.AreEqual(1, result.Count);
 		}
 	}
 }
