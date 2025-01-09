@@ -65,7 +65,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
                 LastName = "Test",
                 Phone = "1234567890",
                 Status = true,
-                IdCharge = 1
+                IdCharge = 5
             };
             AccessAccount accessAccount = new AccessAccount
             {
@@ -77,7 +77,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
             };
             EmployeeOperations.SaveEmployee(employee, accessAccount);
 
-            var result = AccessAccountOperations.GetEmployeeCharge("camiloesan@gmail.com");
+            var result = AccessAccountOperations.GetEmployeeCharge("roberto@gmail.com");
 
             using (var db = new ItaliasPizzaDBEntities())
             {
