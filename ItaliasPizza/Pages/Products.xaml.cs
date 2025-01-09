@@ -146,7 +146,15 @@ namespace ItaliasPizza.Pages
 
             if (button.DataContext is ProductDetails selectedProduct)
             {
-                Application.Current.MainWindow.Content = new ModifyRecipe(selectedProduct.IdProduct);
+                var recipe = RecipeOperations.GetRecipeByProductId(selectedProduct.IdProduct);
+                if (recipe != null)
+                {
+                    Application.Current.MainWindow.Content = new ModifyRecipe(selectedProduct.IdProduct);
+                } 
+                else
+                {
+                    MessageBox.Show("Este producto no tiene receta.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
     }
