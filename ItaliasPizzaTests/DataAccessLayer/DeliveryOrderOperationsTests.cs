@@ -22,7 +22,7 @@ namespace ItaliasPizzaTests.DataAccessLayer
 		}
 
 		[TestMethod]
-		public void UpdateDeliveryOrderStatusTesst()
+		public void UpdateDeliveryOrderStatusTest()
 		{
 			var idEmployee = Guid.NewGuid();
 			var testDeliveryDriver = new Employee { IdEmployee = idEmployee, FirstName = "John", LastName = "Doe", Phone = "1234567890", Status = true, IdCharge = 1};
@@ -31,14 +31,18 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			var idClient = Guid.NewGuid();
 			var testClient = new Client { IdClient = idClient, FirstName = "Jane", LastName = "Doe", Phone = "1234567890" };
+			var testAddress = new Address { IdAddress = Guid.NewGuid(), IdClient = idClient, Street = "123 Main St", Number = 123, PostalCode = "1234", Colony = "Main", Reference = "Some reference" };
+
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				db.Client.Add(testClient);
+				db.Address.Add(testAddress);
 				db.SaveChanges();
 			}
 
+
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee, IdClientAddress = testAddress.IdAddress };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var newStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
@@ -49,11 +53,13 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				db.Employee.Attach(testDeliveryDriver);
 				db.AccessAccount.Attach(accessAccount);
 				db.Client.Attach(testClient);
+				db.Address.Attach(testAddress);
 				db.DeliveryOrder.Attach(deliveryOrder);
 				
 				db.Employee.Remove(testDeliveryDriver);
 				db.AccessAccount.Remove(accessAccount);
 				db.Client.Remove(testClient);
+				db.Address.Remove(testAddress);
 				db.DeliveryOrder.Remove(deliveryOrder);
 
 				db.SaveChanges();
@@ -72,14 +78,16 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			var idClient = Guid.NewGuid();
 			var testClient = new Client { IdClient = idClient, FirstName = "Jane", LastName = "Doe", Phone = "1234567890" };
+			var testAddress = new Address { IdAddress = Guid.NewGuid(), IdClient = idClient, Street = "123 Main St", Number = 123, PostalCode = "1234", Colony = "Main", Reference = "Some reference" };
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				db.Client.Add(testClient);
+				db.Address.Add(testAddress);
 				db.SaveChanges();
 			}
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee, IdClientAddress = testAddress.IdAddress };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var result = DeliveryOrderOperations.GetDeliveryOrderById(deliveryOrder.IdDeliveryOrder);
@@ -89,11 +97,13 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				db.Employee.Attach(testDeliveryDriver);
 				db.AccessAccount.Attach(accessAccount);
 				db.Client.Attach(testClient);
+				db.Address.Attach(testAddress);
 				db.DeliveryOrder.Attach(deliveryOrder);
 
 				db.Employee.Remove(testDeliveryDriver);
 				db.AccessAccount.Remove(accessAccount);
 				db.Client.Remove(testClient);
+				db.Address.Remove(testAddress);
 				db.DeliveryOrder.Remove(deliveryOrder);
 
 				db.SaveChanges();
@@ -112,14 +122,16 @@ namespace ItaliasPizzaTests.DataAccessLayer
 
 			var idClient = Guid.NewGuid();
 			var testClient = new Client { IdClient = idClient, FirstName = "Jane", LastName = "Doe", Phone = "1234567890" };
+			var testAddress = new Address { IdAddress = Guid.NewGuid(), IdClient = idClient, Street = "123 Main St", Number = 123, PostalCode = "1234", Colony = "Main", Reference = "Some reference" };
 			using (var db = new ItaliasPizzaDBEntities())
 			{
 				db.Client.Add(testClient);
+				db.Address.Add(testAddress);
 				db.SaveChanges();
 			}
 
 			var defaultStatus = OrderStatusOperations.GetOrderStatusByName("Listo para entregar");
-			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee };
+			var deliveryOrder = new DeliveryOrder { IdDeliveryOrder = Guid.NewGuid(), IdClient = idClient, IdOrderStatus = defaultStatus.IdOrderStatus, Date = DateTime.Now, Total = 120.0m, DeliveryDriver = idEmployee, IdClientAddress = testAddress.IdAddress };
 			DeliveryOrderOperations.SaveDeliveryOrder(deliveryOrder);
 
 			var result = DeliveryOrderOperations.SetNotDeliveredReason(deliveryOrder, "No se encontró la dirección");
@@ -129,11 +141,13 @@ namespace ItaliasPizzaTests.DataAccessLayer
 				db.Employee.Attach(testDeliveryDriver);
 				db.AccessAccount.Attach(accessAccount);
 				db.Client.Attach(testClient);
+				db.Address.Attach(testAddress);
 				db.DeliveryOrder.Attach(deliveryOrder);
 
 				db.Employee.Remove(testDeliveryDriver);
 				db.AccessAccount.Remove(accessAccount);
 				db.Client.Remove(testClient);
+				db.Address.Remove(testAddress);
 				db.DeliveryOrder.Remove(deliveryOrder);
 
 				db.SaveChanges();
