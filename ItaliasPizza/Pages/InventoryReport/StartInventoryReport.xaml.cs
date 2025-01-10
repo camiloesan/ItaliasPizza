@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Utils;
 using Database;
+using ItaliasPizza.Pages.Clients;
 
 namespace ItaliasPizza.Pages.InventoryReport
 {
@@ -139,43 +140,41 @@ namespace ItaliasPizza.Pages.InventoryReport
 			return wasFileGenerated;
 		}
 
-		// -- SIDE BAR BUTTONS -- //
+        // -- SIDE BAR BUTTONS -- //
 
-		private void Btn_Employees(object sender, RoutedEventArgs e)
-		{
-			Application.Current.MainWindow.Content = new Employees();
-		}
+        private void Btn_Employees(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Employees();
+        }
 
 		private void Btn_Supplies(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new Inventory();
 		}
 
-		private void Btn_Orders(object sender, RoutedEventArgs e)
-		{
-			
-		}
+        private void Btn_Suppliers(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SuppliersList();
+        }
 
-		private void Btn_Products(object sender, RoutedEventArgs e)
-		{
-			Application.Current.MainWindow.Content = new Products();
-		}
+        private void Btn_Clients(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new ViewClients();
+        }
 
-		private void Btn_Suppliers(object sender, RoutedEventArgs e)
-		{
-			Application.Current.MainWindow.Content = new SuppliersList();
-		}
+        private void Btn_Products(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new Products();
+        }
+        private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Content = new SupplierOrders();
+        }
 
 		private void Btn_Reports(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new FinishInventoryReport();
 		}
-
-		private void Btn_SupplierOrders(object sender, RoutedEventArgs e)
-		{
-			Application.Current.MainWindow.Content = new SupplierOrders();
-		}
-
 
 		private void Btn_Exit(object sender, RoutedEventArgs e)
 		{
