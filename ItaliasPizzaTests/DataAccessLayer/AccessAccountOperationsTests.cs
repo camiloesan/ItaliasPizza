@@ -77,7 +77,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
             };
             EmployeeOperations.SaveEmployee(employee, accessAccount);
 
-            var result = AccessAccountOperations.GetEmployeeCharge("camiloesan@gmail.com");
+            var result = AccessAccountOperations.GetEmployeeCharge("roberto@gmail.com");
 
             using (var db = new ItaliasPizzaDBEntities())
             {
@@ -89,7 +89,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
                 db.SaveChanges();
             }
 
-            Assert.AreEqual("Gerente", result);
+            Assert.AreEqual("Mesero", result);
         }
 
         [TestMethod()]
