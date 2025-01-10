@@ -16,6 +16,7 @@ using ItaliasPizza.Utils;
 using ItaliasPizza.DataAccessLayer;
 using Database;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace ItaliasPizza.Pages.Orders
 {
@@ -24,11 +25,25 @@ namespace ItaliasPizza.Pages.Orders
 	/// </summary>
 	public partial class ViewOrders : Page
 	{
-		
+		private DispatcherTimer _timer;
 
 		public ViewOrders()
 		{
 			InitializeComponent();
+			InitializeOrdersByUserType();
+			SetupTimer();
+		}
+
+		private void SetupTimer()
+		{
+			_timer = new DispatcherTimer();
+			_timer.Interval = TimeSpan.FromSeconds(30);
+			_timer.Tick += Timer_Tick;
+			_timer.Start();
+		}
+
+		private void Timer_Tick(object sender, EventArgs e)
+		{
 			InitializeOrdersByUserType();
 		}
 
