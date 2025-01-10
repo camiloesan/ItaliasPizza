@@ -29,7 +29,7 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void InitializeUserTypeButtons()
 		{
-			switch (SessionDetails.UserType) 
+			switch (SessionDetails.UserType)
 			{
 				case "Cocinero":
 					BtnPreparation.Visibility = Visibility.Visible;
@@ -44,6 +44,7 @@ namespace ItaliasPizza.Pages.Orders
 					BtnTransit.Visibility = Visibility.Visible;
 					BtnDelivered.Visibility = Visibility.Visible;
 					BtnNotDelivered.Visibility = Visibility.Visible;
+					BtnViewAddress.Visibility = Visibility.Visible;
 					break;
 			}
 		}
@@ -55,7 +56,7 @@ namespace ItaliasPizza.Pages.Orders
 
 		private void SaveTransaction()
 		{
-            var sale = new Transaction
+			var sale = new Transaction
 			{
 				IdTransaction = Guid.NewGuid(),
 				IdTransactionType = TRANSACTION_TYPE_SALE,
@@ -64,8 +65,8 @@ namespace ItaliasPizza.Pages.Orders
 				Description = "Sale: " + _orderDetails.TotalPrice,
 				RegisteredBy = SessionDetails.IdEmployee
 			};
-            TransactionOperations.SaveTransaction(sale);
-        }
+			TransactionOperations.SaveTransaction(sale);
+		}
 
 		private void BtnPreparation_Click(object sender, MouseButtonEventArgs e)
 		{
@@ -79,7 +80,7 @@ namespace ItaliasPizza.Pages.Orders
 				if (_orderDetails.OrderType == "Local")
 				{
 					LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(_orderDetails.OrderId);
-					updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);					
+					updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);
 				}
 				else if (_orderDetails.OrderType == "A domicilio")
 				{
@@ -162,18 +163,18 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (result == MessageBoxResult.Yes)
 			{
-                OrderStatus orderStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
-                switch (SessionDetails.UserType)
-                {
-                    case "Cocinero":
-                        LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(_orderDetails.OrderId);
-                        updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);
-                        break;
-                    case "Repartidor":
-                        DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(_orderDetails.OrderId);
-                        updatedProduct = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, orderStatus);
-                        break;
-                }	
+				OrderStatus orderStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
+				switch (SessionDetails.UserType)
+				{
+					case "Cocinero":
+						LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(_orderDetails.OrderId);
+						updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);
+						break;
+					case "Repartidor":
+						DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(_orderDetails.OrderId);
+						updatedProduct = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, orderStatus);
+						break;
+				}
 
 				if (updatedProduct > 0)
 				{
@@ -195,11 +196,26 @@ namespace ItaliasPizza.Pages.Orders
 			if (result == MessageBoxResult.Yes)
 			{
 				NotDeliveredForm.Visibility = Visibility.Visible;
-				BtnTransit.IsEnabled = false;
-				BtnDelivered.IsEnabled = false;
-				BtnNotDelivered.IsEnabled = false;
-				BtnCancelOrder.IsEnabled = false;
+				DisableMainForm();
 			}
+		}
+
+		private void DisableMainForm()
+		{
+  			BtnTransit.IsEnabled = false;
+			BtnDelivered.IsEnabled = false;
+			BtnNotDelivered.IsEnabled = false;
+			BtnCancelOrder.IsEnabled = false;
+			BtnViewAddress.IsEnabled = false;
+		}
+
+		private void EnableMainForm()
+		{
+			BtnTransit.IsEnabled = true;
+			BtnDelivered.IsEnabled = true;
+			BtnNotDelivered.IsEnabled = true;
+			BtnCancelOrder.IsEnabled = true;
+			BtnViewAddress.IsEnabled = true;
 		}
 
 		private void BtnCancelOrder_Click(object sender, MouseButtonEventArgs e)
@@ -244,13 +260,13 @@ namespace ItaliasPizza.Pages.Orders
 
 			if (string.IsNullOrEmpty(_notDeliveredReason))
 			{
-					MessageBox.Show("Por favor, ingrese el motivo por el cual no se pudo entregar el pedido", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Por favor, ingrese el motivo por el cual no se pudo entregar el pedido", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			} else if (_notDeliveredReason.Length > 100)
 			{
 				MessageBox.Show("El motivo no puede exceder los 100 caracteres", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
-			} else 
+			} else
 			{
 				NotDeliveredOrder(_notDeliveredReason);
 			}
@@ -270,10 +286,7 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				MessageBox.Show("El estado del pedido ha sido actualizado correctamente", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
 				NotDeliveredForm.Visibility = Visibility.Hidden;
-				BtnTransit.IsEnabled = true;
-				BtnDelivered.IsEnabled = true;
-				BtnNotDelivered.IsEnabled = true;
-				BtnCancelOrder.IsEnabled = true;
+				EnableMainForm();
 				Application.Current.MainWindow.Content = new ViewOrders();
 				_notDeliveredReason = null;
 			}
@@ -281,12 +294,29 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				MessageBox.Show("Ha ocurrido un error al actualizar el estado del pedido", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				NotDeliveredForm.Visibility = Visibility.Hidden;
-				BtnTransit.IsEnabled = true;
-				BtnDelivered.IsEnabled = true;
-				BtnNotDelivered.IsEnabled = true;
-				BtnCancelOrder.IsEnabled = true;
+				EnableMainForm();
 				_notDeliveredReason = null;
 			}
+		}
+
+		private void BtnViewAddress_Click(object sender, MouseButtonEventArgs e)
+		{
+			DisableMainForm();
+			OrderAddressPopUp.Visibility = Visibility.Visible;
+
+			Address address = AddressOperations.GetAddressById(_orderDetails.AddressId);
+
+			LblClientStreet.Content = address.Street;
+			LblClientAddressNumber.Content = address.Number;
+			LblClientColony.Content = address.Colony;
+			LblClientPostalCode.Content = address.PostalCode;
+			LblClientReferences.Content = address.Reference;
+		}
+
+		private void BtnCloseOrderAddress_Click(object sender, RoutedEventArgs e)
+		{
+			OrderAddressPopUp.Visibility = Visibility.Hidden;
+			EnableMainForm();
 		}
 
 		private void BtnCancelReason_Click(object sender, RoutedEventArgs e)
@@ -335,7 +365,7 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				var deliveryOrderProducts = DeliveryOrderProductOperations.GetDeliveryOrderProductsByOrderId(orderId);
 
-				foreach (var deliveryOrderProduct in  deliveryOrderProducts)
+				foreach (var deliveryOrderProduct in deliveryOrderProducts)
 				{
 					var orderProduct = new OrderProductDetails();
 					orderProduct.OrderProductId = deliveryOrderProduct.IdDeliveryOrderProduct;
@@ -352,6 +382,6 @@ namespace ItaliasPizza.Pages.Orders
 			}
 
 			return orderProducts;
-		}		
+		}
 	}
 }

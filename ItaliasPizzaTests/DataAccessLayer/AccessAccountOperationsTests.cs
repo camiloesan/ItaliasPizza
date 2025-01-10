@@ -65,7 +65,7 @@ namespace ItaliasPizza.DataAccessLayer.Tests
                 LastName = "Test",
                 Phone = "1234567890",
                 Status = true,
-                IdCharge = 1
+                IdCharge = 5
             };
             AccessAccount accessAccount = new AccessAccount
             {
