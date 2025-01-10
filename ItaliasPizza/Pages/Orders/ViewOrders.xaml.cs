@@ -29,7 +29,7 @@ namespace ItaliasPizza.Pages.Orders
 		public ViewOrders()
 		{
 			InitializeComponent();
-			InitializeOrdersByUsedType();
+			InitializeOrdersByUserType();
 		}
 
 		private void ImgReturn_Click(object sender, MouseButtonEventArgs e)
@@ -37,7 +37,7 @@ namespace ItaliasPizza.Pages.Orders
 			Application.Current.MainWindow.Content = new Login();
 		}
 
-		private void InitializeOrdersByUsedType()
+		private void InitializeOrdersByUserType()
 		{
 			UserTypeLabel.Content = SessionDetails.UserType;
 
@@ -93,14 +93,14 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(order.OrderId);
 				updatedOrder = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, canceledStatus);
-				InitializeOrdersByUsedType();
+				InitializeOrdersByUserType();
 				// UndoSupplyReservation(deliveryOrder);
 			}
 			else if (order.OrderType == "Local")
 			{
 				LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(order.OrderId);
 				updatedOrder = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, canceledStatus);
-				InitializeOrdersByUsedType();
+				InitializeOrdersByUserType();
 				// UndoSupplyReservation(localOrder);
 			}
 
@@ -174,6 +174,9 @@ namespace ItaliasPizza.Pages.Orders
 				order.Status = thisOrderStatus.Status;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
+
+				order.AddressId = deliveryOrder.IdClientAddress;
+
 				orders.Add(order);
 			}
 
@@ -256,6 +259,8 @@ namespace ItaliasPizza.Pages.Orders
 
 				var thisOrderStatus = OrderStatusOperations.GetOrderStatusByName(orderStatus.Status);
 				order.Status = thisOrderStatus.Status;
+
+				order.AddressId = deliveryOrder.IdClientAddress;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
 				orders.Add(order);

@@ -19,7 +19,6 @@ namespace ItaliasPizza.DataAccessLayer
 				}
 			} catch (Exception e)
 			{
-				// Log the exception
 				return -1;
 			}
 		}

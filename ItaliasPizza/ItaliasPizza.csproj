@@ -192,9 +192,9 @@
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
-	<Compile Include="Pages\MainMenu.xaml.cs">
-		<DependentUpon>MainMenu.xaml</DependentUpon>
-	</Compile>
+    <Compile Include="Pages\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\InventoryReport\FinishInventoryReport.xaml.cs">
       <DependentUpon>FinishInventoryReport.xaml</DependentUpon>
     </Compile>
@@ -502,6 +502,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\recipe_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\house-find.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

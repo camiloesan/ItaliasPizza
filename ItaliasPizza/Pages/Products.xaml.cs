@@ -1,5 +1,6 @@
 ﻿using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Pages.Clients;
+using ItaliasPizza.Pages.InventoryReport;
 using ItaliasPizza.Pages.Recipes;
 using ItaliasPizza.Utils;
 using System.Collections.Generic;
@@ -66,7 +67,12 @@ namespace ItaliasPizza.Pages
             Application.Current.MainWindow.Content = new ViewClients();
         }
 
-        private void Btn_Products(object sender, RoutedEventArgs e)
+		private void Btn_Reports(object sender, RoutedEventArgs e)
+		{
+			Application.Current.MainWindow.Content = new FinishInventoryReport();
+		}
+
+		private void Btn_Products(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new Products();
         }
