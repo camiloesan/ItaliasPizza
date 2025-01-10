@@ -203,7 +203,7 @@
 
 			<!-- Button bar -->
 			<StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="25,20,30,20">
-				<Border x:Name="BtnViewAddress" Visibility="Visible" Width="260" Height="75" MouseLeftButtonDown="BtnViewAddress_Click" Cursor="Hand"
+				<Border x:Name="BtnViewAddress" Visibility="Hidden" Width="260" Height="75" MouseLeftButtonDown="BtnViewAddress_Click" Cursor="Hand"
 					Background="Gray" BorderBrush="White" BorderThickness="1" CornerRadius="5" Margin="0,0,40,0">
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 						<Image Source="../../Assets/Images/house-find.png" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center"/>

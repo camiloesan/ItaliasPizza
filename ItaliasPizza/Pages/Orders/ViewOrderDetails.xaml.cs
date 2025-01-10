@@ -46,6 +46,9 @@ namespace ItaliasPizza.Pages.Orders
 					BtnNotDelivered.Visibility = Visibility.Visible;
 					BtnViewAddress.Visibility = Visibility.Visible;
 					break;
+				case "Mesero":
+					BtnDelivered.Visibility = Visibility.Visible;
+					break;
 			}
 		}
 
@@ -166,7 +169,7 @@ namespace ItaliasPizza.Pages.Orders
 				OrderStatus orderStatus = OrderStatusOperations.GetOrderStatusByName("Entregado");
 				switch (SessionDetails.UserType)
 				{
-					case "Cocinero":
+					case "Mesero":
 						LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(_orderDetails.OrderId);
 						updatedProduct = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, orderStatus);
 						break;
