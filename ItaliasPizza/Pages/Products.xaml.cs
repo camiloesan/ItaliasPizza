@@ -1,4 +1,5 @@
-﻿using ItaliasPizza.DataAccessLayer;
+﻿using Database;
+using ItaliasPizza.DataAccessLayer;
 using ItaliasPizza.Pages.Clients;
 using ItaliasPizza.Pages.InventoryReport;
 using ItaliasPizza.Pages.Recipes;
@@ -160,6 +161,8 @@ namespace ItaliasPizza.Pages
                 else
                 {
                     MessageBox.Show("Este producto no tiene receta.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Product product = ProductOperations.GetProductById(selectedProduct.IdProduct);
+                    Application.Current.MainWindow.Content = new RegisterRecipe(product);
                 }
             }
         }
