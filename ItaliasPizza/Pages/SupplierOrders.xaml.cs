@@ -1,20 +1,12 @@
 ﻿using ItaliasPizza.DataAccessLayer;
+using ItaliasPizza.Pages.Clients;
+using ItaliasPizza.Pages.InventoryReport;
 using ItaliasPizza.Utils;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace ItaliasPizza.Pages
 {
@@ -62,22 +54,22 @@ namespace ItaliasPizza.Pages
             Application.Current.MainWindow.Content = new Inventory();
         }
 
-        private void Btn_Orders(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Btn_Suppliers(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new SuppliersList();
         }
 
-        private void Btn_Reports(object sender, RoutedEventArgs e)
+        private void Btn_Clients(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Content = new ViewClients();
         }
 
-        private void Btn_Products(object sender, RoutedEventArgs e)
+		private void Btn_Reports(object sender, RoutedEventArgs e)
+		{
+			Application.Current.MainWindow.Content = new FinishInventoryReport();
+		}
+
+		private void Btn_Products(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Content = new Products();
         }

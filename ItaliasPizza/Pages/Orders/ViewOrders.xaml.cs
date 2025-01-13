@@ -16,6 +16,7 @@ using ItaliasPizza.Utils;
 using ItaliasPizza.DataAccessLayer;
 using Database;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace ItaliasPizza.Pages.Orders
 {
@@ -24,12 +25,26 @@ namespace ItaliasPizza.Pages.Orders
 	/// </summary>
 	public partial class ViewOrders : Page
 	{
-		
+		private DispatcherTimer _timer;
 
 		public ViewOrders()
 		{
 			InitializeComponent();
-			InitializeOrdersByUsedType();
+			InitializeOrdersByUserType();
+			SetupTimer();
+		}
+
+		private void SetupTimer()
+		{
+			_timer = new DispatcherTimer();
+			_timer.Interval = TimeSpan.FromSeconds(30);
+			_timer.Tick += Timer_Tick;
+			_timer.Start();
+		}
+
+		private void Timer_Tick(object sender, EventArgs e)
+		{
+			InitializeOrdersByUserType();
 		}
 
 		private void ImgReturn_Click(object sender, MouseButtonEventArgs e)
@@ -37,7 +52,7 @@ namespace ItaliasPizza.Pages.Orders
 			Application.Current.MainWindow.Content = new Login();
 		}
 
-		private void InitializeOrdersByUsedType()
+		private void InitializeOrdersByUserType()
 		{
 			UserTypeLabel.Content = SessionDetails.UserType;
 
@@ -93,14 +108,14 @@ namespace ItaliasPizza.Pages.Orders
 			{
 				DeliveryOrder deliveryOrder = DeliveryOrderOperations.GetDeliveryOrderById(order.OrderId);
 				updatedOrder = DeliveryOrderOperations.UpdateDeliveryOrderStatus(deliveryOrder, canceledStatus);
-				InitializeOrdersByUsedType();
+				InitializeOrdersByUserType();
 				// UndoSupplyReservation(deliveryOrder);
 			}
 			else if (order.OrderType == "Local")
 			{
 				LocalOrder localOrder = LocalOrderOperations.GetLocalOrderById(order.OrderId);
 				updatedOrder = LocalOrderOperations.UpdateLocalOrderStatus(localOrder, canceledStatus);
-				InitializeOrdersByUsedType();
+				InitializeOrdersByUserType();
 				// UndoSupplyReservation(localOrder);
 			}
 
@@ -174,6 +189,9 @@ namespace ItaliasPizza.Pages.Orders
 				order.Status = thisOrderStatus.Status;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
+
+				order.AddressId = deliveryOrder.IdClientAddress;
+
 				orders.Add(order);
 			}
 
@@ -256,6 +274,8 @@ namespace ItaliasPizza.Pages.Orders
 
 				var thisOrderStatus = OrderStatusOperations.GetOrderStatusByName(orderStatus.Status);
 				order.Status = thisOrderStatus.Status;
+
+				order.AddressId = deliveryOrder.IdClientAddress;
 
 				order.TotalPrice = deliveryOrder.Total.ToString();
 				orders.Add(order);

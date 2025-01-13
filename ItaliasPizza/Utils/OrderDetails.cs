@@ -15,5 +15,6 @@ namespace ItaliasPizza.Utils
 		public string Status { get; set; }
 		public string OrderType { get; set; }
 		public DateTime OrderDate { get; set; }
+		public Guid AddressId { get; set; }
 	}
 }

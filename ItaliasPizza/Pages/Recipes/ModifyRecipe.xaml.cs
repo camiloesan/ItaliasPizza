@@ -20,12 +20,6 @@ namespace ItaliasPizza.Pages.Recipes
         public ModifyRecipe(Guid productId)
         {
             var recipe = RecipeOperations.GetRecipeByProductId(productId);
-            if (recipe == null)
-            {
-                MessageBox.Show("No se encontró la receta.", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Application.Current.MainWindow.Content = new Products();
-                return;
-            }
 
             InitializeComponent();
             currentProductId = productId;
